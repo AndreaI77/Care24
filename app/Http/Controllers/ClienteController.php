@@ -11,6 +11,9 @@ use App\Http\Requests\ClienteRequest;
 use Illuminate\Support\Facades\Session;
 use Exception;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PassMail;
+use Illuminate\Support\Str;
 
 class ClienteController extends Controller
 {
@@ -66,7 +69,9 @@ class ClienteController extends Controller
                 $uploadSuccess = $request->file('foto')->move($path , $filename);
                 $user->foto = $path . $filename;
             }
-            $user->password=bcrypt($request->get('nombre'));
+            $pass = Str::random(8);
+            $user->password=bcrypt($pass);
+
             $user->save();
             $cl=new Cliente();
             $cl->user_id=$user->id;
@@ -83,8 +88,16 @@ class ClienteController extends Controller
             $cl->coordenaday=$request->coordenaday;
             $cl->user()->associate($user);
             $cl->save();
+
+            $details=[
+                'password' => $pass
+            ];
+            if($request->has('email') && $user->email != ""){
+                Mail::to($user->email)->send(new PassMail($details));
+            }
+
             return back()->with('info','Se ha creado el registro.');
-            //enviar email con contraseña care24web@gmail.com, webcare24
+
 
         }
     }

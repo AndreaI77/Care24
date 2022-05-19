@@ -31,8 +31,8 @@ class ClienteRequest extends FormRequest
             'email'=> 'required | email',
             'tel'=> 'required | numeric',
             'SIP' => 'nullable | numeric ',
-            'fecha_nacimiento'=> 'nullable | date_format:Y-m-d | before:today | after:1900-01-01',
-            'fecha_baja' => 'nullable | date_format:Y-m-d | after_or_equal:'.$this->fecha_alta
+            'fecha_nacimiento'=> 'nullable |date_format:Y-m-d| before:today | after:1900-01-01',
+            'fecha_baja' => 'nullable |date_format:Y-m-d| after_or_equal:'.$this->fecha_alta
         ];
     }
     public function messages(){

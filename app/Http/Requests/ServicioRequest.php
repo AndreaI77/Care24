@@ -24,9 +24,9 @@ class ServicioRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha'=> 'required | date_format:Y-m-d',
-            'hora_inicio'=> 'required | date_format:H:i',
-            'hora_final'=> 'required |  | date_format:H:i | after:hora_inicio',
+            'fecha'=> 'required |date_format:Y-m-d',
+            'hora_inicio'=> 'required |date_format:H:i',
+            'hora_final'=> 'required |date_format:H:i| after:hora_inicio',
             'tipo'=> 'required',
             'estado'=> 'required',
             'cliente'=> 'required',

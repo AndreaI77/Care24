@@ -26,9 +26,9 @@ class TratamientoRequest extends FormRequest
         return [
             'medicamento'=> 'required',
             'cliente'=> 'required',
-            'fecha_principio'=>'required | date_format:Y-m-d',
-            'fecha_fin'=>'nullable | date_format:Y-m-d | after:fecha_principio',
-            'hora'=> 'required | date_format:H:i',
+            'fecha_principio'=>'required |date_format:Y-m-d',
+            'fecha_fin'=>'nullable |date_format:Y-m-d| after:fecha_principio',
+            'hora'=> 'required |date_format:H:i',
             'cantidad' => 'required | numeric'
         ];
     }

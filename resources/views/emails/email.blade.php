@@ -32,7 +32,8 @@
 
     <div>
         <div class="text-center">
-            <img src="{{asset('img/logo2Trans.png')}}" alt="logo empresa" width='400'/>
+            ---------------------------------------------------------------------------------------
+            {{-- <img src="{{asset('img/logo2Trans.png')}}" alt="logo empresa" width='400'/> --}}
         </div>
        <div class="text-secondary small">
         <p  ><strong >Advertencia importante </strong><br/>
