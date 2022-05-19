@@ -1,0 +1,136 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Tratamiento;
+use App\Models\Medicamento;
+use App\Models\Cliente;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Exception;
+use Illuminate\Support\Facades\Crypt;
+use App\Http\Requests\TratamientoRequest;
+
+class TratamientoController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => 'index','create', 'store', 'edit', 'update', 'destroy']);
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $tratamientos = Tratamiento::get();
+
+        return view('tratamientos.index', compact('tratamientos'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $medicamentos = Medicamento::get();
+        $clientes = Cliente::get();
+        return view('tratamientos.create', compact('medicamentos', 'clientes'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(TratamientoRequest $request)
+    {
+        $trat=new Tratamiento();
+        $trat->fecha_principio=$request->get('fecha_principio');
+        $trat->fecha_fin=$request->get('fecha_fin');
+        $trat->cantidad=$request->get('cantidad');
+        $trat->hora=$request->get('hora');
+        $trat->descripcion=Crypt::encryptString($request->get('descripcion'));
+        $medicamento=Medicamento::findOrFail($request->get('medicamento'));
+        $trat->medicamento()->associate($medicamento);
+        $cliente= Cliente::findOrFail($request->get('cliente'));
+        $trat->cliente()->associate($cliente);
+        $trat->save();
+        return back()->with('info','Se ha creado el registro.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Tratamiento  $tratamiento
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $tratamiento= Tratamiento::findOrFail($id);
+
+        return view('tratamientos.show', compact('tratamiento'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Tratamiento  $tratamiento
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $tratamiento= Tratamiento::findOrFail($id);
+        $medicamentos = Medicamento::get();
+        $clientes = Cliente::get();
+        return view('tratamientos.edit', compact('medicamentos', 'clientes', 'tratamiento'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Tratamiento  $tratamiento
+     * @return \Illuminate\Http\Response
+     */
+    public function update(TratamientoRequest $request, $id)
+    {
+        $trat=Tratamiento::findOrFail($id);
+        $trat->fecha_principio=$request->get('fecha_principio');
+        $trat->fecha_fin=$request->get('fecha_fin');
+        $trat->cantidad=$request->get('cantidad');
+        $trat->hora=$request->get('hora');
+        $trat->descripcion=Crypt::encryptString($request->get('descripcion'));
+        $trat->medicamento_id=$request->get('medicamento');
+        $trat->cliente_id=$request->get('cliente');
+        $trat->save();
+        Session::flash('info', "Se han actualizado los datos.");
+
+        return redirect()->route('tratamientos.show', $id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Tratamiento  $tratamiento
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $tratamiento= Tratamiento::findOrFail($id);
+        try
+        {
+            $tratamiento->delete();
+            Session::flash('info', "Se ha eliminado el registro.");
+            return redirect()->route('tratamientos.index');
+
+        }catch(Exception $e){
+            return $e->getMessage();
+
+        }
+    }
+}
