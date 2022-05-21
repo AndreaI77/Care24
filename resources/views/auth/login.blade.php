@@ -7,8 +7,8 @@
 
                 <div class="row justify-content-center mt-5 ">
                     @if (!empty($error))
-                                <h1 class="text-danger text-center"> {{ $error }} </h1>
-                            @endif
+                        <h1 class="text-danger text-center"> {{ $error }} </h1>
+                    @endif
                     <div class="col-lg-5 ">
                         <div class="card shadow-lg borderc border-2 border-success rounded-lg ">
 
@@ -30,8 +30,8 @@
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="password.php">¡He olvidado mi contraseña!</a>
-                                        <a class="small" href="../index.html">Volver</a>
+                                        <a class="small" href="{{route('recuperacion')}}">¡He olvidado mi contraseña!</a>
+                                        {{-- <a class="small" href="{{route('home')}}">Volver</a> --}}
 
                                         <button type="submit" class="float-end mt-0 btn btn-success text-warning fw-bolder" id="enter" name="enter">Entrar <i class="bi bi-arrow-right"></i></button>
                                     </div>
