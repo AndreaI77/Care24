@@ -18,7 +18,10 @@ class RecupController extends Controller
 
     public function recup(Request $request)
     {
-
+        $request->validate([
+            'dni' => 'required',
+            'email' => 'required|email'
+         ]);
         $users = User::where('dni', $request->get('dni'))->get();
 
          if( $users != null && count($users)>0)

@@ -24,9 +24,9 @@
                                         <div class="invalid-feedback">El DNI/NIE es obligatorio.</div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="password" name="password" type="password" required />
+                                        <input class="form-control" id="password" minlength='8' name="password" type="password" required />
                                         <label for="password">Contraseña</label>
-                                        <div class="invalid-feedback">La contraseña es obligatoria.</div>
+                                        <div class="invalid-feedback">La contraseña es obligatoria (min. 8 carácteres).</div>
                                     </div>
 
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">

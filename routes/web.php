@@ -78,7 +78,7 @@ Route::get('curriculum', [CVController::class, 'index'])->name('envioCV');
 Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.store');
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
-Route::get('/perfil', [PerfilController::class, 'perfilForm'])->name('perfil');
-Route::post('/perfil', [PerfilController::class, 'cambio'])->name('cambio');
-
+// Route::get('/perfil', [PerfilController::class, 'perfilForm'])->name('perfil');
+// Route::post('/perfil', [PerfilController::class, 'cambio'])->name('cambio');
+Route::resource('/perfil', PerfilController::class)->only('index', 'store');
 
