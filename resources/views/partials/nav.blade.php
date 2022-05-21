@@ -41,7 +41,7 @@
             @if(auth()->check())
                 <ul class="navbar-nav  ms-md-auto  me-3 me-lg-4">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false"><i class="bi bi-person-circle"></i></a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto !== null ) <img class= "rounded" src="{{auth()->user()->foto}}" alt="logo" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#!">Mi perfil</a></li>
                             {{-- <li><a class="dropdown-item" href="#!">Activity Log</a></li> --}}

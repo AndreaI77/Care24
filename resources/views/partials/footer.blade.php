@@ -7,10 +7,10 @@
         <div class="me-md-4"  >
             <span><i class="bi bi-telephone-fill"></i>Teléfono:</span>
             <span class="text-end">966&nbsp;555&nbsp;444</span><br/>
-            <a class="text-success" href="#"><i class="bi bi-envelope"></i>&nbsp;info@care24web.es</a>
+            <p class="text-success" ><i class="bi bi-envelope"></i>&nbsp;care24web@gmail.com</p>
         </div>
         <div class="  d-flex flex-column fs-6 ">
-            <span ><small>Todos los Derechos Reservados &copy;2020-2022</small></span>
+            <span ><small>Todos los Derechos Reservados &copy; care24</small></span>
             <a class="text-success" href= "{{route('privacidad')}}">Política de privacidad</a>
             <a class="text-success" href= "{{route('cookies')}}">Política de cookies</a>
         </div>
