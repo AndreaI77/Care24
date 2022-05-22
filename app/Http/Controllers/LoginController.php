@@ -15,7 +15,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'dni' => 'required',
-            'password' => 'required|min:8'
+            'password' => 'required'
          ]);
         $credentials = $request->only('dni', 'password');
         if (Auth::attempt($credentials))

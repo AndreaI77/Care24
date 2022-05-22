@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<h1 class="bg-success bg-opacity-25 text-success text-center">Tratamientos</h1>
+<h1 class="bg-success bg-opacity-25 text-success text-center">Tratamientos </h1>
 
 <div class="table-responsive">
 
@@ -24,16 +24,16 @@
         </tr>
         </thead>
         <tbody>
-            @forelse($tratamientos as $cl)
-                <tr class="text-center" id="{{$cl->id}}">
-                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('tratamientos.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
-                    <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}} </td>
-                    <td class="empleado">{{Crypt::decryptString($cl->medicamento->nombre)}} ({{$cl->medicamento->cantidad}}) </td>
-                    <td class="fecha_principio">{{Carbon\Carbon::parse($cl->fecha_principio)->format('d/m/Y')}} </td>
-                    <td class="fecha_fin"> @isset(($cl->fecha_fin)){{Carbon\Carbon::parse($cl->fecha_fin)->format('d/m/Y')}} @endisset</td>
-                    <td class="cantidad">{{$cl->cantidad}} </td>
-                    <td class="hora">{{Carbon\Carbon::parse($cl->hora)->format('H:i')}} </td>
-                    <td class="descrip">@isset(($cl->servicio->descripcion)){{Crypt::decryptString($cl->servicio->descripcion)}} @endisset</td>
+            @forelse($tratamientos as $trat)
+                <tr class="text-center" id="{{$trat->id}}">
+                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('tratamientos.show', $trat->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
+                    <td class="cliente">{{$trat->cliente->user->nombre}}, {{$trat->cliente->user->apellido}} </td>
+                    <td class="empleado">{{Crypt::decryptString($trat->medicamento->nombre)}} ({{$trat->medicamento->cantidad}}) </td>
+                    <td class="fecha_principio">{{Carbon\Carbon::parse($trat->fecha_principio)->format('d/m/Y')}} </td>
+                    <td class="fecha_fin"> @isset(($trat->fecha_fin)){{Carbon\Carbon::parse($trat->fecha_fin)->format('d/m/Y')}} @endisset</td>
+                    <td class="cantidad">{{$trat->cantidad}} </td>
+                    <td class="hora">{{Carbon\Carbon::parse($trat->hora)->format('H:i')}} </td>
+                    <td class="descrip">@isset(($trat->servicio->descripcion)){{Crypt::decryptString($trat->servicio->descripcion)}} @endisset</td>
                 </tr>
 
             @empty <li>No elements to be shown</li>
@@ -44,6 +44,7 @@
     @endisset
 
 </div>
+
 @endsection
 @section('js')
 

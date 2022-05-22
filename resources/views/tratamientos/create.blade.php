@@ -6,6 +6,7 @@
     @csrf
     <h1 class="bg-success bg-opacity-25 text-success text-center">Nuevo tratamiento</h1>
     <div class= "row g-3 p-3">
+
         <div class= "col-sm-6">
             <div class= "">
 
@@ -28,7 +29,6 @@
                     <a class="btn btn-outline-success mb-2 me-2 pt-0 pb-0" href="{{route('medicamentos.index')}}"> Borrar medicamento</a>
                 </div>
             </div>
-
             <div class= "mt-2">
                 <label class= "form-label fw-bolder me-2" for="cliente">Cliente:<span class="text-danger">*</span></label>
 
@@ -47,6 +47,7 @@
                     </div>
                 @endif
             </div>
+
             <div class= "mt-2">
                 <label class= "form-label fw-bolder mt-2" for="Lugar">Cantidad:<span class="text-danger">*</span></label>
                 <input type="text" id="lugar" name="cantidad" pattern="([0-9]*[.])?[0-9]+" value="{{old('cantidad')}}" required>
@@ -87,10 +88,6 @@
 
             </div>
 
-
-
-
-
         </div>
         <div class= "">
             <label class= "form-label fw-bolder" for="descripcion">Descripción:</label>
@@ -100,7 +97,7 @@
     </div>
 
     <button type="submit" class="btn btn-success text-warning mt-3 mb-3 float-end" name="enter" id="enter"><i class="bi bi-save"></i> Guardar</button>
-    <a href= "{{route('tratamientos.index')}}" class="btn btn-outline-success  m-3 float-end"><i class="bi bi-arrow-left"></i> Salir sin guardar</a>
+    <a href= "{{route('tratamientos.index')}}" class="btn btn-outline-success  m-3 float-end"><i class="bi bi-arrow-left"></i> Volver</a>
 </form>
 
 @endsection

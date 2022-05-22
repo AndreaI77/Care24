@@ -24,6 +24,7 @@ class TratamientoController extends Controller
      */
     public function index()
     {
+
         $tratamientos = Tratamiento::get();
 
         return view('tratamientos.index', compact('tratamientos'));
@@ -47,7 +48,7 @@ class TratamientoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TratamientoRequest $request)
+    public function store(TratamientoRequest $request, )
     {
         $trat=new Tratamiento();
         $trat->fecha_principio=$request->get('fecha_principio');
@@ -69,7 +70,7 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id)
     {
         $tratamiento= Tratamiento::findOrFail($id);
 
@@ -82,12 +83,13 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id)
     {
         $tratamiento= Tratamiento::findOrFail($id);
         $medicamentos = Medicamento::get();
-        $clientes = Cliente::get();
-        return view('tratamientos.edit', compact('medicamentos', 'clientes', 'tratamiento'));
+        $clientes=Cliente::get();
+
+        return view('tratamientos.edit', compact('medicamentos','clientes', 'tratamiento'));
     }
 
     /**
@@ -108,9 +110,10 @@ class TratamientoController extends Controller
         $trat->medicamento_id=$request->get('medicamento');
         $trat->cliente_id=$request->get('cliente');
         $trat->save();
-        Session::flash('info', "Se han actualizado los datos.");
 
-        return redirect()->route('tratamientos.show', $id);
+        Session::flash('info', "Se han actualizado los datos.");
+        return view('tratamientos.show', compact('tratamiento'));
+       // return redirect()->route('tratamientos.show', $cliente_id, $id);
     }
 
     /**
@@ -119,9 +122,9 @@ class TratamientoController extends Controller
      * @param  \App\Models\Tratamiento  $tratamiento
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        $tratamiento= Tratamiento::findOrFail($id);
+        $tratamiento= Tratamiento::findOrFail( $id);
         try
         {
             $tratamiento->delete();

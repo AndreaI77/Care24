@@ -7,6 +7,7 @@
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Editar tratamiento</h1>
     <div class= "row g-3 p-3">
+
         <div class= "col-sm-6">
             <div class= "">
 

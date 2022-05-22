@@ -25,9 +25,10 @@
                     @endif
                     @if(auth()->check() && auth()->user()->tipo === 'cliente')
                         {{-- <li class="nav-item "><a class="nav-link  text-sm-center fw-bolder {{setActive('inicio')}}  " href={{route('inicio')}}>Inicio</a></li> --}}
-                        <li class="nav-item "><a class="nav-link  text-sm-center fw-bolder  {{setActive('servicios')}}  " href="#">Servicios</a></li>
-                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('citas')}}" href="#">Citas</a></li>
-                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('tratamientos')}} " href="#">Tratamientos</a></li>
+                        <li class="nav-item "><a class="nav-link  text-sm-center fw-bolder  {{setActive('servicios')}}  " href="{{route('servicios.index')}}">Servicios</a></li>
+                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('citas')}}" href="{{route('citas.index')}}">Citas médicas</a></li>
+                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('tratamientos')}} " href="{{route('tratamientos.index')}}">Tratamientos</a></li>
+                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('agenda')}} " href="">Agenda</a></li>
                     @endif
                 </ul>
             </div>
@@ -41,12 +42,11 @@
             @if(auth()->check())
                 <ul class="navbar-nav  ms-md-auto  me-3 me-lg-4">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto !== null ) <img class= "rounded" src="{{auth()->user()->foto}}" alt="logo" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">Mi perfil</a></li>
-                            {{-- <li><a class="dropdown-item" href="#!">Activity Log</a></li> --}}
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto !== null ) <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="logo" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
+                        <ul class="dropdown-menu dropdown-menu-end text-success" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-success" href="{{route('perfil.index')}}">Mi perfil</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="{{route('logout')}}">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item text-success" href="{{route('logout')}}">Cerrar sesión</a></li>
                         </ul>
                     </li>
                 </ul>

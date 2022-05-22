@@ -16,7 +16,7 @@ use App\Http\Controllers\MapaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\CVController;
-use App\Http\Controllers\RecupController;
+use App\Http\Controllers\PerfilController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
@@ -78,7 +78,5 @@ Route::get('curriculum', [CVController::class, 'index'])->name('envioCV');
 Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.store');
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
-// Route::get('/perfil', [PerfilController::class, 'perfilForm'])->name('perfil');
-// Route::post('/perfil', [PerfilController::class, 'cambio'])->name('cambio');
-Route::resource('/perfil', PerfilController::class)->only('index', 'store');
+Route::resource('perfil', PerfilController::class)->only('index', 'update');
 
