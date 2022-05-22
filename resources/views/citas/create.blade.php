@@ -138,7 +138,7 @@
             <label class= "form-label fw-bolder" for="descripcion">Descripción:</label>
             <textarea class= "form-control" name="descripcion" rows="3" cols="50">{{old('descripcion')}}</textarea>
         </div>
-
+        <input type="hidden" name = "comentario" value="">
         {{-- <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
             <textarea class= "form-control" name="comentario" rows="3" cols="50">{{old('comentario')}}</textarea>

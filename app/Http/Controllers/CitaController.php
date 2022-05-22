@@ -35,11 +35,10 @@ class CitaController extends Controller
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
                 foreach($servicios as $servicio){
-                $citas=Cita::where('servicio_id', $servicio->id)->get();
+                    $citas[]=Cita::where('servicio_id', $servicio->id)->get();
                 }
             }
         }
-
         return view('citas.index', compact('citas'));
     }
 
@@ -114,6 +113,8 @@ class CitaController extends Controller
      */
     public function show($id)
     {
+        // $cita=Cita::findOrFail($id);
+        // return view('citas.show', compact('cita'));
 
         $cita = null;
         if(auth()->user()->tipo === 'empleado'){
@@ -123,7 +124,7 @@ class CitaController extends Controller
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $cita1= Cita::findOrFail($id);
             foreach($clientes as $cliente){
-                if($cita1->servicio->cliente_id === $cliente->id){
+                if($cita1->servicio->cliente_id == $cliente->id){
                     $cita=$cita1;
                 }
             }
@@ -175,7 +176,6 @@ class CitaController extends Controller
             if($request->has('descripcion')){
                 $cita->servicio->descripcion=Crypt::encryptString($request->get('descripcion'));
             }
-
             if($request->has('comentario')){
                 $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
             }
