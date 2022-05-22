@@ -88,9 +88,25 @@ class TratamientoController extends Controller
      */
     public function show( $id)
     {
-        $tratamiento= Tratamiento::findOrFail($id);
-
-        return view('tratamientos.show', compact('tratamiento'));
+        $tratamiento = null;
+        if(auth()->user()->tipo === 'empleado'){
+            $tratamiento= Tratamiento::findOrFail($id);
+            return view('tratamientos.show', compact('tratamiento'));
+        }else{
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $tratamiento1= Tratamiento::findOrFail($id);
+            foreach($clientes as $cliente){
+                if($tratamiento1->cliente_id === $cliente->id){
+                    $tratamiento=$tratamiento1;
+                }
+            }
+            if($tratamiento == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('tratamientos.show', compact('tratamiento'));
+            }
+        }
     }
 
     /**

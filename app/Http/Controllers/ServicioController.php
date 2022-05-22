@@ -102,9 +102,25 @@ class ServicioController extends Controller
      */
     public function show($id)
     {
-        $servicio= Servicio::findOrFail($id);
-
-        return view('servicios.show', compact('servicio'));
+        $servicio = null;
+        if(auth()->user()->tipo === 'empleado'){
+            $servicio= Servicio::findOrFail($id);
+            return view('servicios.show', compact('servicio'));
+        }else{
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $servicio1= Servicio::findOrFail($id);
+            foreach($clientes as $cliente){
+                if($servicio1->cliente_id === $cliente->id){
+                    $servicio=$servicio1;
+                }
+            }
+            if($servicio == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('servicios.show', compact('servicio'));
+            }
+        }
     }
 
     /**

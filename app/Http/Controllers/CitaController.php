@@ -114,27 +114,26 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        $cita=Cita::findOrFail($id);
-        return view('citas.show', compact('cita'));
-        // $cita=null;
-        // if(auth()->user()->tipo === 'cliente'){
-        //     $clientes=Cliente::where('user_id', auth()->user()->id)->get();
-        //     $citas= Cita::findOrFail($id);
-        //     foreach($clientes as $cliente){
-        //         foreach($citas as $cita1){
-        //             if($cita1->cliente_id == $cliente->id){  // error: try to read property cliente_id on bool
-        //                 $cita[]=$cita1;
 
-        //             }
-        //         }
-        //     }
-        //     return view('citas.show', compact('cita'));
-        // }else if(auth()->user()->tipo === 'empleado'){
-        //     $cita= Cita::findOrFail($id);
-        //     return view('citas.show', compact('cita'));
-        // }else{
-        //     return redirect()->route('citas.index')->with('danger','No está autorizado a acceder a esta ruta.');
-        // }
+        $cita = null;
+        if(auth()->user()->tipo === 'empleado'){
+            $cita=Cita::findOrFail($id);
+            return view('citas.show', compact('cita'));
+        }else{
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $cita1= Cita::findOrFail($id);
+            foreach($clientes as $cliente){
+                if($cita1->servicio->cliente_id === $cliente->id){
+                    $cita=$cita1;
+                }
+            }
+            if($cita == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('citas.show', compact('cita'));
+            }
+        }
 
     }
 
