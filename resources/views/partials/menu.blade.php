@@ -136,7 +136,7 @@
                   </ul>
             </div>
         </div>
-
+        <a class="nav-link fw-bolder fs-5 text-success" href={{route('comentarios.index')}}>Ver comentarios</a>
 
     </div>
   </div>

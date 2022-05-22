@@ -72,7 +72,7 @@
 
             <div class= "d-flex ">
                 <label class= "form-label fw-bolder me-2" for="fecha">Fecha:<span class="text-danger">*</span></label>
-                <input class="form-control" type="date" name="fecha" id="fecha" value="{{$servicio->fecha)}}" required>
+                <input class="form-control" type="date" name="fecha" id="fecha" value="{{$servicio->fecha}}" required>
                 <div class="invalid-feedback">La fecha es obligatoria</div>
                 @if($errors->has('fecha'))
                     <div class='text-danger mens'>

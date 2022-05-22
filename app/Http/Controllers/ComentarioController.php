@@ -58,11 +58,16 @@ class ComentarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'valoracion' => 'required|numeric|min:1|max:5',
+            'comentario' => 'required'
+         ]);
         if(auth()->user()->tipo === 'cliente'){
             $servicio= Servicio::findOrFail($id);
             $servicio->comentario=Crypt::encryptString($request->get('comentario'));
             $servicio->valoracion=$request->get('valoracion');
             $servicio->save();
+
             Session::flash('info', "Se ha guardado su comentario.");
 
             return redirect()->route('servicios.index');

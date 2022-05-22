@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             @forelse($servicios as $cl)
-                @if($cl->tipo != "medico")
+                @if($cl->tipo != "Cita médica")
                     <tr class="text-center" id="{{$cl->id}}">
                         <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
                         <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} </td>
