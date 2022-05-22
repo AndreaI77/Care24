@@ -61,7 +61,7 @@
                                     @endif
                                 </div>
                                 <div class="form-floating mb-3 ">
-                                    <input class="form-control" name="email" id="email" type="email" value="{{auth()->user()->dni}}"  disabled />
+                                    <input class="form-control" name="email" id="email" type="email" value="{{auth()->user()->email}}"  disabled />
                                     <label for="email">Email</label>
                                 </div>
 

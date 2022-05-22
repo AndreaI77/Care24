@@ -24,7 +24,7 @@ class IncidenciaRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required |date_format:Y-m-d| before_or_equal:today',
+            'fecha' => 'required|date_format:Y-m-d|before_or_equal:today',
             'estado'=> 'required',
             'titulo' => 'required',
             'descripcion' => 'required',

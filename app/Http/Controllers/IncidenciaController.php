@@ -65,6 +65,7 @@ class IncidenciaController extends Controller
         $incidencia->descripcion = Crypt::encryptString($request->get('descripcion'));
         $incidencia->estado = "activo";
         $incidencia->save();
+        //return redirect()->route('incidencias.index')->with('info','Se ha creado el registro.');
         return back()->with('info','Se ha creado el registro.');
     }
 

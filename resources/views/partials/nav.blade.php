@@ -42,7 +42,7 @@
             @if(auth()->check())
                 <ul class="navbar-nav  ms-md-auto  me-3 me-lg-4">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto !== null ) <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="logo" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto != null && auth()->user()->foto != "" ) <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
                         <ul class="dropdown-menu dropdown-menu-end text-success" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item text-success" href="{{route('perfil.index')}}">Mi perfil</a></li>
                             <li><hr class="dropdown-divider" /></li>

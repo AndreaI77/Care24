@@ -45,10 +45,10 @@
     <div class= "col-12 ps-3 mt-1">
         <p><span class="fw-bolder">Otros datos:  <br/></span>{{$cliente->user->datos}} </p>
     </div>
-    <div class="">
+    {{-- <div class="">
         <a class=" btn btn-outline-success fw-bolder fs-5 text-success" href={{route('tratamientos.index')}}>Tratamientos</a>
         <a class=" btn btn-outline-success fw-bolder fs-5 text-success" href={{route('tratamientos.create')}}>Nuevo tratamiento</a>
-    </div>
+    </div> --}}
     <div class="card-footer">
         <form action= "{{route('clientes.destroy', $cliente->id)}}" id="form" method="POST">
             @method('DELETE')
