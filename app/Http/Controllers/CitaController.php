@@ -27,7 +27,18 @@ class CitaController extends Controller
      */
     public function index()
     {
-        $citas= Cita::get();
+        $citas=[];
+        if(auth()->user()->tipo === 'empleado'){
+            $citas= Cita::get();
+        }else{
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            foreach($clientes as $cliente){
+                $servicios=Servicio::where('cliente_id', $cliente->id)->get();
+                foreach($servicios as $servicio){
+                $citas=Cita::where('servicio_id', $servicio->id)->get();
+                }
+            }
+        }
 
         return view('citas.index', compact('citas'));
     }
@@ -39,10 +50,15 @@ class CitaController extends Controller
      */
     public function create()
     {
-        $clientes=Cliente::get();
-        $empleados=Empleado::get();
-        $especialidades=Especialidad::get();
-        return view('citas.create', compact('empleados','clientes', 'especialidades'));
+        if(auth()->user()->tipo === 'empleado'){
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            $especialidades=Especialidad::get();
+            return view('citas.create', compact('empleados','clientes', 'especialidades'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('citas.index');
+        }
     }
 
     /**
@@ -53,36 +69,41 @@ class CitaController extends Controller
      */
     public function store(CitaRequest $request)
     {
-        $ser= new Servicio();
-        $ser->fecha=$request->get('fecha');
-        $ser->hora_inicio=$request->get('hora_inicio');
-        $ser->hora_final=$request->get('hora_final');
-        $ser->tipo="medico";
-        if($request->has('descripcion')){
-            $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
-        }
-        $ser->estado=$request->get('estado');
-        if($request->has('comentario')){
-            $ser->comentario=Crypt::encryptString($request->get('comentario'));
-        }
+        if(auth()->user()->tipo === 'empleado'){
+            $ser= new Servicio();
+            $ser->fecha=$request->get('fecha');
+            $ser->hora_inicio=$request->get('hora_inicio');
+            $ser->hora_final=$request->get('hora_final');
+            $ser->tipo="medico";
+            if($request->has('descripcion')){
+                $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
+            }
+            $ser->estado=$request->get('estado');
+            if($request->has('comentario')){
+                $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            }
 
-        $ser->valoracion=$request->get('valoracion');
-        $cliente=Cliente::findOrFail($request->get('cliente'));
-        $ser->cliente()->associate($cliente);
-        $empleado= Empleado::findOrFail($request->get('empleado'));
-        $ser->empleado()->associate($empleado);
-        $ser->save();
-        $cita=new Cita();
-        $cita->hora_cita=$request->get('hora_cita');
-        $cita->lugar=$request->get('lugar');
-        $cita->especialidad_id=$request->get('especialidad');
-        $especialidad= Especialidad::findOrFail($request->get('especialidad'));
-        $cita->especialidad()->associate($especialidad);
-        $cita->servicio_id = $ser->id;
-        $cita->servicio()->associate($ser);
-        $cita->save();
+            $ser->valoracion=$request->get('valoracion');
+            $cliente=Cliente::findOrFail($request->get('cliente'));
+            $ser->cliente()->associate($cliente);
+            $empleado= Empleado::findOrFail($request->get('empleado'));
+            $ser->empleado()->associate($empleado);
+            $ser->save();
+            $cita=new Cita();
+            $cita->hora_cita=$request->get('hora_cita');
+            $cita->lugar=$request->get('lugar');
+            $cita->especialidad_id=$request->get('especialidad');
+            $especialidad= Especialidad::findOrFail($request->get('especialidad'));
+            $cita->especialidad()->associate($especialidad);
+            $cita->servicio_id = $ser->id;
+            $cita->servicio()->associate($ser);
+            $cita->save();
 
-        return back()->with('info','Se ha creado el registro.');
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('citas.index');
+        }
     }
 
     /**
@@ -93,9 +114,28 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        $cita= Cita::findOrFail($id);
-
+        $cita=Cita::findOrFail($id);
         return view('citas.show', compact('cita'));
+        // $cita=null;
+        // if(auth()->user()->tipo === 'cliente'){
+        //     $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+        //     $citas= Cita::findOrFail($id);
+        //     foreach($clientes as $cliente){
+        //         foreach($citas as $cita1){
+        //             if($cita1->cliente_id == $cliente->id){  // error: try to read property cliente_id on bool
+        //                 $cita[]=$cita1;
+
+        //             }
+        //         }
+        //     }
+        //     return view('citas.show', compact('cita'));
+        // }else if(auth()->user()->tipo === 'empleado'){
+        //     $cita= Cita::findOrFail($id);
+        //     return view('citas.show', compact('cita'));
+        // }else{
+        //     return redirect()->route('citas.index')->with('danger','No está autorizado a acceder a esta ruta.');
+        // }
+
     }
 
     /**
@@ -106,11 +146,16 @@ class CitaController extends Controller
      */
     public function edit($id)
     {
-        $cita= Cita::findOrFail($id);
-        $clientes=Cliente::get();
-        $empleados=Empleado::get();
-        $especialidades = Especialidad::get();
-        return view('citas.edit', compact('cita', 'clientes', 'empleados', 'especialidades'));
+        if(auth()->user()->tipo === 'empleado'){
+            $cita= Cita::findOrFail($id);
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            $especialidades = Especialidad::get();
+            return view('citas.edit', compact('cita', 'clientes', 'empleados', 'especialidades'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('citas.index');
+        }
     }
 
     /**
@@ -122,31 +167,36 @@ class CitaController extends Controller
      */
     public function update(CitaRequest $request, $id)
     {
-        $cita= Cita::findOrFail($id);
-        $cita->servicio->fecha=$request->get('fecha');
-        $cita->servicio->hora_inicio=$request->get('hora_inicio');
-        $cita->servicio->hora_final=$request->get('hora_final');
-        $cita->servicio->estado = $request->get('estado');
-        if($request->has('descripcion')){
-            $cita->servicio->descripcion=Crypt::encryptString($request->get('descripcion'));
+        if(auth()->user()->tipo === 'empleado'){
+            $cita= Cita::findOrFail($id);
+            $cita->servicio->fecha=$request->get('fecha');
+            $cita->servicio->hora_inicio=$request->get('hora_inicio');
+            $cita->servicio->hora_final=$request->get('hora_final');
+            $cita->servicio->estado = $request->get('estado');
+            if($request->has('descripcion')){
+                $cita->servicio->descripcion=Crypt::encryptString($request->get('descripcion'));
+            }
+
+            if($request->has('comentario')){
+                $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
+            }
+
+            $cita->servicio->valoracion=$request->get('valoracion');
+            $cita->servicio->cliente_id=$request->get('cliente');
+            $cita->servicio->empleado_id=$request->get('empleado');
+            $cita->servicio->save();
+            $cita->hora_cita=$request->get('hora_cita');
+            $cita->lugar = $request->get('lugar');
+            $cita->especialidad_id=$request->get('especialidad');
+            $cita->save();
+
+            Session::flash('info', "Se han actualizado los datos.");
+
+            return redirect()->route('citas.show', $id);
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('citas.index');
         }
-
-        if($request->has('comentario')){
-            $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
-        }
-
-        $cita->servicio->valoracion=$request->get('valoracion');
-        $cita->servicio->cliente_id=$request->get('cliente');
-        $cita->servicio->empleado_id=$request->get('empleado');
-        $cita->servicio->save();
-        $cita->hora_cita=$request->get('hora_cita');
-        $cita->lugar = $request->get('lugar');
-        $cita->especialidad_id=$request->get('especialidad');
-        $cita->save();
-
-        Session::flash('info', "Se han actualizado los datos.");
-
-        return redirect()->route('citas.show', $id);
     }
 
     /**
@@ -157,22 +207,27 @@ class CitaController extends Controller
      */
     public function destroy($id)
     {
-        $cita= Cita::findOrFail($id);
-        try
-        {
-            if(Incidencia::where('cita_id', '=', $id)->first() != null){
-                return back()->with('error','Hay una incidencia reportada en esta cita, \npor lo cual no puede ser eliminada.');
-            }else{
-                $cita->servicio->delete();
-                $cita->delete();
-                Session::flash('info', "Se ha eliminado el registro.");
-                return redirect()->route('citas.index');
+        if(auth()->user()->tipo === 'empleado'){
+            $cita= Cita::findOrFail($id);
+            try
+            {
+                if(Incidencia::where('cita_id', '=', $id)->first() != null){
+                    return back()->with('error','Hay una incidencia reportada en esta cita, \npor lo cual no puede ser eliminada.');
+                }else{
+                    $cita->servicio->delete();
+                    $cita->delete();
+                    Session::flash('info', "Se ha eliminado el registro.");
+                    return redirect()->route('citas.index');
+                }
+
+
+            }catch(Exception $e){
+                return $e->getMessage();
+
             }
-
-
-        }catch(Exception $e){
-            return $e->getMessage();
-
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('citas.index');
         }
     }
 }

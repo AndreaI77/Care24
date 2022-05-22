@@ -12,7 +12,7 @@
 
                 <label class= "form-label fw-bolder me-2" for="estado">Especialidad:<span class="text-danger">*</span></label>
 
-                <select name="especialidad" required id="especialidad">
+                <select name="especialidad" required id="especialidad" >
                     <option value="" selected hidden disabled>Elige especialidad</option>
                     @foreach($especialidades as $es)
                         <option value="{{$es->id}}" @if("{{$cita->especialidad_id}}" == "{{$es->id}}") selected @endif>{{Crypt::decryptString($es->nombre)}}</option>
@@ -135,11 +135,11 @@
         </div>
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="descripcion">Descripción:</label>
-            <textarea class= "form-control" name="descripcion" rows="3" cols="50">{{Crypt::decryptString($cita->servicio->descripcion)}}</textarea>
+            <textarea class= "form-control" name="descripcion" rows="3" cols="50" >{{Crypt::decryptString($cita->servicio->descripcion)}}</textarea>
         </div>
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
-            <textarea class= "form-control" name="comentario" rows="3" cols="50">{{Crypt::decryptString($cita->servicio->comentario)}}</textarea>
+            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo !== 'cliente') disabled @endif>{{Crypt::decryptString($cita->servicio->comentario)}}</textarea>
 
         </div>
         {{-- <div class= "col-lg-6">

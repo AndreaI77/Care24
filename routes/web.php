@@ -19,6 +19,8 @@ use App\Http\Controllers\CVController;
 use App\Http\Controllers\PerfilController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\RecupController;
+use App\Http\Controllers\ComentarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,4 +81,5 @@ Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.sto
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
 Route::resource('perfil', PerfilController::class)->only('index', 'update');
+Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update');
 

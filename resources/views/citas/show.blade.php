@@ -30,13 +30,22 @@
             </div>
         </div>
         <div class="card-footer p-3">
-                <form action= "{{route('citas.destroy', $cita->id)}}" id="form" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button  type="submit" class="btn btn-danger  fw-bolder float-start w-25" name="borrar" id="borrar"><i class="bi bi-x-circle"></i>Eliminar</Button>
+            <div>
+                @if(auth()->user()->tipo === 'empleado'){
+                    <form action= "{{route('citas.destroy', $cita->id)}}" id="form" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button  type="submit" class="btn btn-danger  fw-bolder float-start w-25" name="borrar" id="borrar"><i class="bi bi-x-circle"></i>Eliminar</Button>
                     </form>
-                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('citas.edit', $cita->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
-                <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('citas.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
+
+                    <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('citas.edit', $cita->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+                }
+                @endif
+                @if(auth()->user()->tipo === 'cliente'){
+                    <a class="btn btn-success text-warning fw-bolder float-end w-25" href=""><i class="bi bi-pencil-square"></i> Valorar</a>
+                }
+                @endif
+                    <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('citas.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
             </div>
         </div>
     </div>

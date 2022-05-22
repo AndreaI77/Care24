@@ -23,8 +23,8 @@
             <th class="text-center h-f"> Hora final</th>
             <th class="text-center tipo"> Hora de&nbsp;cita</th>
             <th class="text-center estado"> Estado</th>
-            <th class="text-center descrip"> Descripción</th>
-            <th class="text-center comentario">Comentario cliente</th>
+            {{-- <th class="text-center descrip"> Descripción</th>
+            <th class="text-center comentario">Comentario cliente</th> --}}
             <th class="text-center valoracion"> Valoración</th>
 
         </tr>
@@ -42,8 +42,8 @@
                     <td class="h-f">{{Carbon\Carbon::parse($cl->servicio->hora_final)->format('H:i')}} </td>
                     <td class="h-c">{{Carbon\Carbon::parse($cl->hora_cita)->format('H:i')}} </td>
                     <td class="estado">{{$cl->servicio->estado}} </td>
-                    <td class="descrip">@isset(($cl->servicio->descripcion)){{Crypt::decryptString($cl->servicio->descripcion)}} @endisset</td>
-                    <td class="comentario">{{Crypt::decryptString($cl->servicio->comentario)}} </td>
+                    {{-- <td class="descrip">@isset(($cl->servicio->descripcion)){{Crypt::decryptString($cl->servicio->descripcion)}} @endisset</td>
+                    <td class="comentario">{{Crypt::decryptString($cl->servicio->comentario)}} </td> --}}
                     <td class="valoracion">{{$cl->servicio->valoracion}} </td>
                 </tr>
 
