@@ -25,8 +25,13 @@ class InformeController extends Controller
      */
     public function index()
     {
-        $informes= Informe::get();
-        return view('informes.index', compact( 'informes'));
+        if(auth()->user()->tipo === 'empleado'){
+            $informes= Informe::get();
+            return view('informes.index', compact( 'informes'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -36,8 +41,12 @@ class InformeController extends Controller
      */
     public function create()
     {
-
-        return view('informes.create');
+        if(auth()->user()->tipo === 'empleado'){
+            return view('informes.create');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -48,15 +57,20 @@ class InformeController extends Controller
      */
     public function store(InformeRequest $request)
     {
-        $informe= new Informe();
-        $informe->fecha = Carbon::now();
-        $empleado= Empleado::findOrFail(auth()->user()->id);
-        $informe->empleado()->associate($empleado);
-        $informe->titulo = Crypt::encryptString($request->get('titulo'));
-        $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
-        $informe->estado = $request->get('estado');
-        $informe->save();
-        return back()->with('info','Se ha creado el registro.');
+        if(auth()->user()->tipo === 'empleado'){
+            $informe= new Informe();
+            $informe->fecha = Carbon::now();
+            $empleado= Empleado::findOrFail(auth()->user()->id);
+            $informe->empleado()->associate($empleado);
+            $informe->titulo = Crypt::encryptString($request->get('titulo'));
+            $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
+            $informe->estado = $request->get('estado');
+            $informe->save();
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -67,9 +81,14 @@ class InformeController extends Controller
      */
     public function show($id)
     {
-        $informe= Informe::findOrFail($id);
+        if(auth()->user()->tipo === 'empleado'){
+            $informe= Informe::findOrFail($id);
 
-        return view('informes.show', compact('informe'));
+            return view('informes.show', compact('informe'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -80,8 +99,13 @@ class InformeController extends Controller
      */
     public function edit($id)
     {
-        $informe= Informe::findOrFail($id);
-        return view('informes.edit', compact('informe'));
+        if(auth()->user()->tipo === 'empleado'){
+            $informe= Informe::findOrFail($id);
+            return view('informes.edit', compact('informe'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -93,14 +117,19 @@ class InformeController extends Controller
      */
     public function update(InformeRequest $request, $id)
     {
-        $informe= Informe::findOrFail($id);
-        $informe->titulo = Crypt::encryptString($request->get('titulo'));
-        $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
-        $informe->estado = $request->get("estado");
-        $informe->save();
-        Session::flash('info', "Se han actualizado los datos.");
+        if(auth()->user()->tipo === 'empleado'){
+            $informe= Informe::findOrFail($id);
+            $informe->titulo = Crypt::encryptString($request->get('titulo'));
+            $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
+            $informe->estado = $request->get("estado");
+            $informe->save();
+            Session::flash('info', "Se han actualizado los datos.");
 
-        return redirect()->route('informes.show', $id);
+            return redirect()->route('informes.show', $id);
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -111,14 +140,19 @@ class InformeController extends Controller
      */
     public function destroy($id)
     {
-        $informe= Informe::findOrFail($id);
-        try
-        {
-            $informe->delete();
-            Session::flash('info', "Se ha eliminado el registro.");
-            return redirect()->route('informes.index');
-        }catch(Exception $e){
-            return $e->getMessage();
+        if(auth()->user()->tipo === 'empleado'){
+            $informe= Informe::findOrFail($id);
+            try
+            {
+                $informe->delete();
+                Session::flash('info', "Se ha eliminado el registro.");
+                return redirect()->route('informes.index');
+            }catch(Exception $e){
+                return $e->getMessage();
+            }
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 }

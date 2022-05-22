@@ -45,7 +45,7 @@ class ComentarioController extends Controller
             return view('comentarios.edit', compact('servicio'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
-            return redirect()->route('citas.index');
+            return redirect()->route('inicio');
         }
     }
 
@@ -73,7 +73,7 @@ class ComentarioController extends Controller
             return redirect()->route('servicios.index');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
-            return redirect()->route('servicios.index');
+            return redirect()->route('inicio');
         }
     }
 }

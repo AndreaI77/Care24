@@ -23,9 +23,14 @@ class MedicamentoController extends Controller
      */
     public function index()
     {
-        $medicamentos= Medicamento::get();
+        if(auth()->user()->tipo === 'empleado'){
+            $medicamentos= Medicamento::get();
 
-        return view('medicamentos.index', compact('medicamentos'));
+            return view('medicamentos.index', compact('medicamentos'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -35,7 +40,12 @@ class MedicamentoController extends Controller
      */
     public function create()
     {
-        return view('medicamentos.create');
+        if(auth()->user()->tipo === 'empleado'){
+            return view('medicamentos.create');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -46,12 +56,17 @@ class MedicamentoController extends Controller
      */
     public function store(MedicamentoRequest $request)
     {
-        $medicamento= new Medicamento();
-        $medicamento->nombre=Crypt::encryptString($request->get('nombre'));
-        $medicamento->principio_ac=Crypt::encryptString($request->get('principio'));
-        $medicamento->cantidad = $request->get('cantidad');
-        $medicamento->save();
-        return back()->with('info','Se ha creado el registro.');
+        if(auth()->user()->tipo === 'empleado'){
+            $medicamento= new Medicamento();
+            $medicamento->nombre=Crypt::encryptString($request->get('nombre'));
+            $medicamento->principio_ac=Crypt::encryptString($request->get('principio'));
+            $medicamento->cantidad = $request->get('cantidad');
+            $medicamento->save();
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -96,22 +111,27 @@ class MedicamentoController extends Controller
      */
     public function destroy($id)
     {
-        $esp= Medicamento::findOrFail($id);
-        try
-        {
-            if(Tratamiento::where('medicamento_id', '=', $id)->first() != null){
-                return back()->with('error','Este mediamento se ha usado en un tratamiento, no puede ser eliminada.');
-            }else{
+        if(auth()->user()->tipo === 'empleado'){
+            $esp= Medicamento::findOrFail($id);
+            try
+            {
+                if(Tratamiento::where('medicamento_id', '=', $id)->first() != null){
+                    return back()->with('error','Este mediamento se ha usado en un tratamiento, no puede ser eliminada.');
+                }else{
 
-                $esp->delete();
-                Session::flash('info', "Se ha eliminado el registro.");
-                return redirect()->route('medicamentos.index');
+                    $esp->delete();
+                    Session::flash('info', "Se ha eliminado el registro.");
+                    return redirect()->route('medicamentos.index');
+
+                }
+
+            }catch(Exception $e){
+                return $e->getMessage();
 
             }
-
-        }catch(Exception $e){
-            return $e->getMessage();
-
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 }

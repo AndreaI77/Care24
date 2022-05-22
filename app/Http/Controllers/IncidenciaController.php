@@ -26,8 +26,13 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
-        $incidencias= Incidencia::get();
-        return view('incidencias.index', compact( 'incidencias'));
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencias= Incidencia::get();
+            return view('incidencias.index', compact( 'incidencias'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -37,9 +42,14 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        $clientes=Cliente::get();
+        if(auth()->user()->tipo === 'empleado'){
+            $clientes=Cliente::get();
 
-        return view('incidencias.create',compact('clientes'));
+            return view('incidencias.create',compact('clientes'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -50,23 +60,28 @@ class IncidenciaController extends Controller
      */
     public function store(IncidenciaRequest $request)
     {
-        $incidencia= new Incidencia();
-        $incidencia->fecha = $request->get('fecha');
-        $empleado= Empleado::findOrFail(auth()->user()->id);
-        $incidencia->empleado()->associate($empleado);
-        $cliente= Cliente::findOrFail($request->get('cliente'));
-        $incidencia->cliente()->associate($cliente);
-        if(!empty($request->get('servicio'))){
-            $servicio= Servicio::findOrFail($request->get('servicio'));
-            $incidencia->servicio()->associate($servicio);
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencia= new Incidencia();
+            $incidencia->fecha = $request->get('fecha');
+            $empleado= Empleado::findOrFail(auth()->user()->id);
+            $incidencia->empleado()->associate($empleado);
+            $cliente= Cliente::findOrFail($request->get('cliente'));
+            $incidencia->cliente()->associate($cliente);
+            if(!empty($request->get('servicio'))){
+                $servicio= Servicio::findOrFail($request->get('servicio'));
+                $incidencia->servicio()->associate($servicio);
+            }
+            $incidencia->tipo = $request->get('tipo');
+            $incidencia->titulo =Crypt::encryptString( $request->get('titulo'));
+            $incidencia->descripcion = Crypt::encryptString($request->get('descripcion'));
+            $incidencia->estado = "activo";
+            $incidencia->save();
+            //return redirect()->route('incidencias.index')->with('info','Se ha creado el registro.');
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
-        $incidencia->tipo = $request->get('tipo');
-        $incidencia->titulo =Crypt::encryptString( $request->get('titulo'));
-        $incidencia->descripcion = Crypt::encryptString($request->get('descripcion'));
-        $incidencia->estado = "activo";
-        $incidencia->save();
-        //return redirect()->route('incidencias.index')->with('info','Se ha creado el registro.');
-        return back()->with('info','Se ha creado el registro.');
     }
 
     /**
@@ -77,9 +92,14 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        $incidencia= Incidencia::findOrFail($id);
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencia= Incidencia::findOrFail($id);
 
-        return view('incidencias.show', compact('incidencia'));
+            return view('incidencias.show', compact('incidencia'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -90,9 +110,14 @@ class IncidenciaController extends Controller
      */
     public function edit($id)
     {
-        $incidencia= Incidencia::findOrFail($id);
-        $clientes= Cliente::get();
-        return view('incidencias.edit', compact('incidencia', 'clientes'));
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencia= Incidencia::findOrFail($id);
+            $clientes= Cliente::get();
+            return view('incidencias.edit', compact('incidencia', 'clientes'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -104,16 +129,21 @@ class IncidenciaController extends Controller
      */
     public function update(IncidenciaRequest $request, $id)
     {
-        $incidencia= Incidencia::findOrFail($id);
-        $incidencia->fecha = $request->get('fecha');
-        $incidencia->tipo = $request->get('tipo');
-        $incidencia->titulo =Crypt::encryptString( $request->get('titulo'));
-        $incidencia->descripcion = Crypt::encryptString($request->get('descripcion'));
-        $incidencia->estado = $request->get('estado');
-        $incidencia->save();
-        Session::flash('info', "Se han actualizado los datos.");
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencia= Incidencia::findOrFail($id);
+            $incidencia->fecha = $request->get('fecha');
+            $incidencia->tipo = $request->get('tipo');
+            $incidencia->titulo =Crypt::encryptString( $request->get('titulo'));
+            $incidencia->descripcion = Crypt::encryptString($request->get('descripcion'));
+            $incidencia->estado = $request->get('estado');
+            $incidencia->save();
+            Session::flash('info', "Se han actualizado los datos.");
 
-        return redirect()->route('incidencias.show', $id);
+            return redirect()->route('incidencias.show', $id);
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -124,14 +154,19 @@ class IncidenciaController extends Controller
      */
     public function destroy($id)
     {
-        $incidencia= Incidencia::findOrFail($id);
-        try
-        {
-            $incidencia->delete();
-            Session::flash('info', "Se ha eliminado el registro.");
-            return redirect()->route('incidencias.index');
-        }catch(Exception $e){
-            return $e->getMessage();
+        if(auth()->user()->tipo === 'empleado'){
+            $incidencia= Incidencia::findOrFail($id);
+            try
+            {
+                $incidencia->delete();
+                Session::flash('info', "Se ha eliminado el registro.");
+                return redirect()->route('incidencias.index');
+            }catch(Exception $e){
+                return $e->getMessage();
+            }
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 }

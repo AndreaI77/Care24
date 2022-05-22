@@ -28,10 +28,15 @@ class ServicioController extends Controller
      */
     public function index()
     {
-
-
-        $servicios= Servicio::get();
-
+        $servicios=[];
+        if(auth()->user()->tipo === 'empleado'){
+            $servicios= Servicio::get();
+        }else{
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            foreach($clientes as $cliente){
+                $servicios=Servicio::where('cliente_id', $cliente->id)->get();
+            }
+        }
         return view('servicios.index', compact('servicios'));
     }
 
@@ -42,14 +47,15 @@ class ServicioController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->tipo === 'empleado'){
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
 
-        // $clientes= Cliente::with(User::whereNull('fecha_baja'))->get();
-        // $empleados= Empleado::with(User::whereNull('fecha_baja'))->get();
-
-        $clientes=Cliente::get();
-        $empleados=Empleado::get();
-
-        return view('servicios.create', compact('empleados','clientes'));
+            return view('servicios.create', compact('empleados','clientes'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -60,29 +66,32 @@ class ServicioController extends Controller
      */
     public function store(ServicioRequest $request)
     {
+        if(auth()->user()->tipo === 'empleado'){
+            $ser= new Servicio();
+            $ser->fecha=$request->get('fecha');
+            $ser->hora_inicio=$request->get('hora_inicio');
+            $ser->hora_final=$request->get('hora_final');
+            $ser->tipo=$request->get('tipo');
+            if($request->has('descripcion')){
+                $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
+            }
+            $ser->estado=$request->get('estado');
+            if($request->has('comentario')){
+                $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            }
+            $ser->valoracion=$request->get('valoracion');
+            $cliente=Cliente::findOrFail($request->get('cliente'));
+            $ser->cliente()->associate($cliente);
+            $em=explode(";", $request->get('empleado'));
+            $empleado= Empleado::findOrFail($em[0]);
+            $ser->empleado()->associate($empleado);
+            $ser->save();
 
-        $ser= new Servicio();
-        $ser->fecha=$request->get('fecha');
-        $ser->hora_inicio=$request->get('hora_inicio');
-        $ser->hora_final=$request->get('hora_final');
-        $ser->tipo=$request->get('tipo');
-        if($request->has('descripcion')){
-            $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
-        $ser->estado=$request->get('estado');
-        if($request->has('comentario')){
-            $ser->comentario=Crypt::encryptString($request->get('comentario'));
-        }
-
-        $ser->valoracion=$request->get('valoracion');
-        $cliente=Cliente::findOrFail($request->get('cliente'));
-        $ser->cliente()->associate($cliente);
-        $em=explode(";", $request->get('empleado'));
-        $empleado= Empleado::findOrFail($em[0]);
-        $ser->empleado()->associate($empleado);
-        $ser->save();
-
-        return back()->with('info','Se ha creado el registro.');
     }
 
     /**
@@ -106,10 +115,15 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
-        $servicio= Servicio::findOrFail($id);
-        $clientes=Cliente::get();
-        $empleados=Empleado::get();
-        return view('servicios.edit', compact('servicio', 'clientes', 'empleados'));
+        if(auth()->user()->tipo === 'empleado'){
+            $servicio= Servicio::findOrFail($id);
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            return view('servicios.edit', compact('servicio', 'clientes', 'empleados'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -121,29 +135,34 @@ class ServicioController extends Controller
      */
     public function update(ServicioRequest $request, $id)
     {
-        $ser= Servicio::findOrFail($id);
-        $ser->fecha=$request->get('fecha');
-        $ser->hora_inicio=$request->get('hora_inicio');
-        $ser->hora_final=$request->get('hora_final');
-        $ser->tipo=$request->get('tipo');
-        if($request->has('descripcion')){
-            $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
+        if(auth()->user()->tipo === 'empleado'){
+            $ser= Servicio::findOrFail($id);
+            $ser->fecha=$request->get('fecha');
+            $ser->hora_inicio=$request->get('hora_inicio');
+            $ser->hora_final=$request->get('hora_final');
+            $ser->tipo=$request->get('tipo');
+            if($request->has('descripcion')){
+                $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
+            }
+            $ser->estado=$request->get('estado');
+            if($request->has('comentario')){
+                $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            }
+
+            $ser->valoracion=$request->get('valoracion');
+            $ser->cliente_id=$request->get('cliente');
+            $em=explode(";", $request->get('empleado'));
+
+            $ser->empleado_id=$em[0];
+            $ser->save();
+
+            Session::flash('info', "Se han actualizado los datos.");
+
+            return redirect()->route('servicios.show', $id);
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
-        $ser->estado=$request->get('estado');
-        if($request->has('comentario')){
-            $ser->comentario=Crypt::encryptString($request->get('comentario'));
-        }
-
-        $ser->valoracion=$request->get('valoracion');
-        $ser->cliente_id=$request->get('cliente');
-        $em=explode(";", $request->get('empleado'));
-
-        $ser->empleado_id=$em[0];
-        $ser->save();
-
-        Session::flash('info', "Se han actualizado los datos.");
-
-        return redirect()->route('servicios.show', $id);
     }
 
     /**
@@ -154,20 +173,25 @@ class ServicioController extends Controller
      */
     public function destroy($id)
     {
-        $ser= Servicio::findOrFail($id);
-        try
-        {
-            if(Incidencia::where('servicio_id', '=', $id)->first() != null){
-                return back()->with('error','Se ha reportado incidencia durante este servicio, no puede ser eliminado.');
-            }else{
+        if(auth()->user()->tipo === 'empleado'){
+            $ser= Servicio::findOrFail($id);
+            try
+            {
+                if(Incidencia::where('servicio_id', '=', $id)->first() != null){
+                    return back()->with('error','Se ha reportado incidencia durante este servicio, no puede ser eliminado.');
+                }else{
 
-                $ser->delete();
-                Session::flash('info', "Se ha eliminado el registro.");
-                return redirect()->route('servicios.index');
+                    $ser->delete();
+                    Session::flash('info', "Se ha eliminado el registro.");
+                    return redirect()->route('servicios.index');
+                }
+            }catch(Exception $e){
+                return $e->getMessage();
+
             }
-        }catch(Exception $e){
-            return $e->getMessage();
-
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 }

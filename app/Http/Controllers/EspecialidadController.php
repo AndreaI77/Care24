@@ -25,9 +25,14 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        $especialidades= Especialidad::get();
+        if(auth()->user()->tipo === 'empleado'){
+            $especialidades= Especialidad::get();
 
-        return view('especialidades.index', compact('especialidades'));
+            return view('especialidades.index', compact('especialidades'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -37,7 +42,12 @@ class EspecialidadController extends Controller
      */
     public function create()
     {
-        return view('especialidades.create');
+        if(auth()->user()->tipo === 'empleado'){
+            return view('especialidades.create');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -48,10 +58,15 @@ class EspecialidadController extends Controller
      */
     public function store(EspecialidadRequest $request)
     {
-        $especialidad= new Especialidad();
-        $especialidad->nombre=Crypt::encryptString($request->get('nombre'));
-        $especialidad->save();
-        return back()->with('info','Se ha creado el registro.');
+        if(auth()->user()->tipo === 'empleado'){
+            $especialidad= new Especialidad();
+            $especialidad->nombre=Crypt::encryptString($request->get('nombre'));
+            $especialidad->save();
+            return back()->with('info','Se ha creado el registro.');
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 
     /**
@@ -96,22 +111,27 @@ class EspecialidadController extends Controller
      */
     public function destroy($id)
     {
-        $esp= Especialidad::findOrFail($id);
-        try
-        {
-            if(Cita::where('especialidad_id', '=', $id)->first() != null){
-                return back()->with('error','Esta especialidad se ha usado en una cita, no puede ser eliminada.');
-            }else{
+        if(auth()->user()->tipo === 'empleado'){
+            $esp= Especialidad::findOrFail($id);
+            try
+            {
+                if(Cita::where('especialidad_id', '=', $id)->first() != null){
+                    return back()->with('error','Esta especialidad se ha usado en una cita, no puede ser eliminada.');
+                }else{
 
-                $esp->delete();
-                Session::flash('info', "Se ha eliminado el registro.");
-                return redirect()->route('especialidades.index');
+                    $esp->delete();
+                    Session::flash('info', "Se ha eliminado el registro.");
+                    return redirect()->route('especialidades.index');
+
+                }
+
+            }catch(Exception $e){
+                return $e->getMessage();
 
             }
-
-        }catch(Exception $e){
-            return $e->getMessage();
-
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 }

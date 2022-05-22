@@ -53,13 +53,12 @@ class PerfilController extends Controller
         $request->validate([
             'password_confirmation' => 'required|min:8',
             'pass' => 'required|min:8'
-         ]);
+        ]);
         $user= User::findOrFail($id);
         $user->password=bcrypt($request->get('pass'));
+        $user->save();
 
-            $user->save();
-
-            return back()->with('info','Se ha actualizado la contraseña.');
+        return back()->with('info','Se ha actualizado la contraseña.');
     }
 
 }

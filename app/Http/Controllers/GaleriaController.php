@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cliente;
+use Illuminate\Support\Facades\Session;
+
 class GaleriaController extends Controller
 {
     public function __construct()
@@ -13,8 +15,13 @@ class GaleriaController extends Controller
     }
     public function index()
     {
-        $clientes= Cliente::get();
+        if(auth()->user()->tipo === 'empleado'){
+            $clientes= Cliente::get();
 
-        return view('clientes.galeria', compact( 'clientes'));
+            return view('clientes.galeria', compact( 'clientes'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
+        }
     }
 }
