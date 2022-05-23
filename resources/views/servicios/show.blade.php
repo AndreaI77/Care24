@@ -28,6 +28,7 @@
             </div>
         </div>
         <div class="card-footer   p-3">
+            @if(auth()->user()->tipo !== 'cliente')
                 <form action= "{{route('servicios.destroy', $servicio->id)}}" id="form" method="POST">
                     @method('DELETE')
                     @csrf
@@ -35,8 +36,16 @@
                     </form>
 
                 <a class="btn btn-success text-warning fw-bolder float-end  w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+            @endif
                 <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('servicios.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
-                <a class="btn btn-primary text-warning fw-bolder float-end me-5 w-25 " href="{{route('incidencias.create', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Reportar incidencia</a>
+
+            @if(auth()->user()->tipo === 'cliente' && $servicio->estado != 'Pendiente')
+                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit',$cita->servicio_id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
+
+            @endif
+            @if(auth()->user()->tipo !== 'cliente')
+                <a class="btn btn-success text-warning fw-bolder float-end me-5 w-25 " href="{{route('incidencias.create', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Reportar incidencia</a>
+            @endif
             </div>
         </div>
     </div>

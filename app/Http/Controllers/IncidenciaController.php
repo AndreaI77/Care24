@@ -26,7 +26,7 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencias= Incidencia::get();
             return view('incidencias.index', compact( 'incidencias'));
         }else{
@@ -42,7 +42,7 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $clientes=Cliente::get();
 
             return view('incidencias.create',compact('clientes'));
@@ -60,7 +60,7 @@ class IncidenciaController extends Controller
      */
     public function store(IncidenciaRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencia= new Incidencia();
             $incidencia->fecha = $request->get('fecha');
             $empleado= Empleado::findOrFail(auth()->user()->id);
@@ -92,7 +92,7 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencia= Incidencia::findOrFail($id);
 
             return view('incidencias.show', compact('incidencia'));
@@ -110,7 +110,7 @@ class IncidenciaController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencia= Incidencia::findOrFail($id);
             $clientes= Cliente::get();
             return view('incidencias.edit', compact('incidencia', 'clientes'));
@@ -129,7 +129,7 @@ class IncidenciaController extends Controller
      */
     public function update(IncidenciaRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencia= Incidencia::findOrFail($id);
             $incidencia->fecha = $request->get('fecha');
             $incidencia->tipo = $request->get('tipo');
@@ -154,7 +154,7 @@ class IncidenciaController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $incidencia= Incidencia::findOrFail($id);
             try
             {

@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         $usuario->domicilio = 'care24_domicilio';
         $usuario->dni='administrador';
         $usuario->email = 'care24web@gmail.com';
-        $usuario->tipo="empleado";
+        $usuario->tipo="Administrativo";
         $usuario->password = bcrypt('admin');
         $usuario->save();
         $emp=new Empleado();

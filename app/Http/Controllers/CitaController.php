@@ -28,14 +28,19 @@ class CitaController extends Controller
     public function index()
     {
         $citas=[];
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $citas= Cita::get();
         }else{
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
+                $citas1 = Cita::get();
                 foreach($servicios as $servicio){
-                    $citas[]=Cita::where('servicio_id', $servicio->id)->get();
+                    foreach($citas1 as $ct){
+                        if($ct->servicio_id == $servicio->id){
+                            $citas[]=$ct;
+                        }
+                    }
                 }
             }
         }
@@ -49,7 +54,7 @@ class CitaController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $clientes=Cliente::get();
             $empleados=Empleado::get();
             $especialidades=Especialidad::get();
@@ -68,7 +73,7 @@ class CitaController extends Controller
      */
     public function store(CitaRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $ser= new Servicio();
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -117,17 +122,19 @@ class CitaController extends Controller
         // return view('citas.show', compact('cita'));
 
         $cita = null;
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cita=Cita::findOrFail($id);
             return view('citas.show', compact('cita'));
         }else{
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $cita1= Cita::findOrFail($id);
             foreach($clientes as $cliente){
+
                 if($cita1->servicio->cliente_id == $cliente->id){
                     $cita=$cita1;
                 }
             }
+
             if($cita == null){
                 Session::flash('danger','No está autorizado a acceder a esta ruta.');
                 return redirect()->route('inicio');
@@ -146,7 +153,7 @@ class CitaController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cita= Cita::findOrFail($id);
             $clientes=Cliente::get();
             $empleados=Empleado::get();
@@ -167,7 +174,7 @@ class CitaController extends Controller
      */
     public function update(CitaRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cita= Cita::findOrFail($id);
             $cita->servicio->fecha=$request->get('fecha');
             $cita->servicio->hora_inicio=$request->get('hora_inicio');
@@ -206,7 +213,7 @@ class CitaController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cita= Cita::findOrFail($id);
             try
             {

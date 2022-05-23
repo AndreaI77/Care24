@@ -25,7 +25,7 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $especialidades= Especialidad::get();
 
             return view('especialidades.index', compact('especialidades'));
@@ -42,7 +42,7 @@ class EspecialidadController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             return view('especialidades.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -58,7 +58,7 @@ class EspecialidadController extends Controller
      */
     public function store(EspecialidadRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $especialidad= new Especialidad();
             $especialidad->nombre=Crypt::encryptString($request->get('nombre'));
             $especialidad->save();
@@ -111,7 +111,7 @@ class EspecialidadController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $esp= Especialidad::findOrFail($id);
             try
             {

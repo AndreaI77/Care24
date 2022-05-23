@@ -26,14 +26,16 @@
             </div>
         </div>
         <div class="card-footer p-3">
+            @if(auth()->user()->tipo !== 'cliente')
                 <form action= "{{route('tratamientos.destroy', $tratamiento->id)}}" id="form" method="POST">
                     @method('DELETE')
                     @csrf
                     <button  type="submit" class="btn btn-danger  fw-bolder float-start w-25" name="borrar" id="borrar"><i class="bi bi-x-circle"></i>Eliminar</Button>
                     </form>
                 <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('tratamientos.edit', $tratamiento->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+            @endif
                 <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('tratamientos.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
-            </div>
+
         </div>
     </div>
 @endsection

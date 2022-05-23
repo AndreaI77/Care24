@@ -29,7 +29,7 @@ class ServicioController extends Controller
     public function index()
     {
         $servicios=[];
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $servicios= Servicio::get();
         }else{
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
@@ -47,7 +47,7 @@ class ServicioController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $clientes=Cliente::get();
             $empleados=Empleado::get();
 
@@ -66,7 +66,7 @@ class ServicioController extends Controller
      */
     public function store(ServicioRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $ser= new Servicio();
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -103,7 +103,7 @@ class ServicioController extends Controller
     public function show($id)
     {
         $servicio = null;
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $servicio= Servicio::findOrFail($id);
             return view('servicios.show', compact('servicio'));
         }else{
@@ -131,7 +131,7 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $servicio= Servicio::findOrFail($id);
             $clientes=Cliente::get();
             $empleados=Empleado::get();
@@ -151,7 +151,7 @@ class ServicioController extends Controller
      */
     public function update(ServicioRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $ser= Servicio::findOrFail($id);
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -189,7 +189,7 @@ class ServicioController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $ser= Servicio::findOrFail($id);
             try
             {

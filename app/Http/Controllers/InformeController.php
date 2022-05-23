@@ -25,7 +25,7 @@ class InformeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informes= Informe::get();
             return view('informes.index', compact( 'informes'));
         }else{
@@ -41,7 +41,7 @@ class InformeController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             return view('informes.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -57,7 +57,7 @@ class InformeController extends Controller
      */
     public function store(InformeRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informe= new Informe();
             $informe->fecha = Carbon::now();
             $empleado= Empleado::findOrFail(auth()->user()->id);
@@ -81,7 +81,7 @@ class InformeController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informe= Informe::findOrFail($id);
 
             return view('informes.show', compact('informe'));
@@ -99,7 +99,7 @@ class InformeController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informe= Informe::findOrFail($id);
             return view('informes.edit', compact('informe'));
         }else{
@@ -117,7 +117,7 @@ class InformeController extends Controller
      */
     public function update(InformeRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informe= Informe::findOrFail($id);
             $informe->titulo = Crypt::encryptString($request->get('titulo'));
             $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
@@ -140,7 +140,7 @@ class InformeController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $informe= Informe::findOrFail($id);
             try
             {

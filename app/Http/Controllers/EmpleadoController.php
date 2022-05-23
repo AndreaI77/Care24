@@ -28,7 +28,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
 
             $empleados= Empleado::get();
 
@@ -46,7 +46,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             return view('empleados.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -62,7 +62,7 @@ class EmpleadoController extends Controller
      */
     public function store(EmpleadoRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             if($request->has('nombre')){
                 $user=new User();
                 $user->nombre=$request->get('nombre');
@@ -73,7 +73,7 @@ class EmpleadoController extends Controller
                 $user->tel=$request->get('tel');
                 $user->fecha_nac=$request->get('fecha_nacimiento');
                 $user->datos=$request->get('datos');
-                $user->tipo="empleado";
+                $user->tipo=$request->get('puesto');
                 if($request->hasFile('foto')){
                     $file = $request->file('foto');
                     $path = 'img/fotos/';
@@ -114,7 +114,7 @@ class EmpleadoController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $empleado= Empleado::findOrFail($id);
 
             return view('empleados.show', compact('empleado'));
@@ -131,7 +131,7 @@ class EmpleadoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {    if(auth()->user()->tipo === 'empleado'){
+    {    if(auth()->user()->tipo !== 'cliente'){
             $empleado= Empleado::findOrFail($id);
             return view('empleados.edit', compact('empleado'));
         }else{
@@ -149,7 +149,7 @@ class EmpleadoController extends Controller
      */
     public function update(EmpleadoRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $empleado= Empleado::findOrFail($id);
             $empleado->user->nombre=$request->get('nombre');
             $empleado->user->apellido=$request->get('apellido');
@@ -189,7 +189,7 @@ class EmpleadoController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $empleado= Empleado::findOrFail($id);
             try
             {

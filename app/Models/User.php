@@ -30,6 +30,7 @@ class User extends Authenticatable
         'fecha_baja',
         'password',
         'tipo'
+
     ];
     // public function empleado(){
     //     return $this->hasOne(Empleado::class);

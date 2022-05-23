@@ -21,20 +21,21 @@ class PerfilController extends Controller
     public function index()
     {
         $user=null;
-        if(auth()->user()->tipo === 'empleado'){
-            $empleados= Empleado::get();
-            foreach ($empleados as $em) {
-                if($em->user_id == auth()->user()->id)
-                {
-                    $user=$em;
-                }
-            }
-        }else{
+        if(auth()->user()->tipo === 'cliente'){
             $clientes= Cliente::get();
             foreach ($clientes as $cl) {
                 if($cl->user_id == auth()->user()->id)
                 {
                     $user=$cl;
+                }
+            }
+
+        }else{
+            $empleados= Empleado::get();
+            foreach ($empleados as $em) {
+                if($em->user_id == auth()->user()->id)
+                {
+                    $user=$em;
                 }
             }
         }

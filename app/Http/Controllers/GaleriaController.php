@@ -15,7 +15,7 @@ class GaleriaController extends Controller
     }
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $clientes= Cliente::get();
 
             return view('clientes.galeria', compact( 'clientes'));

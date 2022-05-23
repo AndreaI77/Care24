@@ -28,7 +28,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $clientes= Cliente::get();
 
             return view('clientes.index', compact( 'clientes'));
@@ -45,7 +45,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             return view('clientes.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -61,7 +61,7 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             if($request->has('nombre')){
                 $user=new User();
                 $user->nombre=$request->get('nombre');
@@ -73,6 +73,7 @@ class ClienteController extends Controller
                 $user->fecha_nac=$request->get('fecha_nacimiento');
                 $user->datos=$request->get('datos');
                 $user->tipo="cliente";
+
                 if($request->hasFile('foto')){
                     $file = $request->file('foto');
                     $path = 'img/fotos/';
@@ -123,7 +124,7 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cliente= Cliente::findOrFail($id);
 
             return view('clientes.show', compact('cliente'));
@@ -141,7 +142,7 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cliente= Cliente::findOrFail($id);
             return view('clientes.edit', compact('cliente'));
         }else{
@@ -159,7 +160,7 @@ class ClienteController extends Controller
      */
     public function update(ClienteRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cl= Cliente::findOrFail($id);
             $cl->user->nombre=$request->get('nombre');
             $cl->user->apellido=$request->get('apellido');
@@ -207,7 +208,7 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $cl= Cliente::findOrFail($id);
             try
             {

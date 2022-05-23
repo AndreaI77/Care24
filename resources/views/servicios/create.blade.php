@@ -59,7 +59,7 @@
                 <select name="empleado" required id="empleado" >
                     <option value="" selected hidden disabled>Selecciona empleado</option>
                     @foreach($empleados as $em)
-                        @if($em->user->fecha_baja == null || $em->user->fecha_baja == "")
+                        @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "") && $em->user_id != 1)
                         <option value="{{$em->id}};{{$em->puesto}}"  @if(old('empleado') === "{{$em->id}};{{$em->puesto}}") selected @endif >{{$em->user->nombre}}, {{$em->user->apellido}} </option>
                         @endif
                     @endforeach

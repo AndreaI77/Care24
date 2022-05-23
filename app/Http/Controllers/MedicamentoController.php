@@ -23,7 +23,7 @@ class MedicamentoController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $medicamentos= Medicamento::get();
 
             return view('medicamentos.index', compact('medicamentos'));
@@ -40,7 +40,7 @@ class MedicamentoController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             return view('medicamentos.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -56,7 +56,7 @@ class MedicamentoController extends Controller
      */
     public function store(MedicamentoRequest $request)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $medicamento= new Medicamento();
             $medicamento->nombre=Crypt::encryptString($request->get('nombre'));
             $medicamento->principio_ac=Crypt::encryptString($request->get('principio'));
@@ -111,7 +111,7 @@ class MedicamentoController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $esp= Medicamento::findOrFail($id);
             try
             {

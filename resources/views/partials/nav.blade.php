@@ -5,7 +5,7 @@
                 <a class="navbar-brand" href="#">
                     <img src="{{asset('img/logo2Trans.png')}}" alt="logo" width="60">
                 </a>
-                @if(auth()->check() && auth()->user()->tipo === 'empleado')
+                @if(auth()->check() && auth()->user()->tipo !== 'cliente')
                     <button class=" nav-item btn btn-outline-success text-warning me-sm-3 " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                         <i class="bi bi-justify  ">Menu</i>
                     </button>

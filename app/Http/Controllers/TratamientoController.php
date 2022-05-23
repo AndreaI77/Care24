@@ -25,7 +25,7 @@ class TratamientoController extends Controller
     public function index()
     {
         $tratamientos=[];
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $tratamientos = Tratamiento::get();
         }else{
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
@@ -43,7 +43,7 @@ class TratamientoController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $medicamentos = Medicamento::get();
             $clientes = Cliente::get();
             return view('tratamientos.create', compact('medicamentos', 'clientes'));
@@ -61,7 +61,7 @@ class TratamientoController extends Controller
      */
     public function store(TratamientoRequest $request, )
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $trat=new Tratamiento();
             $trat->fecha_principio=$request->get('fecha_principio');
             $trat->fecha_fin=$request->get('fecha_fin');
@@ -89,7 +89,7 @@ class TratamientoController extends Controller
     public function show( $id)
     {
         $tratamiento = null;
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $tratamiento= Tratamiento::findOrFail($id);
             return view('tratamientos.show', compact('tratamiento'));
         }else{
@@ -117,7 +117,7 @@ class TratamientoController extends Controller
      */
     public function edit( $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $tratamiento= Tratamiento::findOrFail($id);
             $medicamentos = Medicamento::get();
             $clientes=Cliente::get();
@@ -138,7 +138,7 @@ class TratamientoController extends Controller
      */
     public function update(TratamientoRequest $request, $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $trat=Tratamiento::findOrFail($id);
             $trat->fecha_principio=$request->get('fecha_principio');
             $trat->fecha_fin=$request->get('fecha_fin');
@@ -166,7 +166,7 @@ class TratamientoController extends Controller
      */
     public function destroy( $id)
     {
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $tratamiento= Tratamiento::findOrFail( $id);
             try
             {
