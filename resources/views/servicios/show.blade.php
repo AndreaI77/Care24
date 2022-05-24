@@ -37,12 +37,13 @@
 
                 <a class="btn btn-success text-warning fw-bolder float-end  w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
             @endif
-                <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('servicios.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
 
             @if(auth()->user()->tipo === 'cliente' && $servicio->estado != 'Pendiente')
-                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit',$cita->servicio_id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
+                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
 
             @endif
+
+            <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('servicios.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
             @if(auth()->user()->tipo !== 'cliente')
                 <a class="btn btn-success text-warning fw-bolder float-end me-5 w-25 " href="{{route('incidencias.create', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Reportar incidencia</a>
             @endif

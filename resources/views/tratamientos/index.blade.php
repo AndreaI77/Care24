@@ -20,7 +20,7 @@
             <th class="text-center fecha_fin">Fecha final</th>
             <th class="text-center cantidad"> Cantidad</th>
             <th class="text-center hora"> Hora de la toma</th>
-            <th class="text-center descrip"> Descripción</th>
+            {{-- <th class="text-center descrip"> Descripción</th> --}}
         </tr>
         </thead>
         <tbody>
@@ -33,7 +33,7 @@
                     <td class="fecha_fin"> @isset(($trat->fecha_fin)){{Carbon\Carbon::parse($trat->fecha_fin)->format('d/m/Y')}} @endisset</td>
                     <td class="cantidad">{{$trat->cantidad}} </td>
                     <td class="hora">{{Carbon\Carbon::parse($trat->hora)->format('H:i')}} </td>
-                    <td class="descrip">@isset(($trat->servicio->descripcion)){{Crypt::decryptString($trat->servicio->descripcion)}} @endisset</td>
+                    {{-- <td class="descrip">@isset(($trat->servicio->descripcion)){{Crypt::decryptString($trat->servicio->descripcion)}} @endisset</td> --}}
                 </tr>
 
             @empty <li>No elements to be shown</li>

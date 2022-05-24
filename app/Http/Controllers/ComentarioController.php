@@ -68,9 +68,9 @@ class ComentarioController extends Controller
             $servicio->valoracion=$request->get('valoracion');
             $servicio->save();
 
-            Session::flash('info', "Se ha guardado su comentario.");
+           Session::flash('info', "Se ha guardado su comentario.");
 
-            return redirect()->route('servicios.index');
+            return redirect()->route('inicio');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
