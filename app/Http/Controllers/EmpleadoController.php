@@ -81,6 +81,7 @@ class EmpleadoController extends Controller
                     $uploadSuccess = $request->file('foto')->move($path , $filename);
                     $user->foto = $path . $filename;
                 }
+                $user->activo= 1;
                 $pass = Str::random(8);
                 $user->password=bcrypt($pass);
                 $user->save();
@@ -160,7 +161,13 @@ class EmpleadoController extends Controller
             $empleado->user->tel=$request->get('tel');
             $empleado->user->fecha_nac=$request->get('fecha_nacimiento');
             $empleado->user->datos=$request->get('datos');
-            $empleado->user->fecha_baja=$request->get('fecha_baja');
+            $baja=$request->get('fecha_baja');
+            if($baja !== "" && $baja != null){
+                $empleado->user->fecha_baja= $baja;
+                $empleado->user->activo= 0;
+            }else{
+                $empleado->user->activo= 1;
+            }
             if($request->hasFile('foto')){
                 $file = $request->file('foto');
                 $path = 'img/fotos/';

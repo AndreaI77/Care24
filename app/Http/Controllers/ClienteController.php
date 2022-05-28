@@ -92,7 +92,7 @@ class ClienteController extends Controller
                 $user->fecha_nac=$request->get('fecha_nacimiento');
                 $user->datos=$request->get('datos');
                 $user->tipo="cliente";
-
+                $user->activo= 1;
                 if($request->hasFile('foto')){
                     $file = $request->file('foto');
                     $path = 'img/fotos/';
@@ -206,7 +206,13 @@ class ClienteController extends Controller
             $cl->user->tel=$request->get('tel');
             $cl->user->fecha_nac=$request->get('fecha_nacimiento');
             $cl->user->datos=$request->get('datos');
-            $cl->user->fecha_baja=$request->get('fecha_baja');
+            $baja=$request->get('fecha_baja');
+            if($baja !== "" && $baja != null){
+                $cl->user->fecha_baja= $baja;
+                $cl->user->activo= 0;
+            }else{
+                $cl->user->activo= 1;
+            }
             if($request->hasFile('foto')){
                 $file = $request->file('foto');
                 $path = 'img/fotos/';
@@ -214,6 +220,7 @@ class ClienteController extends Controller
                 $uploadSuccess = $request->file('foto')->move($path , $filename);
                 $cl->user->foto = $path . $filename;
             }
+
             $cl->user->save();
             $cl->idioma=$request->idioma;
             if($request->has('SIP')){

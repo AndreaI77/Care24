@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('fecha_baja')->nullable();
             $table->string('password');
             $table->string('tipo');
+            $table->tinyint('activo');
             $table->timestamps();
 
         });

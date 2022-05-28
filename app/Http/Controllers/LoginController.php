@@ -17,7 +17,7 @@ class LoginController extends Controller
             'dni' => 'required',
             'password' => 'required'
          ]);
-        $credentials = $request->only('dni', 'password');
+        $credentials = $request->only('dni', 'password', 'activo');
         if (Auth::attempt($credentials))
         {
             // Authentication successful
