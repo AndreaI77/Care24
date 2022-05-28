@@ -31,7 +31,7 @@
         </div>
         <div class="card-footer p-3">
             <div>
-                @if(auth()->user()->tipo !== 'cliente')
+                @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Administrativo')
                     <form action= "{{route('citas.destroy', $cita->id)}}" id="form" method="POST">
                         @method('DELETE')
                         @csrf

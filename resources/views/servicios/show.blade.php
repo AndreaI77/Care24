@@ -28,13 +28,14 @@
             </div>
         </div>
         <div class="card-footer   p-3">
-            @if(auth()->user()->tipo !== 'cliente')
+            @if(auth()->user()->tipo == 'Administrativo')
                 <form action= "{{route('servicios.destroy', $servicio->id)}}" id="form" method="POST">
                     @method('DELETE')
                     @csrf
                     <button  type="submit" class="btn btn-danger float-start  fw-bolder  " name="borrar" id="borrar"><i class="bi bi-x-circle"></i> Eliminar</Button>
                     </form>
-
+            @endif
+            @if(auth()->user()->tipo !== 'cliente')
                 <a class="btn btn-success text-warning fw-bolder float-end  w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
             @endif
 

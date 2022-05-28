@@ -24,6 +24,7 @@
             </div>
         </div>
         <div class="card-footer p-3">
+
                 <form action= "{{route('incidencias.destroy', $incidencia->id)}}" id="form" method="POST">
                     @method('DELETE')
                     @csrf

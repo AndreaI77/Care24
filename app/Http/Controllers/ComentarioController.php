@@ -23,7 +23,7 @@ class ComentarioController extends Controller
     public function index()
     {
         $citas=[];
-        if(auth()->user()->tipo === 'empleado'){
+        if(auth()->user()->tipo !== 'cliente'){
             $citas= Cita::get();
             $servicios= Servicio::get();
         }else{

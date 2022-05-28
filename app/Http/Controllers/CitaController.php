@@ -18,7 +18,7 @@ class CitaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'index','create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('auth', ['only' => 'index','create', 'store', 'show', 'edit', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -28,13 +28,16 @@ class CitaController extends Controller
     public function index()
     {
         $citas=[];
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $citas= Cita::get();
-        }else{
+            return view('citas.index', compact('citas'));
+
+        }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $citas1 = Cita::get();
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
-                $citas1 = Cita::get();
+
                 foreach($servicios as $servicio){
                     foreach($citas1 as $ct){
                         if($ct->servicio_id == $servicio->id){
@@ -43,8 +46,26 @@ class CitaController extends Controller
                     }
                 }
             }
+            return view('citas.index', compact('citas'));
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $citas1 = Cita::get();
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+
+                foreach($servicios as $servicio){
+                    foreach($citas1 as $ct){
+                        if($ct->servicio_id == $servicio->id){
+                            $citas[]=$ct;
+                        }
+                    }
+                }
+            }
+            return view('citas.index', compact('citas'));
+        }else{
+            return view('welcome');
         }
-        return view('citas.index', compact('citas'));
+
     }
 
     /**
@@ -54,11 +75,27 @@ class CitaController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $clientes=Cliente::get();
             $empleados=Empleado::get();
             $especialidades=Especialidad::get();
             return view('citas.create', compact('empleados','clientes', 'especialidades'));
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            //filtro clientes para que en select aparezcan solamente los que tienen servicios asignados con el cuidador
+            $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
+            $clientes1=Cliente::get();
+            $clientes=[];
+            foreach($servicios as $servicio){
+                foreach($clientes1 as $ct){
+                    if($ct->id == $servicio->cliente_id){
+                        if(in_array($ct, $clientes) == false){
+                            $clientes[]=$ct;
+                        }
+                    }
+                }
+            }
+            $especialidades=Especialidad::get();
+            return view('citas.create', compact('clientes', 'especialidades'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('citas.index');
@@ -73,7 +110,7 @@ class CitaController extends Controller
      */
     public function store(CitaRequest $request)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $ser= new Servicio();
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -118,14 +155,14 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        // $cita=Cita::findOrFail($id);
-        // return view('citas.show', compact('cita'));
+
 
         $cita = null;
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $cita=Cita::findOrFail($id);
             return view('citas.show', compact('cita'));
-        }else{
+
+        }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $cita1= Cita::findOrFail($id);
             foreach($clientes as $cliente){
@@ -141,6 +178,23 @@ class CitaController extends Controller
             }else{
                 return view('citas.show', compact('cita'));
             }
+
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $cita1= Cita::findOrFail($id);
+            foreach($empleados as $emp){
+                if($cita1->servicio->empleado_id == $emp->id){
+                    $cita=$cita1;
+                }
+            }
+            if($cita == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('citas.show', compact('cita'));
+            }
+        }else{
+            return view('welcome');
         }
 
     }
@@ -153,12 +207,28 @@ class CitaController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $cita= Cita::findOrFail($id);
             $clientes=Cliente::get();
             $empleados=Empleado::get();
             $especialidades = Especialidad::get();
             return view('citas.edit', compact('cita', 'clientes', 'empleados', 'especialidades'));
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            $cita= Cita::findOrFail($id);
+                $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
+                $clientes1=Cliente::get();
+                $clientes=[];
+                foreach($servicios as $servicio){
+                    foreach($clientes1 as $ct){
+                        if($ct->id == $servicio->cliente_id){
+                            if(in_array($ct, $clientes) == false){
+                                $clientes[]=$ct;
+                            }
+                        }
+                    }
+                }
+                $especialidades=Especialidad::get();
+                return view('citas.edit', compact('cita','clientes', 'especialidades'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('citas.index');
@@ -174,7 +244,7 @@ class CitaController extends Controller
      */
     public function update(CitaRequest $request, $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $cita= Cita::findOrFail($id);
             $cita->servicio->fecha=$request->get('fecha');
             $cita->servicio->hora_inicio=$request->get('hora_inicio');
@@ -213,18 +283,16 @@ class CitaController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $cita= Cita::findOrFail($id);
             try
             {
-                if(Incidencia::where('cita_id', '=', $id)->first() != null){
-                    return back()->with('error','Hay una incidencia reportada en esta cita, \npor lo cual no puede ser eliminada.');
-                }else{
+
                     $cita->servicio->delete();
                     $cita->delete();
                     Session::flash('info', "Se ha eliminado el registro.");
                     return redirect()->route('citas.index');
-                }
+
 
 
             }catch(Exception $e){

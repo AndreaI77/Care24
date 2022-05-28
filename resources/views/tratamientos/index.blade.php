@@ -26,6 +26,7 @@
         <tbody>
             @forelse($tratamientos as $trat)
                 <tr class="text-center" id="{{$trat->id}}">
+
                     <td><a class= "nav-link p-0 m-0 text-center" href="{{route('tratamientos.show', $trat->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
                     <td class="cliente">{{$trat->cliente->user->nombre}}, {{$trat->cliente->user->apellido}} </td>
                     <td class="empleado">{{Crypt::decryptString($trat->medicamento->nombre)}} ({{$trat->medicamento->cantidad}}) </td>

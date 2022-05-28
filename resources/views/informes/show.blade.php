@@ -22,12 +22,15 @@
             </div>
         </div>
         <div class="card-footer p-3">
+            @if(auth()->user()->tipo == 'Administrativo')
                 <form action= "{{route('informes.destroy', $informe->id)}}" id="form" method="POST">
                     @method('DELETE')
                     @csrf
                     <button  type="submit" class="btn btn-danger  fw-bolder float-start w-25" name="borrar" id="borrar"><i class="bi bi-x-circle"></i>Eliminar</Button>
-                    </form>
+                </form>
+
                 <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('informes.edit', $informe->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+            @endif
                 <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('informes.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
             </div>
         </div>
@@ -35,5 +38,6 @@
 @endsection
 @section('js')
     <script type="text/javascript" src="{{ asset('js/borrar.js') }}" ></script>
+
 @endsection
 

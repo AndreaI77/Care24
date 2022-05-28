@@ -25,8 +25,17 @@ class InformeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $informes= Informe::get();
+            return view('informes.index', compact( 'informes'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $informes=[];
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+
+            foreach($empleados as $emp){
+                $informe=Informe::where('empleado_id', $emp->id)->get();
+                $informes=$informe;
+            }
             return view('informes.index', compact( 'informes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -81,10 +90,30 @@ class InformeController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $informe= Informe::findOrFail($id);
 
             return view('informes.show', compact('informe'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+
+            $informe=null;
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $informe1= Informe::findOrFail($id);
+            foreach($empleados as $emp){
+                $informes=Informe::where('empleado_id', $emp->id)->get();
+                foreach($informes as $inf){
+                    if($inf->empleado_id == $informe1->empleado_id){
+                        $informe=$informe1;
+                    }
+                }
+            }
+
+            if($informe == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('informes.show', compact('informe'));
+            }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
@@ -99,7 +128,7 @@ class InformeController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo === 'Administrativo'){
             $informe= Informe::findOrFail($id);
             return view('informes.edit', compact('informe'));
         }else{
@@ -117,10 +146,10 @@ class InformeController extends Controller
      */
     public function update(InformeRequest $request, $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo === 'Administrativo'){
             $informe= Informe::findOrFail($id);
-            $informe->titulo = Crypt::encryptString($request->get('titulo'));
-            $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
+            // $informe->titulo = Crypt::encryptString($request->get('titulo'));
+            // $informe->descripcion = Crypt::encryptString($request->get('descripcion'));
             $informe->estado = $request->get("estado");
             $informe->save();
             Session::flash('info', "Se han actualizado los datos.");
@@ -140,7 +169,7 @@ class InformeController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $informe= Informe::findOrFail($id);
             try
             {

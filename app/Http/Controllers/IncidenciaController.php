@@ -26,8 +26,25 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $incidencias= Incidencia::get();
+            return view('incidencias.index', compact( 'incidencias'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $incidencias=[];
+            $incidencias1=Incidencia::get();
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+                foreach($servicios as $ser){
+                    foreach($incidencias1 as $inc){
+                        if($inc->cliente_id == $ser->cliente_id){
+                            if(in_array($inc, $incidencias)== false){
+                                $incidencias[] = $inc;
+                            }
+                        }
+                    }
+                }
+            }
             return view('incidencias.index', compact( 'incidencias'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -42,9 +59,27 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $clientes=Cliente::get();
 
+            return view('incidencias.create',compact('clientes'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $clientes=[];
+            $clientes1=Cliente::get();
+            foreach ($empleados as $emp) {
+                $servicios = Servicio::where('empleado_id', $emp->id)->get();
+                foreach ($clientes1 as $cl) {
+                    foreach ($servicios as $ser) {
+
+                        if ($ser->cliente_id == $cl->id) {
+                            if(in_array($cl, $clientes)== false){
+                                $clientes[] = $cl;
+                            }
+                        }
+                    }
+                }
+            }
             return view('incidencias.create',compact('clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -92,10 +127,30 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $incidencia= Incidencia::findOrFail($id);
 
             return view('incidencias.show', compact('incidencia'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $incidencia1= Incidencia::findOrFail($id);
+            $incidencia=null;
+            foreach ($empleados as $emp) {
+                $servicios = Servicio::where('empleado_id', $emp->id)->get();
+
+                foreach ($servicios as $ser) {
+                    if ($ser->cliente_id == $incidencia1->cliente_id) {
+                        $incidencia = $incidencia1;
+                    }
+                }
+            }
+            if($incidencia == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('incidencias.show', compact('incidencia'));
+            }
+
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
@@ -110,10 +165,39 @@ class IncidenciaController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $incidencia= Incidencia::findOrFail($id);
             $clientes= Cliente::get();
             return view('incidencias.edit', compact('incidencia', 'clientes'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $incidencia1= Incidencia::findOrFail($id);
+            $clientes1 = Cliente::get();
+            $clientes = [];
+            $incidencia= null;
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+
+                foreach ($servicios as $servicio) {
+                    if($servicio->cliente_id == $incidencia1->cliente_id){
+                        $incidencia=$incidencia1;
+                    }
+                    foreach ($clientes1 as $ct) {
+                        if ($ct->id == $servicio->cliente_id) {
+                            if (in_array($ct, $clientes) == false) {
+                                $clientes[] = $ct;
+                            }
+
+                        }
+                    }
+                }
+            }
+            if($incidencia == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('incidencias.edit', compact('incidencia', 'clientes'));
+            }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');

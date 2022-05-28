@@ -16,7 +16,7 @@ class EspecialidadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'index','create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('auth', ['only' => 'index','create', 'store', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $especialidades= Especialidad::get();
 
             return view('especialidades.index', compact('especialidades'));
@@ -42,7 +42,7 @@ class EspecialidadController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             return view('especialidades.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -58,7 +58,7 @@ class EspecialidadController extends Controller
      */
     public function store(EspecialidadRequest $request)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $especialidad= new Especialidad();
             $especialidad->nombre=Crypt::encryptString($request->get('nombre'));
             $especialidad->save();
@@ -111,7 +111,7 @@ class EspecialidadController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $esp= Especialidad::findOrFail($id);
             try
             {

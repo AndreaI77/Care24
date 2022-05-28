@@ -40,7 +40,7 @@ class MedicamentoController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             return view('medicamentos.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -56,7 +56,7 @@ class MedicamentoController extends Controller
      */
     public function store(MedicamentoRequest $request)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $medicamento= new Medicamento();
             $medicamento->nombre=Crypt::encryptString($request->get('nombre'));
             $medicamento->principio_ac=Crypt::encryptString($request->get('principio'));
@@ -111,12 +111,12 @@ class MedicamentoController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $esp= Medicamento::findOrFail($id);
             try
             {
                 if(Tratamiento::where('medicamento_id', '=', $id)->first() != null){
-                    return back()->with('error','Este mediamento se ha usado en un tratamiento, no puede ser eliminada.');
+                    return back()->with('error','Este medicamento se ha usado en un tratamiento, no puede ser eliminada.');
                 }else{
 
                     $esp->delete();

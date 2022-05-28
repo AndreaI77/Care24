@@ -41,6 +41,8 @@
 @endsection
 @section('js')
     <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
-
+    @if(auth()->user()->tipo !== 'Administrativo')
+        <script type="text/javascript" src="{{ asset('js/guardar.js') }}" ></script>
+    @endif
 @endsection
 

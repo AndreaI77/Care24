@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tratamiento;
 use App\Models\Medicamento;
 use App\Models\Cliente;
+use App\Models\Empleado;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Exception;
@@ -25,15 +27,45 @@ class TratamientoController extends Controller
     public function index()
     {
         $tratamientos=[];
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $tratamientos = Tratamiento::get();
-        }else{
+            return view('tratamientos.index', compact('tratamientos'));
+
+        }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             foreach($clientes as $cliente){
                 $tratamientos=Tratamiento::where('cliente_id', $cliente->id)->get();
+
             }
+            return view('tratamientos.index', compact('tratamientos'));
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            $empleados =Empleado::where('user_id', auth()->user()->id)->get();
+
+           //$tratamientos1=Tratamiento::get();
+            $clientes=[];
+            foreach($empleados as $empleado){
+                $servicios=Servicio::where('empleado_id', $empleado->id)->get();
+                foreach($servicios as $servicio){
+                    $clientes1= Cliente::where('id', $servicio->cliente_id)->get();
+                    foreach($clientes1 as $cliente){
+                        if(in_array($cliente, $clientes) == false){
+                            $clientes[]=$cliente;
+                            $tratamientos1=Tratamiento::where('cliente_id', $cliente->id)->get();
+                            foreach($tratamientos1 as $trat){
+
+                                //if($trat->cliente_id == $cliente->id){
+                                    $tratamientos[]=$trat;
+                               // }
+                            }
+                        }
+                    }
+                }
+            }
+            return view('tratamientos.index', compact('tratamientos'));
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
-        return view('tratamientos.index', compact('tratamientos'));
     }
 
     /**
@@ -43,9 +75,25 @@ class TratamientoController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $medicamentos = Medicamento::get();
             $clientes = Cliente::get();
+            return view('tratamientos.create', compact('medicamentos', 'clientes'));
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            //filtro clientes para que en select aparezcan solamente los que tienen servicios asignados con el cuidador
+            $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
+            $clientes1=Cliente::get();
+            $clientes=[];
+            foreach($servicios as $servicio){
+                foreach($clientes1 as $ct){
+                    if($ct->id == $servicio->cliente_id){
+                        if(in_array($ct, $clientes) == false){
+                            $clientes[]=$ct;
+                        }
+                    }
+                }
+            }
+            $medicamentos = Medicamento::get();
             return view('tratamientos.create', compact('medicamentos', 'clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -61,7 +109,7 @@ class TratamientoController extends Controller
      */
     public function store(TratamientoRequest $request, )
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $trat=new Tratamiento();
             $trat->fecha_principio=$request->get('fecha_principio');
             $trat->fecha_fin=$request->get('fecha_fin');
@@ -89,10 +137,10 @@ class TratamientoController extends Controller
     public function show( $id)
     {
         $tratamiento = null;
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $tratamiento= Tratamiento::findOrFail($id);
             return view('tratamientos.show', compact('tratamiento'));
-        }else{
+        }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $tratamiento1= Tratamiento::findOrFail($id);
             foreach($clientes as $cliente){
@@ -106,6 +154,27 @@ class TratamientoController extends Controller
             }else{
                 return view('tratamientos.show', compact('tratamiento'));
             }
+        }else if(auth()->user()->tipo == 'Cuidador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $tratamiento1= Tratamiento::findOrFail($id);
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+                foreach($servicios as $ser){
+
+                    if($ser->cliente_id == $tratamiento1->cliente_id){
+                        $tratamiento=$tratamiento1;
+                    }
+                }
+            }
+            if($tratamiento == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('tratamientos.show', compact('tratamiento'));
+            }
+        }else{
+            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            return redirect()->route('inicio');
         }
     }
 
@@ -117,13 +186,44 @@ class TratamientoController extends Controller
      */
     public function edit( $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $tratamiento= Tratamiento::findOrFail($id);
             $medicamentos = Medicamento::get();
             $clientes=Cliente::get();
 
             return view('tratamientos.edit', compact('medicamentos','clientes', 'tratamiento'));
-        }else{
+        } else if (auth()->user()->tipo == 'Cuidador') {
+            $tratamiento1 = Tratamiento::findOrFail($id);
+            $medicamentos = Medicamento::get();
+            $clientes1 = Cliente::get();
+            $clientes = [];
+            $tratamiento= null;
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+
+                foreach ($servicios as $servicio) {
+                    if($servicio->cliente_id == $tratamiento1->cliente_id){
+                        $tratamiento=$tratamiento1;
+                    }
+                    foreach ($clientes1 as $ct) {
+                        if ($ct->id == $servicio->cliente_id) {
+                            if (in_array($ct, $clientes) == false) {
+                                $clientes[] = $ct;
+                            }
+
+                        }
+                    }
+                }
+            }
+            if($tratamiento == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('tratamientos.edit', compact('medicamentos', 'clientes', 'tratamiento'));
+            }
+
+        } else {
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
         }
@@ -138,16 +238,16 @@ class TratamientoController extends Controller
      */
     public function update(TratamientoRequest $request, $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
-            $trat=Tratamiento::findOrFail($id);
-            $trat->fecha_principio=$request->get('fecha_principio');
-            $trat->fecha_fin=$request->get('fecha_fin');
-            $trat->cantidad=$request->get('cantidad');
-            $trat->hora=$request->get('hora');
-            $trat->descripcion=Crypt::encryptString($request->get('descripcion'));
-            $trat->medicamento_id=$request->get('medicamento');
-            $trat->cliente_id=$request->get('cliente');
-            $trat->save();
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
+            $tratamiento=Tratamiento::findOrFail($id);
+            $tratamiento->fecha_principio=$request->get('fecha_principio');
+            $tratamiento->fecha_fin=$request->get('fecha_fin');
+            $tratamiento->cantidad=$request->get('cantidad');
+            $tratamiento->hora=$request->get('hora');
+            $tratamiento->descripcion=Crypt::encryptString($request->get('descripcion'));
+            $tratamiento->medicamento_id=$request->get('medicamento');
+            $tratamiento->cliente_id=$request->get('cliente');
+            $tratamiento->save();
 
             Session::flash('info', "Se han actualizado los datos.");
             return view('tratamientos.show', compact('tratamiento'));
@@ -166,7 +266,7 @@ class TratamientoController extends Controller
      */
     public function destroy( $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $tratamiento= Tratamiento::findOrFail( $id);
             try
             {

@@ -18,10 +18,13 @@
             <th> Nombre</th>
             <th> Apellidos</th>
             <th> Domicilio</th>
-            <th> DNI</th>
-            <th> Fecha nacimiento</th>
+            @if(auth()->user()->tipo !== 'Limpiador')
+                <th> DNI</th>
+                <th> Fecha nacimiento</th>
+
+                <th> SIP</th>
+            @endif
             <th> Nacionalidad</th>
-            <th> SIP</th>
             <th>Idioma</th>
             <th> Telefono</th>
             <th> E-mail</th>
@@ -36,10 +39,13 @@
                     <td class= "nombre">{{$cl->user->nombre}} </td>
                     <td class= "apellido">{{$cl->user->apellido}} </td>
                     <td class= "domicilio">{{$cl->user->domicilio}} </td>
-                    <td class= "dni">{{$cl->user->dni}} </td>
-                    <td class= "text-center f_nac">{{ Carbon\Carbon::parse($cl->user->fecha_nac)->format('d/m/Y')}} </td>
+                    @if(auth()->user()->tipo !== 'Limpiador')
+                        <td class= "dni">{{$cl->user->dni}} </td>
+                        <td class= "text-center f_nac">{{ Carbon\Carbon::parse($cl->user->fecha_nac)->format('d/m/Y')}} </td>
+
+                        <td class= "sip">@isset(($cl->sip)){{Crypt::decryptString($cl->sip)}}@endisset </td>
+                    @endif
                     <td class= "nac">{{$cl->nacionalidad}} </td>
-                    <td class= "sip">@isset(($cl->sip)){{Crypt::decryptString($cl->sip)}}@endisset </td>
                     <td class= "idioma">{{$cl->idioma}} </td>
                     <td class= "tel">{{$cl->user->tel}} </td>
                     <td class= "email">{{$cl->user->email}} </td>

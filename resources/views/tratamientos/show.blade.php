@@ -18,7 +18,7 @@
                 </div>
                 <div class= " col-md-6 ps-3">
                     <p><span class="fw-bolder">Fecha de inicio:  </span>{{Carbon\Carbon::parse($tratamiento->fecha_principio)->format('d/m/Y')}} </p>
-                    <p><span class="fw-bolder">Fecha final: </span> @isset(($cl->fecha_fin)){{Carbon\Carbon::parse($cl->fecha_fin)->format('d/m/Y')}} @endisset</p>
+                    <p><span class="fw-bolder">Fecha final: </span> @isset(($tratamiento->fecha_fin)){{Carbon\Carbon::parse($tratamiento->fecha_fin)->format('d/m/Y')}} @endisset</p>
                 </div>
             </div>
             <div class= " col-md-6 ps-3 mt-3 ">

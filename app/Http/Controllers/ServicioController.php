@@ -29,15 +29,31 @@ class ServicioController extends Controller
     public function index()
     {
         $servicios=[];
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo' ){
             $servicios= Servicio::get();
-        }else{
+            return view('servicios.index', compact('servicios'));
+        }else if(auth()->user()->tipo == 'cliente'){
+
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
             }
+            return view('servicios.index', compact('servicios'));
+
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+
+            }
+            return view('servicios.index', compact('servicios'));
+        }else{
+            return view('welcome');
         }
-        return view('servicios.index', compact('servicios'));
+
+
+
     }
 
     /**
@@ -47,7 +63,7 @@ class ServicioController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo === 'Administrativo'){
             $clientes=Cliente::get();
             $empleados=Empleado::get();
 
@@ -66,7 +82,7 @@ class ServicioController extends Controller
      */
     public function store(ServicioRequest $request)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo === 'Administrativo'){
             $ser= new Servicio();
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -103,10 +119,10 @@ class ServicioController extends Controller
     public function show($id)
     {
         $servicio = null;
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo === 'Administrativo'){
             $servicio= Servicio::findOrFail($id);
             return view('servicios.show', compact('servicio'));
-        }else{
+        }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $servicio1= Servicio::findOrFail($id);
             foreach($clientes as $cliente){
@@ -120,6 +136,22 @@ class ServicioController extends Controller
             }else{
                 return view('servicios.show', compact('servicio'));
             }
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $servicio1= Servicio::findOrFail($id);
+            foreach($empleados as $emp){
+                if($servicio1->empleado_id === $emp->id){
+                    $servicio=$servicio1;
+                }
+            }
+            if($servicio == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('servicios.show', compact('servicio'));
+            }
+        }else{
+            return view('welcome');
         }
     }
 
@@ -131,11 +163,28 @@ class ServicioController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $servicio= Servicio::findOrFail($id);
             $clientes=Cliente::get();
             $empleados=Empleado::get();
             return view('servicios.edit', compact('servicio', 'clientes', 'empleados'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' ){
+            $servicio= Servicio::findOrFail($id);
+            //obtener clientes para el select
+            $clientes1=Cliente::get();
+            $clientes=[];
+            $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
+            foreach($servicios as $ser){
+                    foreach($clientes1 as $ct){
+                        if($ct->id == $ser->cliente_id){
+                            if(in_array($ct, $clientes) == false){
+                                $clientes[]=$ct;
+                            }
+                        }
+                    }
+                }
+
+                return view('servicios.edit', compact('servicio', 'clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
@@ -189,7 +238,7 @@ class ServicioController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $ser= Servicio::findOrFail($id);
             try
             {

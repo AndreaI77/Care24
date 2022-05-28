@@ -6,7 +6,7 @@
     @csrf
 
     @method('PUT')
-    <h1 class="bg-success bg-opacity-25 text-success text-center">Nuevo informe</h1>
+    <h1 class="bg-success bg-opacity-25 text-success text-center">Actualizar informe</h1>
     <div class= " p-3">
         <div class= "">
 
@@ -26,23 +26,25 @@
 
         <div>
             <label class= "form-label fw-bolder" for="titulo">Título: <span class="text-danger">*</span></label>
-            <input class="form-control " type="text" minLength='5' name="titulo" id="titulo"  value="{{Crypt::decryptString($informe->titulo)}}" required>
+            <input class="form-control " type="text" minLength='5' name="titulo" id="titulo"  value="{{Crypt::decryptString($informe->titulo)}}" disabled required>
             <div class="invalid-feedback">El título es obligatorio (min. 5 carácteres).</div>
             @if($errors->has('titulo'))
                 <div class='text-danger mens'>
                 {{$errors->first('titulo')}}
                 </div>
             @endif
+            <input class="form-control " type="hidden" name="titulo"   value="{{Crypt::decryptString($informe->titulo)}}">
         </div>
         <div class= "mt-3">
             <label class= "form-label fw-bolder" for="descripcion">Mensaje: <span class="text-danger">*</span></label>
-            <textarea class= "form-control" name="descripcion" rows="10" cols="50" required>{{Crypt::decryptString($informe->descripcion)}}</textarea>
+            <textarea class= "form-control" name="descripcion" rows="10" cols="50" required disabled>{{Crypt::decryptString($informe->descripcion)}}</textarea>
             <div class="invalid-feedback">El mensaje es obligatorio.</div>
             @if($errors->has('descripcion'))
                 <div class='text-danger mens'>
                 {{$errors->first('descripcion')}}
                 </div>
             @endif
+            <input class="form-control " type="hidden" name="descripcion"   value="{{Crypt::decryptString($informe->descripcion)}}">
         </div>
 
     </div>

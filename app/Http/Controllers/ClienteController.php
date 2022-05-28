@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Servicio;
 use App\Models\Cliente;
 use App\Models\Incidencia;
+use App\Models\Empleado;
 use App\Models\Tratamiento;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClienteRequest;
@@ -19,7 +20,7 @@ class ClienteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['only' => 'index','create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('auth', ['only' => 'index','create', 'show', 'store', 'edit', 'update', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -28,9 +29,27 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        $clientes=[];
+        if(auth()->user()->tipo == 'Administrativo' ){
             $clientes= Cliente::get();
 
+            return view('clientes.index', compact( 'clientes'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $clientes1 = Cliente::get();
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+
+                foreach($servicios as $servicio){
+                    foreach($clientes1 as $ct){
+                        if($ct->id == $servicio->cliente_id){
+                            if(in_array($ct, $clientes) == false){
+                                $clientes[]=$ct;
+                            }
+                        }
+                    }
+                }
+            }
             return view('clientes.index', compact( 'clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -45,7 +64,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             return view('clientes.create');
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
@@ -61,7 +80,7 @@ class ClienteController extends Controller
      */
     public function store(ClienteRequest $request)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             if($request->has('nombre')){
                 $user=new User();
                 $user->nombre=$request->get('nombre');
@@ -124,10 +143,27 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        $cliente=null;
+        if(auth()->user()->tipo == 'Administrativo'){
             $cliente= Cliente::findOrFail($id);
-
             return view('clientes.show', compact('cliente'));
+        }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
+            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $cliente1= Cliente::findOrFail($id);
+            foreach($empleados as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+                foreach($servicios as $servicio){
+                    if($servicio->cliente_id == $cliente1->id){
+                        $cliente=$cliente1;
+                    }
+                }
+            }
+            if($cliente == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('clientes.show', compact('cliente'));
+            }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
@@ -142,7 +178,7 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $cliente= Cliente::findOrFail($id);
             return view('clientes.edit', compact('cliente'));
         }else{
@@ -160,7 +196,7 @@ class ClienteController extends Controller
      */
     public function update(ClienteRequest $request, $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $cl= Cliente::findOrFail($id);
             $cl->user->nombre=$request->get('nombre');
             $cl->user->apellido=$request->get('apellido');
@@ -208,7 +244,7 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+        if(auth()->user()->tipo == 'Administrativo'){
             $cl= Cliente::findOrFail($id);
             try
             {

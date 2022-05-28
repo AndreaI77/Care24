@@ -60,23 +60,28 @@
                 @endif
             </div>
             <div class= "mt-2">
-                <label class= "form-label fw-bolder me-2" for="empleado">Acompañante: <span class="text-danger">*</span></label>
 
-                <select name="empleado" required id="empleado" >
-                    <option value="" selected hidden disabled>Selecciona empleado</option>
-                    @foreach($empleados as $em)
-                        @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "" ) && $em->puesto != "Limpiador" && $em->user_id != 1)
-                        <option value="{{$em->id}}"  @if(old('empleado') === "{{$em->id}}") selected @endif >{{$em->user->nombre}}, {{$em->user->apellido}}</option>
-                        @endif
-                    @endforeach
-                </select>
-                <div class="invalid-feedback">Selecciona empleado</div>
-                @if($errors->has('empleado'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('empleado')}}
-                    </div>
+                @if(auth()->user()->tipo == 'Cuidador')
+                    <p> <strong>Acompañante: </strong>{{auth()->user()->nombre}}, {{auth()->user()->apellido}}</p>
+                    <input type="hidden" name="empleado" value="{{auth()->user()->id}}">
                 @endif
-
+                @if(auth()->user()->tipo == 'Administrativo')
+                    <label class= "form-label fw-bolder me-2" for="empleado">Acompañante: <span class="text-danger">*</span></label>
+                    <select name="empleado" required id="empleado" >
+                        <option value="" selected hidden disabled>Selecciona empleado</option>
+                        @foreach($empleados as $em)
+                            @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "" ) && $em->puesto != "Limpiador" && $em->user_id != 1)
+                            <option value="{{$em->id}}"  @if(old('empleado') === "{{$em->id}}") selected @endif >{{$em->user->nombre}}, {{$em->user->apellido}}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback">Selecciona empleado</div>
+                    @if($errors->has('empleado'))
+                        <div class='text-danger mens'>
+                        {{$errors->first('empleado')}}
+                        </div>
+                    @endif
+                @endif
             </div>
         </div>
         <div class= "col-sm-6">

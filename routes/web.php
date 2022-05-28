@@ -58,19 +58,19 @@ Route::get('/privacidad', function () {
 
 Route::get('/inicio', function () {
     return view('welcome');
-})->name('inicio');
+})->name('inicio')->middleware('auth');
 
-Route::resource('clientes', ClienteController::class);
-Route::resource('empleados', EmpleadoController::class);
-Route::resource('especialidades', EspecialidadController::class)->only(['index','create','store', 'destroy' ]);
-Route::resource('incidencias', IncidenciaController::class);
-Route::resource('informes', InformeController::class);
-Route::resource('medicamentos', MedicamentoController::class)->only(['index','create','store', 'destroy' ]);
-Route::resource('servicios', ServicioController::class);
-Route::resource('tratamientos', TratamientoController::class);
-Route::resource('citas', CitaController::class);
-Route::resource('galeria', GaleriaController::class)->only('index');
-Route::resource('mapa', MapaController::class)->only('index');
+Route::resource('clientes', ClienteController::class)->middleware('auth');
+Route::resource('empleados', EmpleadoController::class)->middleware('auth');
+Route::resource('especialidades', EspecialidadController::class)->only(['index','create','store', 'destroy' ])->middleware('auth');
+Route::resource('incidencias', IncidenciaController::class)->middleware('auth');
+Route::resource('informes', InformeController::class)->middleware('auth');
+Route::resource('medicamentos', MedicamentoController::class)->only(['index','create','store', 'destroy' ])->middleware('auth');
+Route::resource('servicios', ServicioController::class)->middleware('auth');
+Route::resource('tratamientos', TratamientoController::class)->middleware('auth');
+Route::resource('citas', CitaController::class)->middleware('auth');
+Route::resource('galeria', GaleriaController::class)->only('index')->middleware('auth');
+Route::resource('mapa', MapaController::class)->only('index')->middleware('auth');
 Route::get('login', [LoginController::class, 'loginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login2');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
@@ -80,6 +80,6 @@ Route::get('curriculum', [CVController::class, 'index'])->name('envioCV');
 Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.store');
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
-Route::resource('perfil', PerfilController::class)->only('index', 'update');
-Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update');
+Route::resource('perfil', PerfilController::class)->only('index', 'update')->middleware('auth');
+Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update')->middleware('auth');
 
