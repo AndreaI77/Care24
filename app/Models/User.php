@@ -29,8 +29,7 @@ class User extends Authenticatable
         'foto',
         'fecha_baja',
         'password',
-        'tipo',
-        'activo'
+        'tipo'
 
     ];
     // public function empleado(){

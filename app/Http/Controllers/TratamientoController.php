@@ -41,7 +41,6 @@ class TratamientoController extends Controller
         }else if(auth()->user()->tipo == 'Cuidador'){
             $empleados =Empleado::where('user_id', auth()->user()->id)->get();
 
-           //$tratamientos1=Tratamiento::get();
             $clientes=[];
             foreach($empleados as $empleado){
                 $servicios=Servicio::where('empleado_id', $empleado->id)->get();
@@ -53,9 +52,8 @@ class TratamientoController extends Controller
                             $tratamientos1=Tratamiento::where('cliente_id', $cliente->id)->get();
                             foreach($tratamientos1 as $trat){
 
-                                //if($trat->cliente_id == $cliente->id){
                                     $tratamientos[]=$trat;
-                               // }
+
                             }
                         }
                     }

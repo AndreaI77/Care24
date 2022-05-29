@@ -49,8 +49,6 @@ Route::get('/cookies', function () {
     return view('Cookies');
 })->name('cookies');
 
-
-
 Route::get('/privacidad', function () {
     return view('privacidad');
 })->name('privacidad');
@@ -70,7 +68,9 @@ Route::resource('servicios', ServicioController::class)->middleware('auth');
 Route::resource('tratamientos', TratamientoController::class)->middleware('auth');
 Route::resource('citas', CitaController::class)->middleware('auth');
 Route::resource('galeria', GaleriaController::class)->only('index')->middleware('auth');
-Route::resource('mapa', MapaController::class)->only('index')->middleware('auth');
+//Route::resource('mapa', MapaController::class)->only(['index','show'])->middleware('auth');
+Route::get('mapa', [MapaController::class, 'index'])->name('mapa.index');
+Route::get('mapaClientes', [MapaController::class, 'show'])->name('show');
 Route::get('login', [LoginController::class, 'loginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login2');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');

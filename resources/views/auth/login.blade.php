@@ -28,7 +28,8 @@
                                         <label for="password">Contraseña</label>
                                         <div class="invalid-feedback">La contraseña es obligatoria .</div>
                                     </div>
-                                    <input    name="activo" type="hidden" value="1" />
+
+                                    <input    name="fecha_baja" type="hidden" value="" />
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                         <a class="small" href="{{route('recuperacion')}}">¡He olvidado mi contraseña!</a>
                                         {{-- <a class="small" href="{{route('home')}}">Volver</a> --}}

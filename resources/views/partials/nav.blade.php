@@ -28,7 +28,10 @@
                         <li class="nav-item "><a class="nav-link  text-sm-center fw-bolder  {{setActive('servicios')}}  " href="{{route('servicios.index')}}">Servicios</a></li>
                         <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('citas')}}" href="{{route('citas.index')}}">Citas médicas</a></li>
                         <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('tratamientos')}} " href="{{route('tratamientos.index')}}">Tratamientos</a></li>
-                        <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('agenda')}} " href="">Agenda</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bolder " href={{route('mapa.index')}}>Mapa</a>
+                        </li>
+
                     @endif
                 </ul>
             </div>
@@ -41,6 +44,7 @@
             @endif
             @if(auth()->check())
                 <ul class="navbar-nav  ms-md-auto  me-3 me-lg-4">
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto != null && auth()->user()->foto != "" ) <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
                         <ul class="dropdown-menu dropdown-menu-end text-success" aria-labelledby="navbarDropdown">
