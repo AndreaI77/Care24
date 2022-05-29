@@ -22,20 +22,11 @@ class ComentarioController extends Controller
      */
     public function index()
     {
-        $citas=[];
-        if(auth()->user()->tipo !== 'cliente'){
-            $citas= Cita::get();
-            $servicios= Servicio::get();
-        }else{
-            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
-            foreach($clientes as $cliente){
-                $servicios=Servicio::where('cliente_id', $cliente->id)->get();
-                foreach($servicios as $servicio){
-                $citas=Cita::where('servicio_id', $servicio->id)->get();
-                }
-            }
-        }
-        return view('comentarios.index', compact('citas', 'servicios'));
+
+            $servicios= Servicio::orderBy('fecha','DESC')->get();
+
+        return view('comentarios.index', compact('servicios'));
+
     }
 
     public function edit($id)
@@ -69,8 +60,12 @@ class ComentarioController extends Controller
             $servicio->save();
 
            Session::flash('info', "Se ha guardado su comentario.");
-
-            return redirect()->route('inicio');
+            if($servicio->tipo == 'Cita médica'){
+                return redirect()->route('citas.index');
+            }else{
+                return redirect()->route('servicios.index');
+            }
+           ;
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');

@@ -6,8 +6,6 @@ $(document).ready(function () {
         method: "GET",
         url: "mapaClientes",
         success: function (data) {
-
-        //   console.log(data);
           for(let item of data){
             features.push( {
                 'type': 'Feature',
@@ -22,7 +20,7 @@ $(document).ready(function () {
                 }
                 })
             }
-            console.log(features);
+
             let longitud= -0.132348;
             let latitud = 38.540494;
             mapboxgl.accessToken = 'pk.eyJ1IjoicXdlcnR5NzciLCJhIjoiY2t3bDQycjdmMDh2dDJ1bG53c3MyMWkxZiJ9.dHJhIIsgx1lMHUpzZNXo-Q';

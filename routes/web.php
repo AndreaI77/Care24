@@ -68,9 +68,8 @@ Route::resource('servicios', ServicioController::class)->middleware('auth');
 Route::resource('tratamientos', TratamientoController::class)->middleware('auth');
 Route::resource('citas', CitaController::class)->middleware('auth');
 Route::resource('galeria', GaleriaController::class)->only('index')->middleware('auth');
-//Route::resource('mapa', MapaController::class)->only(['index','show'])->middleware('auth');
-Route::get('mapa', [MapaController::class, 'index'])->name('mapa.index');
-Route::get('mapaClientes', [MapaController::class, 'show'])->name('show');
+Route::get('mapa', [MapaController::class, 'index'])->name('mapa.index')->middleware('auth');
+Route::get('mapaClientes', [MapaController::class, 'show'])->name('show')->middleware('auth');
 Route::get('login', [LoginController::class, 'loginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login'])->name('login2');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
@@ -81,5 +80,7 @@ Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.sto
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
 Route::resource('perfil', PerfilController::class)->only('index', 'update')->middleware('auth');
+// Route::get('valoraciones', [ComentController::class, 'getData'])->name('coments');
 Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update')->middleware('auth');
+
 
