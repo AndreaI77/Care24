@@ -34,7 +34,7 @@ class MapaController extends Controller
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
                 foreach($servicios as $servicio){
                     foreach($clientes1 as $ct){
-                        if($ct->user->activo == 1){
+                        if($ct->user->fecha_baja == ""){
                             if($ct->id == $servicio->cliente_id){
                                 if(in_array($ct, $clientes) == false){
                                     $clientes[]=$ct;

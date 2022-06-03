@@ -1,8 +1,6 @@
 'use strict'
 document.addEventListener('DOMContentLoaded', function(){
-
     let tipo= document.getElementById('tipo');
-
     let select = document.getElementById('empleado').options;
     let seleccionado= document.getElementById('empleado').value;
         console.log(select.length);
@@ -11,31 +9,23 @@ document.addEventListener('DOMContentLoaded', function(){
         let otros=[{"value": "", "text": "Selecciona empleado"}];
         for(let item of select){
             let val= item.value;
-            //console.log(val);
             if(val != "" && val != null ){
                 let e = val.split(";");
-               // console.log(e[1]);
                 let elemento =[];
                 if(e[1] == "Limpiador"){
                     elemento ={"value": item.value, "text": item.text};
-                   // console.log(item.text);
                     limpieza.push(elemento);
                 }else if(e[1] == "Cuidador"){
                     elemento ={"value": item.value, "text": item.text};
-                    //console.log(item.text);
                     cuidados.push(elemento);
-                   // console.log(item.value);
                 }else if(e[1] == "Administrativo"){
                     elemento ={"value": item.value, "text": item.text};
                     console.log(item.text);
                     otros.push(elemento);
                 }
             }
-
         }
-
     cambiar();
-
     tipo.addEventListener('change', cambiar, false);
 
     function cambiar(){

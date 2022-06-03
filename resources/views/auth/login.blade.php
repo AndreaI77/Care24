@@ -22,14 +22,24 @@
                                         <input class="form-control" id="dni" name="dni" type="text" required/>
                                         <label for="dni">DNI/NIE:</label>
                                         <div class="invalid-feedback">El DNI/NIE es obligatorio.</div>
+                                        @if($errors->has('password'))
+                                            <div class='text-danger mens'>
+                                            {{$errors->first('dni')}}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="password"  name="password" type="password" required />
                                         <label for="password">Contraseña</label>
                                         <div class="invalid-feedback">La contraseña es obligatoria .</div>
+                                        @if($errors->has('password'))
+                                            <div class='text-danger mens'>
+                                            {{$errors->first('password')}}
+                                            </div>
+                                        @endif
                                     </div>
 
-                                    <input    name="fecha_baja" type="hidden" value="" />
+                                    <input  name="fecha_baja" type="hidden" value="" />
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                         <a class="small" href="{{route('recuperacion')}}">¡He olvidado mi contraseña!</a>
                                         {{-- <a class="small" href="{{route('home')}}">Volver</a> --}}

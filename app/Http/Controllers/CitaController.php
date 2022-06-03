@@ -124,7 +124,7 @@ class CitaController extends Controller
                 $ser->comentario=Crypt::encryptString($request->get('comentario'));
             }
 
-            $ser->valoracion=$request->get('valoracion');
+
             $cliente=Cliente::findOrFail($request->get('cliente'));
             $ser->cliente()->associate($cliente);
             $empleado= Empleado::findOrFail($request->get('empleado'));
@@ -257,7 +257,7 @@ class CitaController extends Controller
                 $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
             }
 
-            $cita->servicio->valoracion=$request->get('valoracion');
+
             $cita->servicio->cliente_id=$request->get('cliente');
             $cita->servicio->empleado_id=$request->get('empleado');
             $cita->servicio->save();

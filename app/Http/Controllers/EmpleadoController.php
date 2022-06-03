@@ -199,7 +199,7 @@ class EmpleadoController extends Controller
             {
                 if(Servicio::where('empleado_id', '=', $id)->first() != null || Informe::where('empleado_id', '=', $id)->first() != null
                     || Incidencia::where('empleado_id', '=', $id)->first() != null){
-                    return back()->with('error','Se han creado registros con este empleado, no puede ser eliminado.');
+                    return back()->with('error','Se han creado registros con este empleado, no puede ser eliminado. Lo puedes desactivar, asignándole una fecha de baja en la opción de editar.');
                 }else{
                     $empleado->user->delete();
                     $empleado->delete();

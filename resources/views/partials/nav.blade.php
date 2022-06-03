@@ -55,11 +55,16 @@
                     <li class="nav-item float-end me-4  "><a class="nav-link fw-bolder " href={{route('comentarios.index')}}>Comentarios</a></li>
                     @endif
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">@if (auth()->user()->foto != null && auth()->user()->foto != "" ) <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="" width="60"/> @else <i class="bi bi-person-circle"></i>@endif</a>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                            @if (auth()->user()->foto != null && auth()->user()->foto != "" )
+                                <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="" width="60"/>
+                            @else <i class="bi bi-person-circle"></i>
+                            @endif
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-end text-success" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-success" href="{{route('perfil.index')}}">Mi perfil</a></li>
+                            <li><a class="dropdown-item text-success" href="{{route('perfil.index')}}"><i class="bi bi-person-fill"></i> Mi perfil</a></li>
                             <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item text-success" href="{{route('logout')}}">Cerrar sesión</a></li>
+                            <li><a class="dropdown-item text-success" href="{{route('logout')}}"><i class="bi bi-dash-circle"></i> Cerrar sesión</a></li>
                         </ul>
                     </li>
                 </ul>

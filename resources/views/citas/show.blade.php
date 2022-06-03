@@ -24,8 +24,12 @@
                 </div>
             </div>
             <div class= " col-md-6 ps-3 mt-3 ">
-                <p><span class="fw-bolder"> Descripción:  <br/></span>{{Crypt::decryptString($cita->servicio->descripcion)}} </p>
-                <p><span class="fw-bolder">Comentario:  <br/></span>{{Crypt::decryptString($cita->servicio->comentario)}}</p>
+                <p><span class="fw-bolder"> Descripción:
+                    <br/></span>{{Crypt::decryptString($cita->servicio->descripcion)}}
+                </p>
+                <p><span class="fw-bolder">Comentario:
+                    <br/></span>{{Crypt::decryptString($cita->servicio->comentario)}}
+                </p>
 
             </div>
         </div>

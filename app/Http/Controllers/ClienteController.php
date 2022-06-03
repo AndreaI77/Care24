@@ -253,7 +253,7 @@ class ClienteController extends Controller
             {
                 if(Servicio::where('cliente_id', '=', $id)->first() != null || Tratamiento::where('cliente_id', '=', $id)->first() != null
                     || Incidencia::where('cliente_id', '=', $id)->first() != null){
-                    return back()->with('error','Se han creado registros con este cliente, no puede ser eliminado.');
+                    return back()->with('error','Se han creado registros con este cliente, no puede ser eliminado.Lo puedes desactivar, asignándole una fecha de baja en la opción de editar.');
                 }else{
                     $cl->user->delete();
                     $cl->delete();

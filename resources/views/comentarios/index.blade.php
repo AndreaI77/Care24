@@ -1,7 +1,7 @@
 @extends('template')
 @section('title','Servicios')
 @section("css")
-<script src="https://kit.fontawesome.com/b4f304c53c.js" crossorigin="anonymous"></script>
+{{-- <script src="https://kit.fontawesome.com/b4f304c53c.js" crossorigin="anonymous"></script> --}}
 
 @endsection
 
@@ -24,6 +24,19 @@
                                     <p class="float-end mb-0 text-muted">Valorado por: {{$cl->cliente->user->nombre}}</p>
                                     <p class= "mb-0 ">
                                         @foreach(range(1,5) as $i)
+                                            <span class="text-primary" >
+
+                                                @if($cl->valoracion >0)
+
+                                                    <i class="bi bi-star-fill"></i>
+                                                @else
+                                                <i class="bi bi-star"></i>
+
+                                                @endif
+                                            @php $cl->valoracion--; @endphp
+                                            </span>
+                                        @endforeach
+                                        {{-- @foreach(range(1,5) as $i)
                                             <span class="fa-stack text-primary" style="width:1em">
                                                 <i class="far fa-star fa-stack-1x"></i>
 
@@ -36,7 +49,7 @@
                                                 @endif
                                                 @php $cl->valoracion--; @endphp
                                             </span>
-                                        @endforeach
+                                        @endforeach --}}
                                     </p>
 
                                 </div>

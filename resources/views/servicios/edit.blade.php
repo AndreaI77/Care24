@@ -118,20 +118,12 @@
         </div>
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
-            <textarea class= "form-control" name="comentario" rows="3" cols="50">{{Crypt::decryptString($servicio->comentario)}}</textarea>
+            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo != "cliente") disabled @endif>{{Crypt::decryptString($servicio->comentario)}}</textarea>
 
         </div>
-        {{-- <div class= "col-lg-6">
-            <label class= "form-label fw-bolder" for="valoracion">Valoración:</label>
-            <div class="star_content">
-                <input name="rate" value="1" type="radio" class="star"/>
-                <input name="rate" value="2" type="radio" class="star"/>
-                <input name="rate" value="3" type="radio" class="star"/>
-                <input name="rate" value="4" type="radio" class="star" checked="checked"/>
-                <input name="rate" value="5" type="radio" class="star"/>
-            </div>
 
-        </div> --}}
+
+
 
     </div>
 

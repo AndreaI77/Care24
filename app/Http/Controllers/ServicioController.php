@@ -33,27 +33,20 @@ class ServicioController extends Controller
             $servicios= Servicio::get();
             return view('servicios.index', compact('servicios'));
         }else if(auth()->user()->tipo == 'cliente'){
-
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
             }
             return view('servicios.index', compact('servicios'));
-
         }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
             $empleados=Empleado::where('user_id', auth()->user()->id)->get();
-
             foreach($empleados as $emp){
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
-
             }
             return view('servicios.index', compact('servicios'));
         }else{
             return view('welcome');
         }
-
-
-
     }
 
     /**
@@ -95,7 +88,7 @@ class ServicioController extends Controller
             if($request->has('comentario')){
                 $ser->comentario=Crypt::encryptString($request->get('comentario'));
             }
-            $ser->valoracion=$request->get('valoracion');
+
             $cliente=Cliente::findOrFail($request->get('cliente'));
             $ser->cliente()->associate($cliente);
             $em=explode(";", $request->get('empleado'));
@@ -214,7 +207,7 @@ class ServicioController extends Controller
                 $ser->comentario=Crypt::encryptString($request->get('comentario'));
             }
 
-            $ser->valoracion=$request->get('valoracion');
+
             $ser->cliente_id=$request->get('cliente');
             $em=explode(";", $request->get('empleado'));
 

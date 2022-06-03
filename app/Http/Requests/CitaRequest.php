@@ -24,15 +24,15 @@ class CitaRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha'=> 'required | date_format:Y-m-d',
+            'fecha'=> 'required |date_format:Y-m-d',
             'hora_inicio'=> 'required |date_format:H:i',
-            'hora_final'=> 'required |date_format:H:i| after:hora_inicio',
+            'hora_final'=> 'required |date_format:H:i|after:hora_inicio',
             'estado'=> 'required',
             'cliente'=> 'required',
             'empleado'=> 'required',
             'especialidad' => 'required',
             'lugar' => 'required',
-            'hora_cita' => 'required |date_format:H:i|  after_or_equal:hora_inicio |  before:hora_final'
+            'hora_cita' => 'required |date_format:H:i|after_or_equal:hora_inicio|before:hora_final'
         ];
     }
     public function messages(){
