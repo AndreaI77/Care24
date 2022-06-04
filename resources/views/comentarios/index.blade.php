@@ -2,7 +2,7 @@
 @section('title','Servicios')
 @section("css")
 {{-- <script src="https://kit.fontawesome.com/b4f304c53c.js" crossorigin="anonymous"></script> --}}
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
 
 @section('content')
@@ -13,13 +13,16 @@
     @isset($servicios)
 
 
-        <div class="row row-cols-1 row-cols-lg-2 ps-4 pe-4 g-4">
-            <div class= "col" id="chart"></div>
+        <div class="row row-cols-1 row-cols-lg-2  g-4">
+            <div class= "col" id="chart">
+                <canvas id="myChart"></canvas>
+            </div>
             <div class="col">
                 @forelse($servicios as $cl)
                     @if(Crypt::decryptString($cl->comentario) != "")
                         <div >
-                            <div class="card mb-3 border border-warning ">
+                            <div class="card mb-3 border border-warning  ">
+                                <input typt= "hidden" class='tarjeta' name= "valor" value= "{{$cl->valoracion}}"/>
                                 <div class="card-header pb-0">
                                     <p class="float-end mb-0 text-muted">Valorado por: {{$cl->cliente->user->nombre}}</p>
                                     <p class= "mb-0 ">
@@ -81,5 +84,6 @@
 @endsection
 @section('js')
     <script type="text/javascript" src="{{ asset('js/coment.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/chart.js') }}" defer></script>
 
 @endsection
