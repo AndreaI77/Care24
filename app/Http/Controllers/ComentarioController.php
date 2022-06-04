@@ -31,9 +31,25 @@ class ComentarioController extends Controller
 
     public function edit($id)
     {
-        if(auth()->user()->tipo === 'cliente'){
-            $servicio= Servicio::findOrFail($id);
-            return view('comentarios.edit', compact('servicio'));
+        $cita=null;
+        $servicio = null;
+        if(auth()->user()->tipo == 'cliente'){
+
+            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $servicio1= Servicio::findOrFail($id);
+            $cita = Cita::where('servicio_id', $servicio1->id);
+            foreach($clientes as $cliente){
+                if($servicio1->cliente_id === $cliente->id){
+                    $servicio=$servicio1;
+                    $cita = Cita::where('servicio_id', $servicio->id);
+                }
+            }
+            if($servicio == null){
+                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                return redirect()->route('inicio');
+            }else{
+                return view('comentarios.edit', compact('servicio', 'cita'));
+            }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');

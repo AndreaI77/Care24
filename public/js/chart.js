@@ -48,8 +48,8 @@ let data = {
   datasets: [
     {
         label: "% sobre total de comentarios",
-      backgroundColor: "green",
-      borderColor: "green",
+      backgroundColor: "#198754",
+      borderColor: "#198754",
       data: porcentajes,
     },
 

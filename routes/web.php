@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\RecupController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\HorarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,5 +83,6 @@ Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
 Route::resource('perfil', PerfilController::class)->only('index', 'update')->middleware('auth');
 // Route::get('valoraciones', [ComentController::class, 'getData'])->name('coments');
 Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update')->middleware('auth');
+Route::resource('horarios', HorarioController::class)->only('index')->middleware('auth');
 
 

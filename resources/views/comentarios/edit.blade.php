@@ -6,65 +6,55 @@
     @csrf
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Valorar el servicio:</h1>
-    <div class= 'row row-cols-sm-2  p-2 border-bottom'>
+    <div class= 'row row-cols-sm-2  p-2 '>
         <div class= " col-md-6 ps-3 ">
             <p><span class="fw-bolder">Cliente:  </span>{{$servicio->cliente->user->nombre}}, {{$servicio->cliente->user->apellido}} </p>
             <p><span class="fw-bolder">Empleado:  </span>{{$servicio->empleado->user->nombre}}, {{$servicio->empleado->user->apellido}} </p>
             <p><span class="fw-bolder">Estado:  </span>{{$servicio->estado}} </p>
             <p><span class="fw-bolder">Tipo:  </span>{{$servicio->tipo}} </p>
-        </div>
-        <div class= " col-md-6 ps-3">
             <p><span class="fw-bolder">Fecha:  </span>{{Carbon\Carbon::parse($servicio->fecha)->format('d/m/Y')}} </p>
             <p><span class="fw-bolder">Desde: </span> {{Carbon\Carbon::parse($servicio->hora_inicio)->format('H:i')}}</p>
             <p><span class="fw-bolder">Hasta: </span> {{Carbon\Carbon::parse($servicio->hora_final)->format('H:i')}}</p>
-
         </div>
-        <div class= " col-md-6 ps-3 mt-3 ">
-            <p><span class="fw-bolder"> Descripción:  <br/></span>{{Crypt::decryptString($servicio->descripcion)}} </p>
 
-        </div>
-        <div class= "col-md-6">
+        <div class= "col-md-6 ps-3">
             <div >
-                <label class= "form-label fw-bolder text-primary fs-4" for="valoracion">Valoración:</label>
-                {{-- <input class= "col-md-4" type= "number" min='1' max='5' id='valoracion' name="valoracion" value="{{$servicio->valoracion}}" required> --}}
-                {{-- <div class="invalid-feedback">Escribe un número entre 1 y 5</div>
-                @if($errors->has('valoracion'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('valoracion')}}
-                    </div>
-                @endif --}}
+                <label class= "form-label fw-bolder text-success fs-4" for="valoracion">Valoración:</label>
+
                 <div class="star_content fs-bolder  ms-3">
-                    <input name="valoracion" value="5" type="radio"@if($servicio->valoracion == 5)checked @endif class="star"/>
-                    <label class="ms-2" for=valoracion>Muy satisfecho:</label><br/>
 
-                    <input name="valoracion" value="4" type="radio" @if($servicio->valoracion == 4)checked @endif class="star"/>
-                    <label class="ms-2" for=valoracion>Satisfecho:</label><br/>
-
-                    <input name="valoracion" value="3" type="radio" @if($servicio->valoracion == 3)checked @endif class="star"/>
-                    <label class="ms-2" for=valoracion>Bien:</label><br/>
+                        <input name="valoracion" value="5" type="radio"@if($servicio->valoracion == 5)checked @endif class="form-check-input" required/>
+                        <label class="ms-2 form-check-label" for=valoracion>Muy satisfecho:</label><br/>
 
 
-                    <input name="valoracion" value="2" type="radio" @if($servicio->valoracion == 2)checked @endif class="star"/>
-                    <label  class="ms-2" for=valoracion>Insatisfecho:</label><br/>
-                    <input name="valoracion" value="1" type="radio" @if($servicio->valoracion == 1)checked @endif class="star"/>
-                    <label class="ms-2" for=valoracion>Muy insatisfecho:</label><br/>
+                    <input name="valoracion" value="4" type="radio" @if($servicio->valoracion == 4)checked @endif class="form-check-input" required/>
+                    <label class="ms-2 form-check-label" for=valoracion>Satisfecho:</label><br/>
 
 
+                    <input name="valoracion" value="3" type="radio" @if($servicio->valoracion == 3)checked @endif class="form-check-input" required/>
+                    <label class="ms-2 form-check-label" for=valoracion>Bien:</label><br/>
 
 
+                    <input name="valoracion" value="2" type="radio" @if($servicio->valoracion == 2)checked @endif class="form-check-input" required/>
+                    <label  class="ms-2 form-check-label" for=valoracion>Insatisfecho:</label><br/>
+
+
+                    <input name="valoracion" value="1" type="radio" @if($servicio->valoracion == 1)checked @endif class="form-check-input" required/>
+                    <label class="ms-2 form-check-label" for=valoracion>Muy insatisfecho:</label><br/>
+
+                    <div class="invalid-feedback">Elige una opción</div>
+                    @if($errors->has('valoracion'))
+                        <div class='text-danger mens'>
+                        {{$errors->first('valoracion')}}
+                        </div>
+                    @endif
 
 
                 </div>
-                <div class="invalid-feedback">Elije una opción</div>
-                @if($errors->has('valoracion'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('valoracion')}}
-                    </div>
-                @endif
 
             </div>
             <div class= "">
-                <label class= "form-label fw-bolder text-primary fs-4" for="comentario">Comentario:</label>
+                <label class= "form-label fw-bolder text-success fs-4" for="comentario">Comentario:</label>
                 <textarea class= "form-control" name="comentario" rows="4" cols="50" required>{{Crypt::decryptString($servicio->comentario)}}</textarea>
                 <div class="invalid-feedback">Escribe un comentario.</div>
                 @if($errors->has('comentario'))
@@ -73,6 +63,9 @@
                     </div>
                 @endif
             </div>
+        </div>
+        <div class= " col-md-6 ps-3 mt-3 ">
+            <p><span class="fw-bolder"> Descripción:  <br/></span>{{Crypt::decryptString($servicio->descripcion)}} </p>
         </div>
     </div>
 

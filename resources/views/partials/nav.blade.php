@@ -28,10 +28,12 @@
                         <li class="nav-item "><a class="nav-link  text-sm-center fw-bolder  {{setActive('servicios')}}  " href="{{route('servicios.index')}}">Servicios</a></li>
                         <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('citas')}}" href="{{route('citas.index')}}">Citas médicas</a></li>
                         <li class="nav-item"><a class="nav-link text-sm-center fw-bolder  {{setActive('tratamientos')}} " href="{{route('tratamientos.index')}}">Tratamientos</a></li>
+                        <li class="nav-item"><a class="nav-link fw-bolder d-sm-none d-md-inline-block" href={{route('horarios.index')}}>Agenda</a></li>
                         <li class="nav-item"><a class="nav-link fw-bolder d-sm-none d-lg-inline-block" href={{route('mapa.index')}}>Mapa</a></li>
                         <li class= "nav-item dropdown d-none d-sm-inline d-lg-none">
                             <a class= "nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Más...</a>
                             <ul class="dropdown-menu">
+                                <li class="dropdown-item"><a class="nav-link fw-bolder d-md-none text-success" href={{route('horarios.index')}}>Agenda</a></li>
                                 <li class="dropdown-item"><a class=" nav-link fw-bolder text-success " href={{route('mapa.index')}}>Mapa</a></li>
                                 <li class="dropdown-item"><a class="nav-link fw-bolder text-success " href={{route('comentarios.index')}}>Comentarios</a></li>
                             </ul>

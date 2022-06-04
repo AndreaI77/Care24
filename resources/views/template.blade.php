@@ -19,8 +19,8 @@
 
     <main class="container pt-2 ">
         @include('partials.menu')
-        {{-- @include('partials.comentarios') --}}
-        {{-- <p class="float-end">{{currentDate("d/m/Y")}} </p> --}}
+
+        {{-- <p class="float-end">{{Carbon\Carbon::now()->format('d/m/Y')}} </p> --}}
         @include('flash-message')
         @yield('content')
     </main>

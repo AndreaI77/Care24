@@ -143,7 +143,23 @@
                     </ul>
                 </div>
             </div>
-            {{-- <a class="nav-link fw-bolder fs-5 text-success" href={{route('comentarios.index')}}>Ver comentarios</a> --}}
+
+                <div>
+                    <a class="nav-link fs-5 text-white" data-bs-toggle="collapse" href="#horarios" role="button" aria-expanded="false" aria-controls="horarios">
+                        Agenda <i class="bi bi-chevron-down float-end"></i>
+                    </a>
+                </div>
+                <div class="collapse " id="horarios">
+                    <div class="card card-body bg-dark">
+                        <ul class="nav flex-column border-start border-1 border-success">
+                            <li class="nav-item">
+                                <a class="nav-link fw-bolder fs-5 text-success" href={{route('horarios.index')}}>Agenda</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
 
         </div>
     </div>

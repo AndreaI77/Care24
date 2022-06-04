@@ -12,7 +12,9 @@ class Cita extends Model
     protected $fillable = [
         'servicio_id',
         'lugar',
-        'hora_cita'
+        'hora_cita',
+        'especialidad_id'
+
     ];
     public function servicio(){
         return $this->belongsTo(Servicio::class);
