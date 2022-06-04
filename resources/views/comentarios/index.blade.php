@@ -22,7 +22,7 @@
                     @if(Crypt::decryptString($cl->comentario) != "")
                         <div >
                             <div class="card mb-3 border border-warning  ">
-                                <input typt= "hidden" class='tarjeta' name= "valor" value= "{{$cl->valoracion}}"/>
+                                <input type= "hidden" class='tarjeta' name= "valor" value= "{{$cl->valoracion}}"/>
                                 <div class="card-header pb-0">
                                     <p class="float-end mb-0 text-muted">Valorado por: {{$cl->cliente->user->nombre}}</p>
                                     <p class= "mb-0 ">
