@@ -5,18 +5,16 @@
 @endsection
 
 @section('content')
+
+<h1 class="bg-success bg-opacity-25 text-success text-center mb-3">Agenda:</h1>
 <form action="">
-    <h1 class="bg-success bg-opacity-25 text-success text-center mb-3">Agenda:</h1>
 <div class='d-flex justify-content-end bg-light me-2 ms-2 p-1 pe-2'>
     <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Borrar filtros</button>
 </div>
 <div class= "row row-cols-1  row-cols-lg-2 bg-light me-2 ms-2 mb-3 p-3 pt-0">
 
     <div class= "col d-inline-flex justify-content-start ">
-        {{-- <div class='row me-5' id ="check1">
-            <label for="check">Ver todo:</label>
-            <input type='checkbox' name='check' id='check' checked>
-        </div> --}}
+
         <div class='row ' id ="fecha1">
             <label for="fecha">Elige fecha:</label>
             <input type='date' name='fecha' id='fecha' value="{{Carbon\Carbon::now()->format('Y-m-d')}}">
@@ -44,7 +42,7 @@
                         @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
                             <option value="{{$cl->user->nombre}}, {{$cl->user->apellido}}" >{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
                         @endif
-                @endforeach
+                    @endforeach
                 </select>
             </div>
         @endif

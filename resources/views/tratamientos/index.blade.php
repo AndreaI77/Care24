@@ -6,6 +6,62 @@
 
 @section('content')
 <h1 class="bg-success bg-opacity-25 text-success text-center">Tratamientos </h1>
+<form action="">
+    <div class= "mb-4 d-flex flex-column bg-light">
+
+        <div class= " d-flex  justify-content-center me-2 ms-2 p-3 pe-2">
+
+            <div class='row ' id ="fecha1">
+                <label for="fecha">Elige fecha:</label>
+                <input type='date' name='fecha' id='fecha' value="{{Carbon\Carbon::now()->format('Y-m-d')}}">
+            </div>
+
+            @if (auth()->user()->tipo != 'cliente' )
+                <div class= 'row ms-5 me-3' id ="clt1">
+                    <label for="clt">Cliente:</label>
+                    <select name="clt"  id="clt" >
+                        <option value="" selected hidden >Selecciona cliente</option>
+                        @foreach($clientes as $cl)
+                            @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
+                                <option value="{{$cl->user->nombre}}, {{$cl->user->apellido}}" >{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
+                            @endif
+                    @endforeach
+                    </select>
+                </div>
+
+                <div class=' d-none d-md-flex justify-self-end align-self-end me-2 ms-2 '>
+                    <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Borrar cliente</button>
+                </div>
+            @endif
+        </div>
+        @if (auth()->user()->tipo != 'cliente' )
+            <div class=' d-md-none justify-self-end align-self-end  p-2  me-2'>
+                <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Borrar cliente</button>
+            </div>
+        @endif
+    </div>
+</form>
+<div class= "d-flex justify-content-center">
+    <div class=" col col-lg-6   border m-2 ps-2 pe-2 mb-4" id="agenda">
+        <div id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
+        <div id="8"><span class="fw-bolder">8:00</span></div><hr class="mb-0"/>
+        <div id="9"><span class="fw-bolder">9:00</span> </div><hr class="mb-0"/>
+        <div id="10"><span class="fw-bolder">10:00</span> </div><hr class="mb-0"/>
+        <div id="11"><span class="fw-bolder">11:00</span> </div><hr class="mb-0"/>
+        <div id="12"><span class="fw-bolder">12:00</span> </div><hr class="mb-0"/>
+        <div id="13"><span class="fw-bolder">13:00</span> </div><hr class="mb-0"/>
+        <div id="14"><span class="fw-bolder">14:00</span> </div><hr class="mb-0"/>
+        <div id="15"><span class="fw-bolder">15:00</span></div><hr class="mb-0"/>
+        <div id="16"><span class="fw-bolder">16:00</span> </div><hr class="mb-0"/>
+        <div id="17"><span class="fw-bolder">17:00</span> </div><hr class="mb-0"/>
+        <div id="18"><span class="fw-bolder">18:00</span> </div><hr class="mb-0"/>
+        <div id="19"><span class="fw-bolder">19:00</span> </div><hr class="mb-0"/>
+        <div id="20"><span class="fw-bolder">20:00</span> </div><hr class="mb-0"/>
+        <div id="21"><span class="fw-bolder">21:00</span> </div><hr class="mb-0"/>
+        <div id="despues"><span class="fw-bolder">Después de 21:00</span> </div><hr class="mb-0"/>
+    </div>
+</div>
+<h2 class="bg-success bg-opacity-25 text-success text-center mb-3">Todos los tratamientos:</h2>
 
 <div class="table-responsive">
 
@@ -29,10 +85,10 @@
 
                     <td><a class= "nav-link p-0 m-0 text-center" href="{{route('tratamientos.show', $trat->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
                     <td class="cliente">{{$trat->cliente->user->nombre}}, {{$trat->cliente->user->apellido}} </td>
-                    <td class="empleado">{{Crypt::decryptString($trat->medicamento->nombre)}} ({{$trat->medicamento->cantidad}}) </td>
+                    <td class="empleado">{{Crypt::decryptString($trat->medicamento->nombre)}} ({{$trat->medicamento->cantidad}}mg) </td>
                     <td class="fecha_principio">{{Carbon\Carbon::parse($trat->fecha_principio)->format('d/m/Y')}} </td>
                     <td class="fecha_fin"> @isset(($trat->fecha_fin)){{Carbon\Carbon::parse($trat->fecha_fin)->format('d/m/Y')}} @endisset</td>
-                    <td class="cantidad">{{$trat->cantidad}} </td>
+                    <td class="cantidad">{{$trat->cantidad}}</td>
                     <td class="hora">{{Carbon\Carbon::parse($trat->hora)->format('H:i')}} </td>
                     {{-- <td class="descrip">@isset(($trat->servicio->descripcion)){{Crypt::decryptString($trat->servicio->descripcion)}} @endisset</td> --}}
                 </tr>
@@ -52,6 +108,7 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" ></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tabla.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/tratamientos.js') }}"></script>
 
 
 @endsection

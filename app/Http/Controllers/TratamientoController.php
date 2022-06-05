@@ -29,25 +29,27 @@ class TratamientoController extends Controller
         $tratamientos=[];
         if(auth()->user()->tipo == 'Administrativo' ){
             $tratamientos = Tratamiento::orderBy('hora','ASC')->get();
-            return view('tratamientos.index', compact('tratamientos'));
+            $clientes = Cliente::get();
+            return view('tratamientos.index', compact('tratamientos','clientes'));
 
         }else if(auth()->user()->tipo == 'cliente'){
-            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
-            foreach($clientes as $cliente){
+            $clientes1=Cliente::where('user_id', auth()->user()->id)->get();
+            foreach($clientes1 as $cliente){
                 $tratamientos=Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora','ASC')->get();
 
             }
+
             return view('tratamientos.index', compact('tratamientos'));
         }else if(auth()->user()->tipo == 'Cuidador'){
             $empleados =Empleado::where('user_id', auth()->user()->id)->get();
 
-            $clientes=[];
+            $clientes2=[];
             foreach($empleados as $empleado){
                 $servicios=Servicio::where('empleado_id', $empleado->id)->get();
                 foreach($servicios as $servicio){
                     $clientes1= Cliente::where('id', $servicio->cliente_id)->get();
                     foreach($clientes1 as $cliente){
-                        if(in_array($cliente, $clientes) == false){
+                        if(in_array($cliente, $clientes2) == false){
                             $clientes[]=$cliente;
                             $tratamientos1=Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora','ASC')->get();
                             foreach($tratamientos1 as $trat){
@@ -59,7 +61,8 @@ class TratamientoController extends Controller
                     }
                 }
             }
-            return view('tratamientos.index', compact('tratamientos'));
+            $clientes=Cliente::get();
+            return view('tratamientos.index', compact('tratamientos','clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
