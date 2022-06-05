@@ -5,37 +5,103 @@
 @endsection
 
 @section('content')
-<h1 class="bg-success bg-opacity-25 text-success text-center mb-3">Agenda</h1>
-<div class= "row row-cols-1  row-cols-lg-2  p-3">
-    <div class= "col d-inline-flex justify-content-start   mb-3 bg-light p-3 ">
-        <div class='row me-5' id ="check1">
+<form action="">
+    <h1 class="bg-success bg-opacity-25 text-success text-center mb-3">Agenda:</h1>
+<div class='d-flex justify-content-end bg-light me-2 ms-2 p-1 pe-2'>
+    <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Borrar filtros</button>
+</div>
+<div class= "row row-cols-1  row-cols-lg-2 bg-light me-2 ms-2 mb-3 p-3 pt-0">
+
+    <div class= "col d-inline-flex justify-content-start ">
+        {{-- <div class='row me-5' id ="check1">
             <label for="check">Ver todo:</label>
             <input type='checkbox' name='check' id='check' checked>
-        </div>
+        </div> --}}
         <div class='row ' id ="fecha1">
             <label for="fecha">Elige fecha:</label>
-            <input type='date' name='fecha' id='fecha' value="">
+            <input type='date' name='fecha' id='fecha' value="{{Carbon\Carbon::now()->format('Y-m-d')}}">
         </div>
+        @if (auth()->user()->tipo == 'cliente')
+            <div class= 'row ms-5 me-5' id ="emp1">
+                <label for="emp">Empleado:</label>
+                <select name="emp"  id="emp" >
+                    <option value="" selected hidden >Selecciona empleado</option>
+                    @foreach($empleados as $em)
+                        @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "") && $em->user_id != 1)
+                            <option value="{{$em->user->nombre}}, {{$em->user->apellido}}" >{{$em->user->nombre}}, {{$em->user->apellido}} </option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        @endif
+
+        @if (auth()->user()->tipo == 'Cuidador' || (auth()->user()->tipo == 'Limpiador') )
+            <div class= 'row ms-5 me-3' id ="clt1">
+                <label for="clt">Cliente:</label>
+                <select name="clt"  id="clt" >
+                    <option value="" selected hidden >Selecciona cliente</option>
+                    @foreach($clientes as $cl)
+                        @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
+                            <option value="{{$cl->user->nombre}}, {{$cl->user->apellido}}" >{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
+                        @endif
+                @endforeach
+                </select>
+            </div>
+        @endif
+
     </div>
-    <div class= " col d-inline-flex justify-content-start  mb-3 bg-light p-3 ">
-        @if (auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador') )
+
+    <div class= " col d-inline-flex justify-content-start mt-2 ">
+        @if (auth()->user()->tipo == 'Administrativo')
             <div class= 'row me-5' id ="emp1">
                 <label for="emp">Empleado:</label>
                 <select name="emp"  id="emp" >
-                    <option value="" selected hidden disabled>Selecciona empleado</option>
+                    <option value="" selected hidden >Selecciona empleado</option>
+                    @foreach($empleados as $em)
+                        @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "") && $em->user_id != 1)
+                            <option value="{{$em->user->nombre}}, {{$em->user->apellido}}" >{{$em->user->nombre}}, {{$em->user->apellido}} </option>
+                        @endif
+                    @endforeach
                 </select>
             </div>
-        @endif
-        @if (auth()->user()->tipo != 'cliente')
+
             <div class= 'row me-3' id ="clt1">
                 <label for="clt">Cliente:</label>
                 <select name="clt"  id="clt" >
-                    <option value="" selected hidden disabled>Selecciona cliente</option>
+                    <option value="" selected hidden >Selecciona cliente</option>
+                    @foreach($clientes as $cl)
+                    @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
+                    <option value="{{$cl->user->nombre}}, {{$cl->user->apellido}}" >{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
+                    @endif
+                @endforeach
                 </select>
             </div>
         @endif
+
     </div>
+
 </div>
+</form>
+<div class=" border m-2 ps-2 pe-2 mb-4" id="agenda">
+    <div id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
+    <div id="8"><span class="fw-bolder">8:00</span></div><hr class="mb-0"/>
+    <div id="9"><span class="fw-bolder">9:00</span> </div><hr class="mb-0"/>
+    <div id="10"><span class="fw-bolder">10:00</span> </div><hr class="mb-0"/>
+    <div id="11"><span class="fw-bolder">11:00</span> </div><hr class="mb-0"/>
+    <div id="12"><span class="fw-bolder">12:00</span> </div><hr class="mb-0"/>
+    <div id="13"><span class="fw-bolder">13:00</span> </div><hr class="mb-0"/>
+    <div id="14"><span class="fw-bolder">14:00</span> </div><hr class="mb-0"/>
+    <div id="15"><span class="fw-bolder">15:00</span></div><hr class="mb-0"/>
+    <div id="16"><span class="fw-bolder">16:00</span> </div><hr class="mb-0"/>
+    <div id="17"><span class="fw-bolder">17:00</span> </div><hr class="mb-0"/>
+    <div id="18"><span class="fw-bolder">18:00</span> </div><hr class="mb-0"/>
+    <div id="19"><span class="fw-bolder">19:00</span> </div><hr class="mb-0"/>
+    <div id="20"><span class="fw-bolder">20:00</span> </div><hr class="mb-0"/>
+    <div id="21"><span class="fw-bolder">21:00</span> </div><hr class="mb-0"/>
+    <div id="despues"><span class="fw-bolder">Después de 21:00</span> </div><hr class="mb-0"/>
+
+</div>
+<h2 class="bg-success bg-opacity-25 text-success text-center mb-3">Todos los servicios:</h2>
 <div class="table-responsive mb-4">
 
     @isset($servicios)
@@ -47,12 +113,12 @@
                     <th class="text-center fecha">Fecha</th>
                     <th class="text-center h-i"> Hora inicio</th>
                     <th class="text-center h-f"> Hora final</th>
-                    @if (auth()->user()->tipo != 'cliente')
+                    {{-- @if (auth()->user()->tipo != 'cliente') --}}
                         <th class="text-center cliente"> Cliente</th>
-                    @endif
-                    @if(auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador'))
+                    {{-- @endif
+                    @if(auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador')) --}}
                         <th class="text-center empleado"> Empleado</th>
-                    @endif
+                    {{-- @endif --}}
                     <th class="text-center tipo"> Tipo de&nbsp;servicio</th>
                     <th class="text-center estado"> Estado</th>
                     <th class="text-center h_c"> Hora cita</th>
@@ -82,12 +148,12 @@
 
                                 <td class="h-i">{{Carbon\Carbon::parse($cl->hora_inicio)->format('H:i')}} </td>
                                 <td class="h-f">{{Carbon\Carbon::parse($cl->hora_final)->format('H:i')}} </td>
-                                @if(auth()->user()->tipo != 'cliente')
-                                    <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}} </td>
-                                @endif
-                                @if(auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador'))
-                                    <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}} </td>
-                                @endif
+                                {{-- @if(auth()->user()->tipo != 'cliente') --}}
+                                    <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}}</td>
+                                {{-- @endif
+                                @if(auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador')) --}}
+                                    <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}}</td>
+                                {{-- @endif --}}
                                 <td class="tipo">{{$cl->tipo}} </td>
                                 <td class="estado">{{$cl->estado}} </td>
                                 @forelse($citas as $cita)

@@ -76,7 +76,7 @@
                             </div>
                             <div>
                                 <label for="mensaje" class="form-label">Escribe tu mensaje (opcional):</label>
-                                <textarea class="form-control" name="mensaje" id="mensaje" rows="3">{{old('mensaje')}}"</textarea>
+                                <textarea class="form-control" name="mensaje" id="mensaje" rows="3">{{old('mensaje')}}</textarea>
                                 @if($errors->has('mensaje'))
                                     <div class='text-danger mens'>
                                     {{$errors->first('mensaje')}}

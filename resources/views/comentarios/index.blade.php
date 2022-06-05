@@ -83,7 +83,7 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/coment.js') }}" defer></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/coment.js') }}" defer></script> --}}
     <script type="text/javascript" src="{{ asset('js/chart.js') }}" defer></script>
 
 @endsection

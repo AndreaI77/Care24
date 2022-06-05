@@ -24,14 +24,16 @@ class HorarioController extends Controller
         $servicios=[];
         if(auth()->user()->tipo == 'Administrativo' ){
             $citas= Cita::get();
-            $servicios = Servicio::orderBy('fecha','ASC')->get();
-            return view('horarios.index', compact('citas', 'servicios'));
+            $servicios = Servicio::orderBy('fecha','DESC')->get();
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            return view('horarios.index', compact('citas', 'servicios', 'clientes', 'empleados'));
 
         }else if(auth()->user()->tipo == 'cliente'){
-            $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+            $clientes1=Cliente::where('user_id', auth()->user()->id)->get();
             $citas1 = Cita::get();
-            foreach($clientes as $cliente){
-                $servicios=Servicio::where('cliente_id', $cliente->id)->get();
+            foreach($clientes1 as $cliente){
+                $servicios=Servicio::where('cliente_id', $cliente->id)->orderBy('fecha','DESC')->get();
 
                 foreach($servicios as $servicio){
                     foreach($citas1 as $ct){
@@ -41,12 +43,14 @@ class HorarioController extends Controller
                     }
                 }
             }
-            return view('horarios.index', compact('citas', 'servicios'));
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            return view('horarios.index', compact('citas', 'servicios', 'clientes', 'empleados'));
         }else if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador'){
-            $empleados=Empleado::where('user_id', auth()->user()->id)->get();
+            $empleados1=Empleado::where('user_id', auth()->user()->id)->get();
             $citas1 = Cita::get();
-            foreach($empleados as $emp){
-                $servicios=Servicio::where('empleado_id', $emp->id)->get();
+            foreach($empleados1 as $emp){
+                $servicios=Servicio::where('empleado_id', $emp->id)->orderBy('fecha','DESC')->get();
 
                 foreach($servicios as $servicio){
                     foreach($citas1 as $ct){
@@ -56,7 +60,10 @@ class HorarioController extends Controller
                     }
                 }
             }
-            return view('horarios.index', compact('citas', 'servicios'));
+            $clientes=Cliente::get();
+            $empleados=Empleado::get();
+            return view('horarios.index', compact('citas', 'servicios', 'clientes', 'empleados'));
+
         }else{
             return view('welcome');
         }
