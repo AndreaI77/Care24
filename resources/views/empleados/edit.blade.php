@@ -120,7 +120,7 @@
                     </textarea>
                     <div class= "">
                         <label class= "form-label fw-bolder" for= "fecha_alta">Fecha de alta:</label>
-
+                        <input class="form-control" type="hidden" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}">
                         <input class="form-control" type="date" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}" disabled>
                     </div>
                     <div class= "">

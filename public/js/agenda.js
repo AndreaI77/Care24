@@ -14,11 +14,8 @@ $(document).ready(function () {
         servicios.push(el);
     });
 
-    console.log(servicios);
-
    $('#agenda > div > p').remove();
    filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(),$('#emp').val());
-
 
    $('#borrar').on('click', function(){
        $('form')[0].reset();
@@ -103,7 +100,7 @@ $(document).ready(function () {
             if(datos[0].trim() == dat[0].trim() && datos[1].trim() == dat[1].trim() && datos[2].trim() == dat[2].trim()){
 
                 if(item[6] == "Cita médica"){
-                    console.log(item);
+
                     texto=`<p class= 'ms-5 '><span class="text-success">Hora inicio: </span>`+item[2]+`, <span class="text-success">Hora final: </span>`+item[3]+`, <span class="text-success">Cliente: </span>`+item[4]+`,
                     <span class="text-success">Empleado: </span>`+item[5]+`, <span class="text-success">Tipo: </span>`+item[6]+`, <span class="text-success">Estado: </span>`+item[7]+`,
                     <span class="text-success">Hora cita: </span>`+item[8]+`, <span class="text-success">Lugar: </span>`+item[9]+`, <span class="text-success">Especialidad: </span>`+item[10]+`</p>`;

@@ -20,11 +20,6 @@ for(let item of comentarios){
     }
 
 }
-console.log(total);
-console.log(cinco);
-console.log(cuatro);
-console.log(tres);
-console.log(dos);
 
 let cinco1= 0;
 let cuatro1=0;

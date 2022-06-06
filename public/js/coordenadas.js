@@ -36,9 +36,9 @@ function iniciar() {
         let div = document.getElementById('divcoor');
         div.appendChild(cx);
         div.appendChild(cy);
-        console.log("Latitud: " + latitud);
-        console.log("Longitud: " + longitud);
-        console.log("Exactitud: " + accuracy + " mts.");
+        // console.log("Latitud: " + latitud);
+        // console.log("Longitud: " + longitud);
+        // console.log("Exactitud: " + accuracy + " mts.");
     }
     function errores(error) {
       alert("Error: " + error.code + " " + error.message);
