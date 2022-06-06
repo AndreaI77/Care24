@@ -22,7 +22,7 @@
                     @forelse($especialidades as $cl)
                         <tr  id="{{$cl->id}}">
 
-                            <td class="text-center">{{Crypt::decryptString($cl->nombre)}} </td>
+                            <td class="text-center">{{Crypt::decryptString($cl->nombre)}}</td>
                             <td class="text-start">
                                 <form action= "{{route('especialidades.destroy', $cl->id)}}" class="form" method="POST">
                                     @method('DELETE')

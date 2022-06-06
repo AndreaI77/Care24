@@ -24,11 +24,11 @@
             @forelse($informes as $cl)
 
                     <tr class="text-center" id="{{$cl->id}}">
-                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('informes.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
-                        <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} </td>
-                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}} </td>
-                        <td class="titulo">{{Crypt::decryptString($cl->titulo)}} </td>
-                        <td class="estado">{{$cl->estado}} </td>
+                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('informes.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                        <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}</td>
+                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}}</td>
+                        <td class="titulo">{{Crypt::decryptString($cl->titulo)}}</td>
+                        <td class="estado">{{$cl->estado}}</td>
                     </tr>
 
             @empty <li>No elements to be shown</li>

@@ -35,6 +35,7 @@ class CitaController extends Controller
         }else if(auth()->user()->tipo == 'cliente'){
             $clientes=Cliente::where('user_id', auth()->user()->id)->get();
             $citas1 = Cita::get();
+
             foreach($clientes as $cliente){
                 $servicios=Servicio::where('cliente_id', $cliente->id)->get();
 
@@ -97,7 +98,7 @@ class CitaController extends Controller
             $especialidades=Especialidad::get();
             return view('citas.create', compact('clientes', 'especialidades'));
         }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
         }
     }
@@ -123,8 +124,6 @@ class CitaController extends Controller
             if($request->has('comentario')){
                 $ser->comentario=Crypt::encryptString($request->get('comentario'));
             }
-
-
             $cliente=Cliente::findOrFail($request->get('cliente'));
             $ser->cliente()->associate($cliente);
             $empleado= Empleado::findOrFail($request->get('empleado'));
@@ -142,7 +141,7 @@ class CitaController extends Controller
 
             return back()->with('info','Se ha creado el registro.');
         }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
         }
     }
@@ -155,8 +154,6 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-
-
         $cita = null;
         if(auth()->user()->tipo == 'Administrativo'){
             $cita=Cita::findOrFail($id);
@@ -173,7 +170,7 @@ class CitaController extends Controller
             }
 
             if($cita == null){
-                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                Session::flash('danger','No está autorizado a acceder a esta página.');
                 return redirect()->route('inicio');
             }else{
                 return view('citas.show', compact('cita'));
@@ -188,7 +185,7 @@ class CitaController extends Controller
                 }
             }
             if($cita == null){
-                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                Session::flash('danger','No está autorizado a acceder a esta página.');
                 return redirect()->route('inicio');
             }else{
                 return view('citas.show', compact('cita'));
@@ -230,7 +227,7 @@ class CitaController extends Controller
                 $especialidades=Especialidad::get();
                 return view('citas.edit', compact('cita','clientes', 'especialidades'));
         }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
         }
     }
@@ -257,7 +254,6 @@ class CitaController extends Controller
                 $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
             }
 
-
             $cita->servicio->cliente_id=$request->get('cliente');
             $cita->servicio->empleado_id=$request->get('empleado');
             $cita->servicio->save();
@@ -270,7 +266,7 @@ class CitaController extends Controller
 
             return redirect()->route('citas.show', $id);
         }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
         }
     }
@@ -285,22 +281,16 @@ class CitaController extends Controller
     {
         if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
             $cita= Cita::findOrFail($id);
-            try
-            {
-
-                    $cita->servicio->delete();
-                    $cita->delete();
-                    Session::flash('info', "Se ha eliminado el registro.");
-                    return redirect()->route('citas.index');
-
-
-
-            }catch(Exception $e){
+            try {
+                $cita->servicio->delete();
+                $cita->delete();
+                Session::flash('info', "Se ha eliminado el registro.");
+                return redirect()->route('citas.index');
+            } catch (Exception $e) {
                 return $e->getMessage();
-
             }
         }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
+            Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
         }
     }

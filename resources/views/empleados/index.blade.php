@@ -33,7 +33,7 @@
                     <label class="form-check-label" for="apellidos">Apellidos</label>
                     <input class="form-check-input" type="checkbox"  id="apellido" >
                 </div>
-                <div class="form-check me-3">
+                <div class="form-check ">
                     <label class="form-check-label" for="domicilio">Domicilio</label>
                     <input class="form-check-input" type="checkbox"  id="domicilio" >
                 </div>
@@ -44,27 +44,27 @@
                         <label class="form-check-label" for="dni">DNI</label>
                         <input class="form-check-input" type="checkbox"  id="dni" >
                     </div>
-
                     <div class="form-check me-3">
+                        <label class="form-check-label" for="fnac">Fecha nacimiento</label>
+                        <input class="form-check-input" type="checkbox"  id="fnac" >
+                    </div>
+                    <div class="form-check ">
                         <label class="form-check-label" for="email">E-mail</label>
                         <input class="form-check-input" type="checkbox" id="email" >
                     </div>
-                    <div class="form-check me-3">
-                        <label class="form-check-label" for="tel">Teléfono</label>
-                        <input class="form-check-input" type="checkbox" id="tel" >
-                    </div>
+
                 </div>
 
             <div class="d-xxl-flex  ">
-                <div class="form-check me-3">
-                    <label class="form-check-label" for="fnac">Fecha nacimiento</label>
-                    <input class="form-check-input" type="checkbox"  id="fnac" >
+                <div class="form-check me-3 ">
+                    <label class="form-check-label" for="tel">Teléfono</label>
+                    <input class="form-check-input" type="checkbox" id="tel" >
                 </div>
                 <div class="form-check me-3">
                     <label class="form-check-label" for="puesto">Puesto</label>
                     <input class="form-check-input" type="checkbox"  id="puesto" >
                 </div>
-                <div class="form-check me-3">
+                <div class="form-check ">
                     <label class="form-check-label" for="idioma">Idiomas</label>
                     <input class="form-check-input" type="checkbox" id="idioma" >
                 </div>
@@ -87,10 +87,10 @@
 
 
 </div>
-<div class="table-responsive">
+<div class="table-responsive mb-4">
 
     @isset($empleados)
-    <table class = "table table-sm table-striped" id="tabla">
+    <table class = "table table-sm table-striped " id="tabla">
         <thead>
         <tr class= "text-center">
             <th>Detalles</th>
@@ -98,9 +98,9 @@
             <th class="apellido">Apellidos</th>
             <th class="domicilio">Domicilio</th>
             <th class="dni">DNI</th>
+            <th class="f_nac">Fecha nacimiento</th>
             <th class="email">E-mail</th>
             <th class="tel">Telefono</th>
-            <th class="f_nac">Fecha nacimiento</th>
             <th class="puesto">Puesto</th>
             <th class="idioma">Idiomas</th>
             <th class="f-a">Fecha de&nbsp;alta</th>
@@ -116,9 +116,9 @@
                         <td class="apellido">{{$empleado->user->apellido}}</td>
                         <td class="domicilio">{{$empleado->user->domicilio}}</td>
                         <td class="dni">{{$empleado->user->dni}}</td>
+                        <td class= "f_nac">{{ Carbon\Carbon::parse($empleado->user->fecha_nac)->format('d/m/Y')}}</td>
                         <td class="email">{{$empleado->user->email}}</td>
                         <td class="tel">{{$empleado->user->tel}}</td>
-                        <td class= "text-center f_nac">{{ Carbon\Carbon::parse($empleado->user->fecha_nac)->format('d/m/Y')}}</td>
                         <td class="puesto">{{$empleado->puesto}}</td>
                         <td class="idioma">{{$empleado->idiomas}}</td>
                         <td class= "f-a">{{ Carbon\Carbon::parse($empleado->user->created_at)->format('d/m/Y')}}</td>

@@ -134,7 +134,7 @@
                             <tr class="text-center" id="{{$cl->id}}">
                                 @forelse($citas as $cita)
                                     @if($cita->servicio_id == $cl->id)
-                                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('citas.show', $cita->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
+                                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('citas.show', $cita->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
                                         @php $ct = true; @endphp
                                     @endif
                                 @empty

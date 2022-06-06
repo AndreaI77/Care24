@@ -25,9 +25,9 @@
                         @forelse($medicamentos as $cl)
                             <tr class="text-center"  id="{{$cl->id}}">
 
-                                <td class="nombre">{{Crypt::decryptString($cl->nombre)}} </td>
-                                <td class="principio">{{Crypt::decryptString($cl->principio_ac)}} </td>
-                                <td class="cantidad">{{$cl->cantidad}} mg </td>
+                                <td class="nombre">{{Crypt::decryptString($cl->nombre)}}</td>
+                                <td class="principio">{{Crypt::decryptString($cl->principio_ac)}}</td>
+                                <td class="cantidad">{{$cl->cantidad}} mg</td>
                                 <td class="">
                                     <form action= "{{route('medicamentos.destroy', $cl->id)}}" class="form" method="POST">
                                         @method('DELETE')

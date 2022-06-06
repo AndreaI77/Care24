@@ -31,17 +31,17 @@
             @forelse($servicios as $cl)
                 @if($cl->tipo != "Cita médica")
                     <tr class="text-center" id="{{$cl->id}}">
-                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
-                        <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} </td>
-                        <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}} </td>
-                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}} </td>
-                        <td class="h-i">{{Carbon\Carbon::parse($cl->hora_inicio)->format('H:i')}} </td>
-                        <td class="h-f">{{Carbon\Carbon::parse($cl->hora_final)->format('H:i')}} </td>
-                        <td class="tipo">{{$cl->tipo}} </td>
-                        <td class="estado">{{$cl->estado}} </td>
+                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                        <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}</td>
+                        <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}}</td>
+                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}}</td>
+                        <td class="h-i">{{Carbon\Carbon::parse($cl->hora_inicio)->format('H:i')}}</td>
+                        <td class="h-f">{{Carbon\Carbon::parse($cl->hora_final)->format('H:i')}}</td>
+                        <td class="tipo">{{$cl->tipo}}</td>
+                        <td class="estado">{{$cl->estado}}</td>
                         {{-- <td class="descrip">@isset(($cl->descripcion)){{Crypt::decryptString($cl->descripcion)}} @endisset</td>
                         <td class="comentario">{{Crypt::decryptString($cl->comentario)}} </td> --}}
-                        <td class="valoracion">{{$cl->valoracion}} </td>
+                        <td class="valoracion">{{$cl->valoracion}}</td>
                     </tr>
                 @endif
             @empty <li>No elements to be shown</li>

@@ -15,24 +15,24 @@
         <tr>
             <th class="text-center">Detalles</th>
             <th class="text-center fecha">Fecha</th>
-            <th class="text-center empleado"> Autor</th>
-            <th class="text-center cliente"> Cliente</th>
-            <th class="text-center cliente"> Tipo de&nbsp;incidencia</th>
+            <th class="text-center empleado">Autor</th>
+            <th class="text-center cliente">Cliente</th>
+            <th class="text-center tipo ">Tipo de&nbsp;incidencia</th>
             <th class="text-center comentario">Título</th>
-            <th class="text-center estado"> Estado</th>
+            <th class="text-center estado">Estado</th>
         </tr>
         </thead>
         <tbody>
             @forelse($incidencias as $cl)
 
                     <tr class="text-center" id="{{$cl->id}}">
-                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('incidencias.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
-                        <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} </td>
-                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}} </td>
-                        <td class="empleado">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}} </td>
-                        <td class="estado">{{$cl->tipo}} </td>
-                        <td class="titulo">{{Crypt::decryptString($cl->titulo)}} </td>
-                        <td class="estado">{{$cl->estado}} </td>
+                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('incidencias.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                        <td class="fecha ">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}</td>
+                        <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}}</td>
+                        <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}}</td>
+                        <td class="tipo ">{{$cl->tipo}}</td>
+                        <td class="titulo ">{{Crypt::decryptString($cl->titulo)}}</td>
+                        <td class="estado">{{$cl->estado}}</td>
                     </tr>
 
             @empty <li>No elements to be shown</li>

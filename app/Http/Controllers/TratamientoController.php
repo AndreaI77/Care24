@@ -36,13 +36,10 @@ class TratamientoController extends Controller
             $clientes1=Cliente::where('user_id', auth()->user()->id)->get();
             foreach($clientes1 as $cliente){
                 $tratamientos=Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora','ASC')->get();
-
             }
-
             return view('tratamientos.index', compact('tratamientos'));
         }else if(auth()->user()->tipo == 'Cuidador'){
             $empleados =Empleado::where('user_id', auth()->user()->id)->get();
-
             $clientes=[];
             foreach($empleados as $empleado){
                 $servicios=Servicio::where('empleado_id', $empleado->id)->get();
@@ -55,7 +52,7 @@ class TratamientoController extends Controller
                     }
                 }
             }
-            $tratamientos=[];
+
             foreach ($clientes as $cliente) {
                 $tratamientos1 = Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora', 'ASC')->get();
                 foreach ($tratamientos1 as $trat) {

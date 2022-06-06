@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-<h1 class="bg-success bg-opacity-25 text-success text-center">Tratamientos </h1>
+<h1 class="bg-success bg-opacity-25 text-success text-center mb-0">Tratamientos </h1>
 <form action="">
-    <div class= "mb-4 d-flex flex-column bg-light">
+    <div class= " d-flex flex-column bg-light">
 
-        <div class= " d-flex  justify-content-center me-2 ms-2 p-3 pe-2">
+        <div class= " d-flex  justify-content-center me-2 ms-2 p-3 pe-2 ">
 
             <div class='row ' id ="fecha1">
                 <label for="fecha">Elige fecha:</label>
@@ -41,7 +41,7 @@
         @endif
     </div>
 </form>
-<div class= "d-flex justify-content-center">
+<div class= "d-flex justify-content-center pt-4 bg-light">
     <div class=" col col-lg-6  border m-2  mb-4" id="agenda">
         <div class="bg-primary bg-opacity-25 ps-2 pe-2  " >
             <div  id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
@@ -71,7 +71,7 @@
         </div>
     </div>
 </div>
-<h2 class="bg-success bg-opacity-25 text-success text-center mb-3 ps-2 pe-2 ">Todos los tratamientos:</h2>
+<h2 class="bg-success bg-opacity-25 text-success text-center mt-3 mb-3 ps-2 pe-2 ">Todos los tratamientos:</h2>
 
 <div class="table-responsive">
 
