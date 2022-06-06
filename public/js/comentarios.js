@@ -5,10 +5,10 @@ $(document).ready(function () {
         url: "valoraciones",
         success: function (data) {
 
-            console.log(data);
+            //console.log(data);
         },
         error: function(){
-         console.log('error');
+         //console.log('error');
         }
     });
 });

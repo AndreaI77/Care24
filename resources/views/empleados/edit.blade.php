@@ -110,7 +110,7 @@
                     <label class= "form-label fw-bolder" for="foto">Cambiar foto:</label>
                     <input class="form-control mb-2" type="file" name="foto" id="foto" value="{{old('foto')}}">
                     @if("{{$empleado->user->foto}}" != null && "{{$empleado->user->foto}}" != "")
-                        <img src="{{ asset($empleado->user->foto)}}" width='150' alt="">
+                        <img src="{{asset($empleado->user->foto)}}" width='150' alt="">
                     @endif
                 </div>
                 <div class= "col-lg-6">

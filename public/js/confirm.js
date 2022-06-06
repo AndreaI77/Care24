@@ -1,9 +1,7 @@
 'use strict';
 document.addEventListener('DOMContentLoaded', function(){
 
-
     let botones=document.getElementsByName('borrar');
-    console.log(botones.length);
 
     for(let boton of botones){
 

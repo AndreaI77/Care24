@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text float-end ">
-                                        Fecha del servicio: {{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} <br/>
+                                        Fecha del servicio: {{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}<br/>
                                     </p>
                                     <h5 class="card-title">Tipo de servicio: {{$cl->tipo}} </h5>
 

@@ -80,7 +80,7 @@
 
 </div>
 </form>
-<div class=" border m-2 ps-2 pe-2 mb-4" id="agenda">
+<div class=" border m-2  ps-2 pe-2 mb-4" id="agenda">
     <div id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
     <div id="8"><span class="fw-bolder">8:00</span></div><hr class="mb-0"/>
     <div id="9"><span class="fw-bolder">9:00</span> </div><hr class="mb-0"/>
@@ -96,7 +96,7 @@
     <div id="19"><span class="fw-bolder">19:00</span> </div><hr class="mb-0"/>
     <div id="20"><span class="fw-bolder">20:00</span> </div><hr class="mb-0"/>
     <div id="21"><span class="fw-bolder">21:00</span> </div><hr class="mb-0"/>
-    <div id="despues"><span class="fw-bolder">Después de 21:00</span> </div><hr class="mb-0"/>
+    <div id="despues"><span class="fw-bolder">Después de 22:00</span> </div><hr class="mb-0"/>
 
 </div>
 <h2 class="bg-success bg-opacity-25 text-success text-center mb-3">Todos los servicios:</h2>
@@ -140,25 +140,25 @@
                                 @empty
                                 @endforelse
                                 @if($ct == false)
-                                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a> </td>
+                                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
                                 @endif
-                                <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}} </td>
+                                <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}</td>
 
-                                <td class="h-i">{{Carbon\Carbon::parse($cl->hora_inicio)->format('H:i')}} </td>
-                                <td class="h-f">{{Carbon\Carbon::parse($cl->hora_final)->format('H:i')}} </td>
+                                <td class="h-i">{{Carbon\Carbon::parse($cl->hora_inicio)->format('H:i')}}</td>
+                                <td class="h-f">{{Carbon\Carbon::parse($cl->hora_final)->format('H:i')}}</td>
                                 {{-- @if(auth()->user()->tipo != 'cliente') --}}
                                     <td class="cliente">{{$cl->cliente->user->nombre}}, {{$cl->cliente->user->apellido}}</td>
                                 {{-- @endif
                                 @if(auth()->user()->tipo != 'Cuidador' && (auth()->user()->tipo != 'Limpiador')) --}}
                                     <td class="empleado">{{$cl->empleado->user->nombre}}, {{$cl->empleado->user->apellido}}</td>
                                 {{-- @endif --}}
-                                <td class="tipo">{{$cl->tipo}} </td>
-                                <td class="estado">{{$cl->estado}} </td>
+                                <td class="tipo">{{$cl->tipo}}</td>
+                                <td class="estado">{{$cl->estado}}</td>
                                 @forelse($citas as $cita)
                                     @if($cita->servicio_id == $cl->id)
                                         <td class="h_c">{{Carbon\Carbon::parse($cita->hora_cita)->format('H:i')}}</td>
-                                        <td class="lugar">{{$cita->lugar}} </td>
-                                        <td class="espec">{{Crypt::decryptString($cita->especialidad->nombre)}} </td>
+                                        <td class="lugar">{{$cita->lugar}}</td>
+                                        <td class="espec">{{Crypt::decryptString($cita->especialidad->nombre)}}</td>
                                         @php $datos = true; @endphp
                                     @endif
                                 @empty

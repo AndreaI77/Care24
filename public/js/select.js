@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function(){
     let tipo= document.getElementById('tipo');
     let select = document.getElementById('empleado').options;
     let seleccionado= document.getElementById('empleado').value;
-        console.log(select.length);
+
         let limpieza=[{"value": "", "text": "Selecciona empleado"}];
         let cuidados=[{"value": "", "text": "Selecciona empleado"}];
         let otros=[{"value": "", "text": "Selecciona empleado"}];

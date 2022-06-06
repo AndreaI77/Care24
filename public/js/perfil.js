@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
-  //VALIDAR COINCIDENCIA DE LAS 2 PASSWORDS
+
   $("#enter").on('click',function (event) {
 
-    //SI NO COINCIDEN O ESTAN VACÍAS:
+
     if ($("#pass").val() != $("#password_confirmation").val() || $("#pass").val() == '') {
       $("#password_confirmation").val("");
       event.preventDefault();
@@ -22,7 +22,7 @@ $(document).ready(function () {
     $(".needs-validation").addClass("was-validated");
   });
 
-  //OCULTA/MUESTRA LOS CAMPOS CONTRASEÑA
+
   $("#chbox").on('change',valueChanged);
   $("#passwords").hide();
   function valueChanged() {

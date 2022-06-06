@@ -43,25 +43,26 @@ class TratamientoController extends Controller
         }else if(auth()->user()->tipo == 'Cuidador'){
             $empleados =Empleado::where('user_id', auth()->user()->id)->get();
 
-            $clientes2=[];
+            $clientes=[];
             foreach($empleados as $empleado){
                 $servicios=Servicio::where('empleado_id', $empleado->id)->get();
                 foreach($servicios as $servicio){
                     $clientes1= Cliente::where('id', $servicio->cliente_id)->get();
                     foreach($clientes1 as $cliente){
-                        if(in_array($cliente, $clientes2) == false){
+                        if(in_array($cliente, $clientes) == false){
                             $clientes[]=$cliente;
-                            $tratamientos1=Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora','ASC')->get();
-                            foreach($tratamientos1 as $trat){
-
-                                    $tratamientos[]=$trat;
-
-                            }
                         }
                     }
                 }
             }
-            $clientes=Cliente::get();
+            $tratamientos=[];
+            foreach ($clientes as $cliente) {
+                $tratamientos1 = Tratamiento::where('cliente_id', $cliente->id)->orderBy('hora', 'ASC')->get();
+                foreach ($tratamientos1 as $trat) {
+                    $tratamientos[] = $trat;
+                }
+            }
+
             return view('tratamientos.index', compact('tratamientos','clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
