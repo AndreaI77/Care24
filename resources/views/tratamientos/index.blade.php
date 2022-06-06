@@ -46,7 +46,7 @@
         <div class="bg-primary bg-opacity-25 ps-2 pe-2  " >
             <div  id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
         </div>
-        <div class="bg-danger bg-opacity-25 ps-2 pe-2 " >
+        <div class="bg-warning bg-opacity-25 ps-2 pe-2 " >
             <div id="8"><span class="fw-bolder">8:00</span></div><hr class="mb-0"/>
             <div id="9"><span class="fw-bolder">9:00</span> </div><hr class="mb-0"/>
             <div id="10"><span class="fw-bolder">10:00</span> </div><hr class="mb-0"/>
@@ -59,7 +59,7 @@
             <div id="15"><span class="fw-bolder">15:00</span></div><hr class="mb-0"/>
             <div id="16"><span class="fw-bolder">16:00</span> </div><hr class="mb-0"/>
         </div>
-        <div class="bg-warning bg-opacity-25 ps-2 pe-2 " >
+        <div class="bg-danger bg-opacity-25 ps-2 pe-2 " >
             <div id="17"><span class="fw-bolder">17:00</span> </div><hr class="mb-0"/>
             <div id="18"><span class="fw-bolder">18:00</span> </div><hr class="mb-0"/>
             <div id="19"><span class="fw-bolder">19:00</span> </div><hr class="mb-0"/>

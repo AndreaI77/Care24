@@ -65,8 +65,8 @@
                                     <label for="email">Email</label>
                                 </div>
 
-                                <input type="checkbox" id="chbox" name="chbox" value="Contraseña">
-                                <label for="chbox">Cambiar contraseña</label><br>
+                                <input class="form-check-input" type="checkbox" id="chbox" name="chbox" value="Contraseña">
+                                <label class="form-check-label" for="chbox">Cambiar contraseña</label><br>
 
                                 <div class="row mt-3" id="passwords">
                                     <div class="col-md-6">
