@@ -88,10 +88,10 @@
                     @endif
                 </div>
 
-                <div class= "col-sm-4">
+                <div class= "col-sm-4 ">
                     <label class= "form-label fw-bolder me-2" for="puesto"><span class="text-danger">*</span>Puesto:</label>
 
-                    <select name="puesto" required id="puesto">
+                    <select class="form-control" name="puesto" required id="puesto">
 
                         <option value="Administrativo" {{ $empleado->puesto == "Administrativo" ? 'selected' : ''}}>Administrativo</option>
                         <option value="Cuidador" {{ $empleado->puesto == "Cuidador" ? 'selected' : ''}}>Cuidador</option>
@@ -118,25 +118,27 @@
                     <textarea class= "form-control" name="datos" rows="3" cols="50">
                         {{$empleado->user->datos}}
                     </textarea>
-                    <div class= "">
-                        <label class= "form-label fw-bolder" for= "fecha_alta">Fecha de alta:</label>
-                        <input class="form-control" type="hidden" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}">
-                        <input class="form-control" type="date" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}" disabled>
-                    </div>
-                    <div class= "">
-                        <label class= "form-label fw-bolder" for="fecha_nac">Fecha de baja:</label>
-                        <input class="form-control" type="date" name="fecha_baja" id="fecha_baja"
-                        @if($empleado->user->fecha_baja != null && $empleado->user->fecha_baja != "")
-                            value="{{Carbon\Carbon::parse($empleado->user->fecha_baja)->format('Y-m-d')}}"
-                        @else value="";
-                        @endif>
-
-                        <div class="invalid-feedback">Fecha de baja no puede sera anterior a la fecha de alta.</div>
-                        @if($errors->has('fecha_baja'))
-                        <div class='text-danger mens'>
-                        {{$errors->first('fecha_baja')}}
+                    <div class= "row row-cols-sm-2">
+                        <div class= "col-8 col-sm-6">
+                            <label class= "form-label fw-bolder" for= "fecha_alta">Fecha de alta:</label>
+                            <input class="form-control" type="hidden" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}">
+                            <input class="form-control" type="date" name=fecha_alta id= "fecha_alta" value="{{Carbon\Carbon::parse($empleado->user->created_at)->format('Y-m-d')}}" disabled>
                         </div>
-                    @endif
+                        <div class= "col-8 col-sm-6 ">
+                            <label class= "form-label fw-bolder" for="fecha_nac">Fecha de baja:</label>
+                            <input class="form-control" type="date" name="fecha_baja" id="fecha_baja"
+                            @if($empleado->user->fecha_baja != null && $empleado->user->fecha_baja != "")
+                                value="{{Carbon\Carbon::parse($empleado->user->fecha_baja)->format('Y-m-d')}}"
+                            @else value="";
+                            @endif>
+
+                            <div class="invalid-feedback">Fecha de baja no puede sera anterior a la fecha de alta.</div>
+                            @if($errors->has('fecha_baja'))
+                                <div class='text-danger mens'>
+                                {{$errors->first('fecha_baja')}}
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
 

@@ -42,11 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 event.preventDefault()
                 event.stopPropagation()
             }else if (!form.checkValidity()) {
-                f_n.classList.remove('is-invalid');
-                f_b.classList.remove('is-invalid');
+
                 event.preventDefault()
                 event.stopPropagation()
             }else{
+                f_n.classList.remove('is-invalid');
+                f_b.classList.remove('is-invalid');
                 let boton=document.getElementById('enter');
                 boton.disabled=true;
                 boton.innerHTML="Enviando...";

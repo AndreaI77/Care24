@@ -21,25 +21,25 @@
             <div >
                 <label class= "form-label fw-bolder text-success fs-4" for="valoracion">Valoración:</label>
 
-                <div class="star_content fs-bolder  ms-3">
+                <div class="star_content fs-bolder form-check ms-3">
 
-                        <input name="valoracion" value="5" type="radio"@if($servicio->valoracion == 5)checked @endif class="form-check-input" required/>
+                        <input class="form-check-input" name="valoracion" value="5" type="radio"@if($servicio->valoracion == 5)checked @endif class="form-check-input" required/>
                         <label class="ms-2 form-check-label" for=valoracion>Muy satisfecho:</label><br/>
 
 
-                    <input name="valoracion" value="4" type="radio" @if($servicio->valoracion == 4)checked @endif class="form-check-input" required/>
+                    <input  class="form-check-input" name="valoracion" value="4" type="radio" @if($servicio->valoracion == 4)checked @endif class="form-check-input" required/>
                     <label class="ms-2 form-check-label" for=valoracion>Satisfecho:</label><br/>
 
 
-                    <input name="valoracion" value="3" type="radio" @if($servicio->valoracion == 3)checked @endif class="form-check-input" required/>
+                    <input class="form-check-input" name="valoracion" value="3" type="radio" @if($servicio->valoracion == 3)checked @endif class="form-check-input" required/>
                     <label class="ms-2 form-check-label" for=valoracion>Bien:</label><br/>
 
 
-                    <input name="valoracion" value="2" type="radio" @if($servicio->valoracion == 2)checked @endif class="form-check-input" required/>
+                    <input class="form-check-input" name="valoracion" value="2" type="radio" @if($servicio->valoracion == 2)checked @endif class="form-check-input" required/>
                     <label  class="ms-2 form-check-label" for=valoracion>Insatisfecho:</label><br/>
 
 
-                    <input name="valoracion" value="1" type="radio" @if($servicio->valoracion == 1)checked @endif class="form-check-input" required/>
+                    <input class="form-check-input" name="valoracion" value="1" type="radio" @if($servicio->valoracion == 1)checked @endif class="form-check-input" required/>
                     <label class="ms-2 form-check-label" for=valoracion>Muy insatisfecho:</label><br/>
 
                     <div class="invalid-feedback">Elige una opción</div>

@@ -7,16 +7,16 @@
 
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Actualizar informe</h1>
-    <div class= " p-3">
+    <div class= " p-3 row row-cols-1">
         <div class= "">
 
             <h4 class="text-success text-center"> Autor: {{ $informe->empleado->user->nombre }}, {{ $informe->empleado->user->apellido }}</h4>
             <h5 class=""> Fecha de informe: {{Carbon\Carbon::parse($informe->fecha)->format('d/m/Y')}}
         </div>
-        <div class= "mt-2">
+        <div class= "mt-2 col-8 col-sm-6 col-lg-4 col-xl-3">
             <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
 
-            <select name="estado" required id="estado">
+            <select class="form-control" name="estado" required id="estado">
                 <option value="Activo" @if($informe->estado === "Activo") selected @endif>Activo</option>
                 @if(auth()->user()->tipo == 'Administrativo')
                 <option value="Archivado" @if($informe->estado === "Archivado") selected @endif>Archivado</option>

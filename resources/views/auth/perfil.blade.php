@@ -7,7 +7,7 @@
                 <div class="col-lg-8">
                     <div class="card shadow-lg border-2 border-success rounded-lg mt-3 mb-5">
                         <div class="card-header">
-                            <h3 class="text-center font-weight-light my-4">Mis datos:</h3>
+                            <h3 class="text-center text-success fw-bolder my-4">Mis datos:</h3>
                         </div>
                         <div class="card-body">
                             <form class="needs-validation" action="{{route('perfil.update', auth()->user()->id)}}" method="post" novalidate>
@@ -67,7 +67,9 @@
 
                                 <input class="form-check-input" type="checkbox" id="chbox" name="chbox" value="Contraseña">
                                 <label class="form-check-label" for="chbox">Cambiar contraseña</label><br>
-
+                                <div class="d-flex justify-content-end">
+                                    <a href= "{{route('inicio')}}" class="btn btn-outline-success  m-3 "><i class="bi bi-arrow-left"></i> Salir</a>
+                                </div>
                                 <div class="row mt-3" id="passwords">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">

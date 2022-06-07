@@ -84,10 +84,10 @@
             </div>
         @endif
     </div>
-    <div class= "col-sm-4">
+    <div class= "col-sm-4 col-lg-3">
         <label class= "form-label fw-bolder me-2" for="puesto"><span class="text-danger">*</span>Puesto:</label>
 
-        <select name="puesto" required id="puesto">
+        <select class="form-control" name="puesto" required id="puesto">
             <option value="" selected hidden disabled>Elige una opción</option>
             <option value="Administrativo" @if(old('puesto')=== "Administrativo") selected @endif>Administrativo</option>
             <option value="Cuidador" @if(old('puesto')=== "Cuidador") selected @endif>Cuidador</option>

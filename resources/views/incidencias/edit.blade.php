@@ -6,17 +6,13 @@
     @csrf
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Actualizar incidencia</h1>
-    <div class= " p-3">
+    <div class= " p-3 ps-lg-5 pe-lg-5">
+        <h4> Autor: {{ $incidencia->empleado->user->nombre }}, {{ $incidencia->empleado->user->apellido }}</h4>
         <div class= "row row-cols-lg-2">
-            <div class= "col-lg-6">
-
-                <h4> Autor: {{ $incidencia->empleado->user->nombre }}, {{ $incidencia->empleado->user->apellido }}</h4>
-
-                <div class= "mt-2">
-                    <label class= "form-label fw-bolder me-2" for="cliente">Cliente:<span class="text-danger">*</span></label>
-
-                    <select name="cliente" required id="cliente">
-
+            <div class= "col-lg-6 row row-cols-sm-2">
+                <div class= "col-lg-6">
+                    <label class= "form-label fw-bolder " for="cliente">Cliente:<span class="text-danger">*</span></label>
+                    <select class="form-control" name="cliente" required id="cliente">
                         @foreach($clientes as $cl)
                             @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
                             <option value="{{$cl->id}}" @if("{{$incidencia->cliente_id}}" === "{{$cl->id}}") selected @endif>{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
@@ -30,7 +26,7 @@
                         </div>
                     @endif
                 </div>
-                <div class= "col-md-4">
+                <div class= "col-lg-6 mt-2 mt-sm-0">
                     <label class= "form-label fw-bolder" for="fecha">Fecha de la incidencia: <span class="text-danger">*</span></label>
                     <input class="form-control " type="date"  name="fecha" id="fecha"  value="{{$incidencia->fecha}}" required>
                     <div class="invalid-feedback">La fecha es obligatoria .</div>
@@ -42,21 +38,20 @@
                 </div>
 
             </div>
-            <div class= "col-lg-6">
-                <div class= "mt-2">
-                    <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
-
-                    <select name="estado" required id="estado">
+            <div class= "col-lg-6 row row-cols-sm-2">
+                <div class= "col-lg-6 mt-2 mt-lg-0 ">
+                    <label class= "form-label fw-bolder" for="estado">Estado:<span class="text-danger">*</span></label>
+                    <select class="form-control" name="estado" required id="estado">
                         <option value="Activo" @if($incidencia->estado === "Activo") selected @endif>Activo</option>
                         @if(auth()->user()->tipo == 'Administrativo')
                             <option value="Archivado" @if($incidencia->estado === "Archivado") selected @endif>Archivado</option>
                         @endif
                     </select>
                 </div>
-                <div class= "">
-                    <label class= "form-label fw-bolder me-2" for="estado">Tipo de incidencia:<span class="text-danger">*</span></label>
+                <div class= "col-lg-6 mt-2 mt-lg-0">
+                    <label class= "form-label fw-bolder" for="estado">Tipo de incidencia:<span class="text-danger">*</span></label>
 
-                    <select name="tipo" required id="tipo">
+                    <select class="form-control" name="tipo" required id="tipo">
                         <option value="" selected hidden disabled>Elige una opción</option>
                         <option value="Médica" @if($incidencia->tipo === "Médica") selected @endif>Médica</option>
                         <option value="No médica" @if($incidencia->tipo === "No médica") selected @endif>No médica</option>

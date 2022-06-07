@@ -6,85 +6,88 @@
     @csrf
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Editar servicio</h1>
-    <div class= "row g-3 p-3">
+    <div class= "row g-3 p-3 ps-lg-5 pe-lg-5">
         <div class= "col-sm-6">
-            <div class= "">
-                @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
-                    <p> <strong>Tipo: </strong>{{$servicio->tipo}}</p>
-                    <input type="hidden" name="tipo" value="{{$servicio->tipo}}">
-                @endif
-                @if(auth()->user()->tipo == 'Administrativo')
-                    <label class= "form-label fw-bolder me-2" for="estado">Tipo del servicio:<span class="text-danger">*</span></label>
-
-                    <select name="tipo" required id="tipo">
-
-                        <option value="Limpieza" {{ $servicio->tipo === "Limpieza" ? 'selected' : ''}}>Limpieza</option>
-                        <option value="Cuidados" @if( $servicio->tipo === "Cuidados") selected @endif>Cuidados</option>
-                        <option value="Otros" @if($servicio->tipo === "Otros") selected @endif>Otros</option>
-                    </select>
-                @endif
-            </div>
-            <div class= "mt-2">
-                <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
-
-                <select name="estado" required id="estado">
-
-                    <option value="Pendiente" @if($servicio->estado === "Pendiente") selected @endif>Pendiente</option>
-                    <option value="Atendido" @if($servicio->estado === "Atendido") selected @endif>Atendido</option>
-                    @if(auth()->user()->tipo == 'Administrativo')
-                    <option value="Archivado" @if($servicio->estado === "Archivado") selected @endif>Archivado</option>
+            <div class="row row-cols-md-2 ">
+                <div class= "col-md-6">
+                    @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
+                        <p> <strong>Tipo: </strong>{{$servicio->tipo}}</p>
+                        <input class="form-control" type="hidden" name="tipo" value="{{$servicio->tipo}}">
                     @endif
-                </select>
+                    @if(auth()->user()->tipo == 'Administrativo')
+                        <label class= "form-label fw-bolder " for="estado">Tipo del servicio:<span class="text-danger">*</span></label>
 
-            </div>
-            <div class= "mt-2">
-                <label class= "form-label fw-bolder me-2" for="cliente">Cliente:<span class="text-danger">*</span></label>
+                        <select class="form-control" name="tipo" required id="tipo">
 
-                <select name="cliente" required id="cliente">
-                    <option value="" selected hidden disabled>Elige Cliente</option>
-                    @foreach($clientes as $cl)
-                        @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
-                        <option value={{$cl->id}} @if($servicio->cliente_id == $cl->id) selected @endif>{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
+                            <option value="Limpieza" {{ $servicio->tipo === "Limpieza" ? 'selected' : ''}}>Limpieza</option>
+                            <option value="Cuidados" @if( $servicio->tipo === "Cuidados") selected @endif>Cuidados</option>
+                            <option value="Otros" @if($servicio->tipo === "Otros") selected @endif>Otros</option>
+                        </select>
+                    @endif
+                </div>
+
+                <div class= "mt-2 mt-md-0  col-md-6">
+                    <label class= "form-label fw-bolder " for="estado">Estado:<span class="text-danger">*</span></label>
+                    <select class="form-control" name="estado" required id="estado">
+
+                        <option value="Pendiente" @if($servicio->estado === "Pendiente") selected @endif>Pendiente</option>
+                        <option value="Atendido" @if($servicio->estado === "Atendido") selected @endif>Atendido</option>
+                        @if(auth()->user()->tipo == 'Administrativo')
+                        <option value="Archivado" @if($servicio->estado === "Archivado") selected @endif>Archivado</option>
                         @endif
-                    @endforeach
-                </select>
-                <div class="invalid-feedback">Selecciona cliente</div>
-                @if($errors->has('cliente'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('cliente')}}
-                    </div>
-                @endif
+                    </select>
+                </div>
             </div>
-            <div class= "mt-2">
-                @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
-                    <p> <strong>Empleado: </strong>{{auth()->user()->nombre}}, {{auth()->user()->apellido}}</p>
-                    <input type="hidden" name="empleado" value="{{auth()->user()->id}}">
-                @endif
-                @if(auth()->user()->tipo == 'Administrativo')
-                    <label class= "form-label fw-bolder me-2" for="empleado">Empleado: <span class="text-danger">*</span></label>
+            <div class=" row row-cols-xl-2">
+                <div class= "mt-2 col-xl-6">
+                    <label class= "form-label fw-bolder " for="cliente">Cliente:<span class="text-danger">*</span></label>
 
-                    <select name="empleado" required id="empleado">
-                        <option value="" selected hidden disabled>Selecciona empleado</option>
-                        @foreach($empleados as $em)
-                            @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "") && $em->user_id != 1)
-                            <option value="{{$em->id}};{{$em->puesto}}" @if($servicio->empleado_id  == $em->id) selected @endif >{{$em->user->nombre}}, {{$em->user->apellido}}</option>
+                    <select class="form-control" name="cliente" required id="cliente">
+                        <option value="" selected hidden disabled>Elige Cliente</option>
+                        @foreach($clientes as $cl)
+                            @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
+                            <option value={{$cl->id}} @if($servicio->cliente_id == $cl->id) selected @endif>{{$cl->user->nombre}}, {{$cl->user->apellido}}</option>
                             @endif
-
                         @endforeach
                     </select>
-                    <div class="invalid-feedback">Selecciona empleado</div>
-                    @if($errors->has('empleado'))
+                    <div class="invalid-feedback">Selecciona cliente</div>
+                    @if($errors->has('cliente'))
                         <div class='text-danger mens'>
-                        {{$errors->first('empleado')}}
+                        {{$errors->first('cliente')}}
                         </div>
                     @endif
-                @endif
+                </div>
+                <div class= "mt-2 col-xl-6">
+                    @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
+                        <p> <strong>Empleado: </strong>{{auth()->user()->nombre}}, {{auth()->user()->apellido}}</p>
+                        <input type="hidden" name="empleado" value="{{auth()->user()->id}}">
+                    @endif
+                    @if(auth()->user()->tipo == 'Administrativo')
+                        <label class= "form-label fw-bolder " for="empleado">Empleado: <span class="text-danger">*</span></label>
+
+                        <select class="form-control" name="empleado" required id="empleado">
+                            <option value="" selected hidden disabled>Selecciona empleado</option>
+                            @foreach($empleados as $em)
+                                @if(($em->user->fecha_baja == null || $em->user->fecha_baja == "") && $em->user_id != 1)
+                                <option value="{{$em->id}};{{$em->puesto}}" @if($servicio->empleado_id  == $em->id) selected @endif >{{$em->user->nombre}}, {{$em->user->apellido}}</option>
+                                @endif
+
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback">Selecciona empleado</div>
+                        @if($errors->has('empleado'))
+                            <div class='text-danger mens'>
+                            {{$errors->first('empleado')}}
+                            </div>
+                        @endif
+                    @endif
+                </div>
             </div>
         </div>
         <div class= "col-sm-6">
 
-            <div class= "d-flex ">
-                <label class= "form-label fw-bolder me-2" for="fecha">Fecha:<span class="text-danger">*</span></label>
+            <div class= "col-md-6">
+                <label class= "form-label fw-bolder " for="fecha">Fecha:<span class="text-danger">*</span></label>
                 <input class="form-control" type="date" name="fecha" id="fecha" value="{{$servicio->fecha}}" required>
                 <div class="invalid-feedback">La fecha es obligatoria</div>
                 @if($errors->has('fecha'))
@@ -93,25 +96,27 @@
                     </div>
                 @endif
             </div>
-            <div class= "mt-2">
-                <label class= "form-label fw-bolder me-2" for="hora_inicio">Desde:<span class="text-danger">*</span></label>
-                <input type="time" id="hora_inicio" name="hora_inicio"  value={{Carbon\Carbon::parse($servicio->hora_inicio)->format('H:i')}} required>
-                <div class="invalid-feedback">La hora de inicio es obligatoria</div>
-                @if($errors->has('hora_inicio'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('hora_inicio')}}
-                    </div>
-                @endif
-            </div>
-            <div class= "mt-2">
-                <label class= "form-label fw-bolder me-2" for="hora_final">Hasta:<span class="text-danger">*</span></label>
-                <input type="time" id="hora_final" name="hora_final"  value={{Carbon\Carbon::parse($servicio->hora_final)->format('H:i')}} required>
-                <div class="invalid-feedback">La hora final es obligatoria</div>
-                @if($errors->has('hora_final'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('hora_final')}}
-                    </div>
-                @endif
+            <div class="row row-cols-lg-2 ">
+                <div class= "mt-2 col-sm-6">
+                    <label class= "form-label fw-bolder me-2" for="hora_inicio">Desde:<span class="text-danger">*</span></label>
+                    <input class="form-control" type="time" id="hora_inicio" name="hora_inicio"  value={{Carbon\Carbon::parse($servicio->hora_inicio)->format('H:i')}} required>
+                    <div class="invalid-feedback">La hora de inicio es obligatoria</div>
+                    @if($errors->has('hora_inicio'))
+                        <div class='text-danger mens'>
+                        {{$errors->first('hora_inicio')}}
+                        </div>
+                    @endif
+                </div>
+                <div class= "mt-2 col-sm-6">
+                    <label class= "form-label fw-bolder me-2" for="hora_final">Hasta:<span class="text-danger">*</span></label>
+                    <input class="form-control" type="time" id="hora_final" name="hora_final"  value={{Carbon\Carbon::parse($servicio->hora_final)->format('H:i')}} required>
+                    <div class="invalid-feedback">La hora final es obligatoria</div>
+                    @if($errors->has('hora_final'))
+                        <div class='text-danger mens'>
+                        {{$errors->first('hora_final')}}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
         <div class= "col-lg-6">

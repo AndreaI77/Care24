@@ -5,13 +5,15 @@
 <form class="bg-light border rounded needs-validation" action="{{route('incidencias.store')}}" method="post"  novalidate >
     @csrf
     <h1 class="bg-success bg-opacity-25 text-success text-center">Nueva incidencia</h1>
-    <div class= " p-3">
+    <div class= " p-3 ps-lg-5 pe-lg-5">
+        <h4 class=""> Autor: {{ auth()->user()->nombre }}, {{ auth()->user()->apellido }}</h4>
         <div class= "row row-cols-lg-2">
-            <div class= "col-lg-6">
-                <h4> Autor: {{ auth()->user()->nombre }}, {{ auth()->user()->apellido }}</h4>
-                <div class= "">
+
+            <div class= "col-lg-6 ">
+
+                <div class= "col-8 col-lg-6">
                     <label class= "form-label fw-bolder" for="fecha">Fecha de la incidencia: <span class="text-danger">*</span></label>
-                    <input class="form-control w-50" type="date"  name="fecha" id="fecha"  value="{{old('fecha')}}" required>
+                    <input class="form-control" type="date"  name="fecha" id="fecha"  value="{{old('fecha')}}" required>
                     <div class="invalid-feedback">La fecha es obligatoria .</div>
                         @if($errors->has('fecha'))
                             <div class='text-danger mens'>
@@ -20,13 +22,13 @@
                         @endif
                 </div>
             </div>
-            <div class= "col-lg-6">
+            <div class= "col-lg-6 row  row-cols-lg-2">
                 <input type="hidden" name="estado" id='estado' value='activo'/>
 
-                <div class= "mt-2">
+                <div class= "col-10 col-md-8 col-lg-6 mt-2 mt-lg-0">
                     <label class= "form-label fw-bolder me-2" for="cliente">Cliente:<span class="text-danger">*</span></label>
 
-                    <select name="cliente" required id="cliente">
+                    <select class="form-control" name="cliente" required id="cliente">
                         <option value="" selected hidden disabled>Selecciona cliente:</option>
                         @foreach($clientes as $cl)
                             @if($cl->user->fecha_baja == null || $cl->user->fecha_baja == "")
@@ -41,10 +43,10 @@
                         </div>
                     @endif
                 </div>
-                <div class= "">
+                <div class= "col-10 col-md-8 col-lg-6 mt-2 mt-lg-0">
                     <label class= "form-label fw-bolder me-2" for="estado">Tipo de incidencia:<span class="text-danger">*</span></label>
 
-                    <select name="tipo" required id="tipo">
+                    <select class="form-control" name="tipo" required id="tipo">
                         <option value="" selected hidden disabled>Elige una opción</option>
                         <option value="Médica" @if(old('tipo') === "Médica") selected @endif>Médica</option>
                         <option value="No médica" @if(old('tipo') === "No médica") selected @endif>No médica</option>
@@ -61,7 +63,7 @@
 
         <div class="mt-3">
             <label class= "form-label fw-bolder" for="titulo">Título: <span class="text-danger">*</span></label>
-            <input class="form-control " type="text" minLength='5' name="titulo" id="titulo" autofocus value="{{old('titulo')}}" required>
+            <input class="form-control" type="text" minLength='5' name="titulo" id="titulo" autofocus value="{{old('titulo')}}" required>
             <div class="invalid-feedback">El título es obligatorio (min. 5 carácteres).</div>
             @if($errors->has('titulo'))
                 <div class='text-danger mens'>
