@@ -33,18 +33,19 @@ class MapaController extends Controller
             foreach($empleados as $emp){
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
                 foreach($servicios as $servicio){
-                    foreach($clientes1 as $ct){
-                        if($ct->user->fecha_baja == ""){
-                            if($ct->id == $servicio->cliente_id){
-                                if(in_array($ct, $clientes) == false){
-                                    $clientes[]=$ct;
+                    if($servicio->estado != 'Archivado'){
+                        foreach($clientes1 as $ct){
+                            if($ct->user->fecha_baja == ""){
+                                if($ct->id == $servicio->cliente_id){
+                                    if(in_array($ct, $clientes) == false){
+                                        $clientes[]=$ct;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-
         }else{
             $clientes= Cliente::where('user_id', auth()->user()->id)->get();
 

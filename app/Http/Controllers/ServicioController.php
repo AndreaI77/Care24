@@ -167,7 +167,9 @@ class ServicioController extends Controller
             $clientes1=Cliente::get();
             $clientes=[];
             $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
+
             foreach($servicios as $ser){
+                if($ser->estado != 'Archivado'){
                     foreach($clientes1 as $ct){
                         if($ct->id == $ser->cliente_id){
                             if(in_array($ct, $clientes) == false){
@@ -176,7 +178,7 @@ class ServicioController extends Controller
                         }
                     }
                 }
-
+            }
                 return view('servicios.edit', compact('servicio', 'clientes'));
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');

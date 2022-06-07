@@ -31,7 +31,7 @@
 
                     <option value="Pendiente" selected>Pendiente</option>
                     <option value="Atendido" @if(old('estado') === "Atendido") selected @endif>Atendido</option>
-                    <option value="Archivado" @if(old('estado') === "Archivado") selected @endif>Archivado</option>
+                    {{-- <option value="Archivado" @if(old('estado') === "Archivado") selected @endif>Archivado</option> --}}
                 </select>
 
             </div>

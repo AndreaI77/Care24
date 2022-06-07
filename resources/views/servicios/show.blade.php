@@ -6,8 +6,8 @@
         <div class='bg-success bg-opacity-25 text-success text-center p-2'>
             <h1>Detalles servicio:</h1>
         </div>
-        <div class="card-body">
-            <div class= 'row row-cols-sm-2  p-2 border-bottom'>
+        <div class="card-body ">
+            <div class= 'row row-cols-sm-2  p-2 border-bottom '>
                 <div class= " col-md-6 ps-3 ">
                     <p><span class="fw-bolder">Cliente:  </span>{{$servicio->cliente->user->nombre}}, {{$servicio->cliente->user->apellido}} </p>
                     <p><span class="fw-bolder">Empleado:  </span>{{$servicio->empleado->user->nombre}}, {{$servicio->empleado->user->apellido}} </p>
@@ -35,17 +35,20 @@
                     <button  type="submit" class="btn btn-danger float-start  fw-bolder  " name="borrar" id="borrar"><i class="bi bi-x-circle"></i> Eliminar</Button>
                     </form>
             @endif
-            @if(auth()->user()->tipo !== 'cliente')
+            @if(auth()->user()->tipo == 'Administrativo' )
+                <a class="btn btn-success text-warning fw-bolder float-end  w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+            @endif
+            @if((auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador') && $servicio->estado != 'Archivado' )
                 <a class="btn btn-success text-warning fw-bolder float-end  w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
             @endif
 
-            @if(auth()->user()->tipo === 'cliente' && $servicio->estado != 'Pendiente')
+            @if(auth()->user()->tipo === 'cliente' && $servicio->estado == 'Atendido')
                 <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
 
             @endif
 
-            <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('servicios.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
-            @if(auth()->user()->tipo !== 'cliente')
+            <a class="btn btn-outline-success  fw-bolder float-end me-5 w-25 " href="{{route('servicios.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
+            @if(auth()->user()->tipo !== 'cliente' && $servicio->estado != 'Archivado')
                 <a class="btn btn-success text-warning fw-bolder float-end me-5 w-25 " href="{{route('incidencias.create', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Reportar incidencia</a>
             @endif
             </div>

@@ -35,7 +35,8 @@
         </div>
         <div class="card-footer p-3">
             <div>
-                @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Administrativo')
+                @if(auth()->user()->tipo == 'Administrativo')
+
                     <form action= "{{route('citas.destroy', $cita->id)}}" id="form" method="POST">
                         @method('DELETE')
                         @csrf
@@ -45,11 +46,24 @@
                     <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('citas.edit', $cita->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
 
                 @endif
-                @if(auth()->user()->tipo === 'cliente' && $cita->servicio->estado != 'Pendiente')
-                    <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit',$cita->servicio_id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
+                @if(auth()->user()->tipo == 'Cuidador'  && $cita->servicio->estado != 'Archivado' )
+                    <form action= "{{route('citas.destroy', $cita->id)}}" id="form" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button  type="submit" class="btn btn-danger  fw-bolder float-start " name="borrar" id="borrar"><i class="bi bi-x-circle"></i>Eliminar</Button>
+                    </form>
+
+                    <a class="btn btn-success text-warning fw-bolder float-end " href="{{route('citas.edit', $cita->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
+                @endif
+                @if(auth()->user()->tipo === 'cliente' && $cita->servicio->estado == 'Atendido')
+                    <a class="btn btn-success text-warning fw-bolder float-end " href="{{route('comentarios.edit',$cita->servicio_id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
 
                 @endif
-                    <a class="btn btn-outline-success  fw-bolder float-end me-5  w-25" href="{{route('citas.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
+                <a class="btn btn-outline-success  fw-bolder float-end me-5  " href="{{route('citas.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
+                @if(auth()->user()->tipo !== 'cliente' && $cita->servicio->estado != 'Archivado')
+                    <a class="btn btn-success text-warning fw-bolder float-end me-5 " href="{{route('incidencias.create', $cita->servicio->id)}}"><i class="bi bi-pencil-square"></i> Reportar incidencia</a>
+                @endif
+
             </div>
         </div>
     </div>

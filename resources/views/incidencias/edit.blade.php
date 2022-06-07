@@ -48,7 +48,9 @@
 
                     <select name="estado" required id="estado">
                         <option value="Activo" @if($incidencia->estado === "Activo") selected @endif>Activo</option>
-                        <option value="Archivado" @if($incidencia->estado === "Archivado") selected @endif>Archivado</option>
+                        @if(auth()->user()->tipo == 'Administrativo')
+                            <option value="Archivado" @if($incidencia->estado === "Archivado") selected @endif>Archivado</option>
+                        @endif
                     </select>
                 </div>
                 <div class= "">

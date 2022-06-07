@@ -31,7 +31,9 @@
 
                     <option value="Pendiente" @if($servicio->estado === "Pendiente") selected @endif>Pendiente</option>
                     <option value="Atendido" @if($servicio->estado === "Atendido") selected @endif>Atendido</option>
+                    @if(auth()->user()->tipo == 'Administrativo')
                     <option value="Archivado" @if($servicio->estado === "Archivado") selected @endif>Archivado</option>
+                    @endif
                 </select>
 
             </div>

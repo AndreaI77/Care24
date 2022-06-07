@@ -41,13 +41,16 @@ class ClienteController extends Controller
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
 
                 foreach($servicios as $servicio){
-                    foreach($clientes1 as $ct){
-                        if($ct->id == $servicio->cliente_id){
-                            if(in_array($ct, $clientes) == false){
-                                $clientes[]=$ct;
+                    if($servicio->estado != 'Archivado'){
+                        foreach($clientes1 as $ct){
+                            if($ct->id == $servicio->cliente_id){
+                                if(in_array($ct, $clientes) == false){
+                                    $clientes[]=$ct;
+                                }
                             }
                         }
                     }
+
                 }
             }
             return view('clientes.index', compact( 'clientes'));
@@ -153,8 +156,10 @@ class ClienteController extends Controller
             foreach($empleados as $emp){
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
                 foreach($servicios as $servicio){
-                    if($servicio->cliente_id == $cliente1->id){
-                        $cliente=$cliente1;
+                    if($servicio->estado != 'Archivado'){
+                        if($servicio->cliente_id == $cliente1->id){
+                            $cliente=$cliente1;
+                        }
                     }
                 }
             }

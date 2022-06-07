@@ -44,10 +44,12 @@ class TratamientoController extends Controller
             foreach($empleados as $empleado){
                 $servicios=Servicio::where('empleado_id', $empleado->id)->get();
                 foreach($servicios as $servicio){
-                    $clientes1= Cliente::where('id', $servicio->cliente_id)->get();
-                    foreach($clientes1 as $cliente){
-                        if(in_array($cliente, $clientes) == false){
-                            $clientes[]=$cliente;
+                    if($servicio->estado != 'Archivado'){
+                        $clientes1= Cliente::where('id', $servicio->cliente_id)->get();
+                        foreach($clientes1 as $cliente){
+                            if(in_array($cliente, $clientes) == false){
+                                $clientes[]=$cliente;
+                            }
                         }
                     }
                 }
@@ -84,10 +86,12 @@ class TratamientoController extends Controller
             $clientes1=Cliente::get();
             $clientes=[];
             foreach($servicios as $servicio){
-                foreach($clientes1 as $ct){
-                    if($ct->id == $servicio->cliente_id){
-                        if(in_array($ct, $clientes) == false){
-                            $clientes[]=$ct;
+                if($servicio->estado != 'Archivado'){
+                    foreach($clientes1 as $ct){
+                        if($ct->id == $servicio->cliente_id){
+                            if(in_array($ct, $clientes) == false){
+                                $clientes[]=$ct;
+                            }
                         }
                     }
                 }
@@ -159,14 +163,15 @@ class TratamientoController extends Controller
             foreach($empleados as $emp){
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
                 foreach($servicios as $ser){
-
-                    if($ser->cliente_id == $tratamiento1->cliente_id){
-                        $tratamiento=$tratamiento1;
+                    if($ser->estado != 'Archivado'){
+                        if($ser->cliente_id == $tratamiento1->cliente_id){
+                            $tratamiento=$tratamiento1;
+                        }
                     }
                 }
             }
             if($tratamiento == null){
-                Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                Session::flash('danger','No está autorizado a acceder a esta página.');
                 return redirect()->route('inicio');
             }else{
                 return view('tratamientos.show', compact('tratamiento'));
@@ -202,15 +207,17 @@ class TratamientoController extends Controller
                 $servicios=Servicio::where('empleado_id', $emp->id)->get();
 
                 foreach ($servicios as $servicio) {
-                    if($servicio->cliente_id == $tratamiento1->cliente_id){
-                        $tratamiento=$tratamiento1;
-                    }
-                    foreach ($clientes1 as $ct) {
-                        if ($ct->id == $servicio->cliente_id) {
-                            if (in_array($ct, $clientes) == false) {
-                                $clientes[] = $ct;
-                            }
+                    if($servicio->estado != 'Archivado'){
+                        if($servicio->cliente_id == $tratamiento1->cliente_id){
+                            $tratamiento=$tratamiento1;
+                        }
+                        foreach ($clientes1 as $ct) {
+                            if ($ct->id == $servicio->cliente_id) {
+                                if (in_array($ct, $clientes) == false) {
+                                    $clientes[] = $ct;
+                                }
 
+                            }
                         }
                     }
                 }
