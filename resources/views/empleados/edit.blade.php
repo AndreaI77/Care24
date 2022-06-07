@@ -42,8 +42,8 @@
                 </div>
                 <div class= "col-sm-3">
                     <label class= "form-label fw-bolder" for="DNI"><span class="text-danger">*</span>DNI/NIE:</label>
-                    <input class="form-control" type="text" name="DNI" id="DNI" required value="{{$empleado->user->dni}}">
-                    <div class="invalid-feedback">El DNI/NIE es obligatorio.</div>
+                    <input class="form-control" type="text" name="DNI" id="DNI" minLength='8' required value="{{$empleado->user->dni}}">
+                    <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres).</div>
                     @if($errors->has('DNI'))
                         <div class='text-danger mens'>
                         {{$errors->first('DNI')}}
