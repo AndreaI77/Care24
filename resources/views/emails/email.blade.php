@@ -17,7 +17,7 @@
             Se ha generado su contraseña de acceso: <span class= 'text-primary fw-bolder'>{{$details['password']}}</span>
             <br/>
             <br/>
-            Puede acceder con su DNI/NIE y la contraseña generada.
+            Puede acceder con su documento de identidad y la contraseña generada.
         </p>
         <p>
             Se recomienda cambiar la contraseña en las opciones de perfil.

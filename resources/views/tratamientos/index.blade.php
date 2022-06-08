@@ -73,7 +73,7 @@
 </div>
 <h2 class="bg-success bg-opacity-25 text-success text-center mt-3 mb-3 ps-2 pe-2 ">Todos los tratamientos:</h2>
 
-<div class="table-responsive">
+<div class="table-responsive mb-4">
 
     @isset($tratamientos)
     <table class = "table table-sm table-striped" id="tabla">

@@ -26,7 +26,7 @@ class MedicamentoRequest extends FormRequest
         return [
             'nombre'=> 'required',
             'principio'=>'required',
-            'cantidad' => 'required'
+            'cantidad' => 'required|numeric'
         ];
     }
     public function messages()
@@ -34,7 +34,8 @@ class MedicamentoRequest extends FormRequest
         return [
             'nombre.required'=> 'Nombre es obligatorio',
             'principio.required'=> 'Principio activo es obligatorio',
-            'cantidad.required'=> 'Cantidad es obligatoria'
+            'cantidad.required'=> 'Cantidad es obligatoria',
+            'cantidad.numeric'=>'La cantidad debe ser un número'
         ];
     }
 }

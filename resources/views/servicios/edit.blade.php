@@ -12,10 +12,10 @@
                 <div class= "col-md-6">
                     @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
                         <p> <strong>Tipo: </strong>{{$servicio->tipo}}</p>
-                        <input class="form-control" type="hidden" name="tipo" value="{{$servicio->tipo}}">
+                        <input class="form-control" type="hidden" name="tipo" id="tipo" value="{{$servicio->tipo}}">
                     @endif
                     @if(auth()->user()->tipo == 'Administrativo')
-                        <label class= "form-label fw-bolder " for="estado">Tipo del servicio:<span class="text-danger">*</span></label>
+                        <label class= "form-label fw-bolder " for="tipo">Tipo del servicio:<span class="text-danger">*</span></label>
 
                         <select class="form-control" name="tipo" required id="tipo">
 
@@ -60,7 +60,7 @@
                 <div class= "mt-2 col-xl-6">
                     @if(auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'Limpiador' )
                         <p> <strong>Empleado: </strong>{{auth()->user()->nombre}}, {{auth()->user()->apellido}}</p>
-                        <input type="hidden" name="empleado" value="{{auth()->user()->id}}">
+                        <input type="hidden" name="empleado"  id="empleado" value="{{auth()->user()->id}}">
                     @endif
                     @if(auth()->user()->tipo == 'Administrativo')
                         <label class= "form-label fw-bolder " for="empleado">Empleado: <span class="text-danger">*</span></label>
@@ -110,7 +110,7 @@
                 <div class= "mt-2 col-sm-6">
                     <label class= "form-label fw-bolder me-2" for="hora_final">Hasta:<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_final" name="hora_final"  value={{Carbon\Carbon::parse($servicio->hora_final)->format('H:i')}} required>
-                    <div class="invalid-feedback">La hora final es obligatoria</div>
+                    <div class="invalid-feedback">La hora final debe ser posterior a la hora inicial</div>
                     @if($errors->has('hora_final'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_final')}}
@@ -125,7 +125,7 @@
         </div>
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
-            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo != "cliente") disabled @endif>{{Crypt::decryptString($servicio->comentario)}}</textarea>
+            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo != "cliente") disabled @endif>@if ($servicio->comentario != "" && $servicio->comentario != null ){{Crypt::decryptString($servicio->comentario)}}@endif</textarea>
 
         </div>
 
@@ -140,7 +140,7 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valServicios.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/select.js') }}" ></script>
 
 

@@ -146,7 +146,8 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
-    <script type="text/javascript" src="{{ asset('js/coordenadas.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/servicioCrear.js') }}" ></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script> --}}
+    <script type="text/javascript" src="{{ asset('js/coordenadas.js') }}" ></script>
 
 @endsection

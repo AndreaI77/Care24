@@ -26,14 +26,14 @@
                         @endif
                     </div>
                     <div class= "d-none d-lg-inline col-lg-5">
-                        <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
+                        {{-- <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
 
                         <select class="form-control" name="estado" required id="estado">
 
                             <option value="Pendiente" selected>Pendiente</option>
                             <option value="Atendido" @if(old('estado') === "Atendido") selected @endif>Atendido</option>
-                            {{-- <option value="Archivado" @if(old('estado') === "Archivado") selected @endif>Archivado</option> --}}
-                        </select>
+
+                        </select> --}}
 
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class= "mt-2 d-lg-none col-lg-6">
+            <div class= "mt-2  col-lg-6">
                 <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
 
                 <select class="form-control" name="estado" required id="estado">
@@ -77,7 +77,7 @@
 
                     @if(auth()->user()->tipo == 'Cuidador')
                         <p> <strong>Acompañante: </strong>{{auth()->user()->nombre}}, {{auth()->user()->apellido}}</p>
-                        <input type="hidden" name="empleado" value="{{auth()->user()->id}}">
+                        <input type="hidden" name="empleado" id="empleado" value="{{auth()->user()->id}}">
                     @endif
                     @if(auth()->user()->tipo == 'Administrativo')
                         <label class= "form-label fw-bolder me-2" for="empleado">Acompañante: <span class="text-danger">*</span></label>
@@ -111,11 +111,11 @@
                     </div>
                 @endif
             </div>
-            <div class="row row-cols-2 g-3 mt-2">
+            <div class="row row-cols-md-2 g-3 mt-2">
                 <div class= "mt-2 col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_inicio">Hora recogida:<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_inicio" name="hora_inicio"  value="{{old('hora_inicio')}}" required>
-                    <div class="invalid-feedback">La hora de inicio es obligatoria</div>
+                    <div class="invalid-feedback">La hora de inicio debe ser anterior a la hora final y a la hora de la cita</div>
                     @if($errors->has('hora_inicio'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_inicio')}}
@@ -125,7 +125,7 @@
                 <div class= "mt-2 col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_final">Hora final (aprox.):<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_final" name="hora_final"  value="{{old('hora_final')}}" required>
-                    <div class="invalid-feedback">La hora final es obligatoria</div>
+                    <div class="invalid-feedback">La hora final debe ser posterior a la fecha de inicio y a la hora de la cita.</div>
                     @if($errors->has('hora_final'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_final')}}
@@ -133,18 +133,18 @@
                     @endif
                 </div>
             </div>
-            <div class="row row-cols-2 g-3 mt-2">
+            <div class="row row-cols-md-2 g-3 mt-2">
                 <div class= " col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_cita">Hora cita:<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_cita" name="hora_cita"  value="{{old('hora_cita')}}" required>
-                    <div class="invalid-feedback">La hora de la cita es obligatoria</div>
+                    <div class="invalid-feedback">La hora de la cita debe ser posterior o igual a la hora de inicio y anterior a la hora final</div>
                     @if($errors->has('hora_cita'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_cita')}}
                         </div>
                     @endif
                 </div>
-                <div class= "d-none d-lg-inline col-lg-6">
+                <div class= " col-lg-6">
                     <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="lugar" name="lugar"  value="{{old('lugar')}}" required>
                     <div class="invalid-feedback">El lugar es obligatorio</div>
@@ -155,16 +155,7 @@
                     @endif
                 </div>
             </div>
-            <div class= "d-lg-none col-lg-6 mt-2">
-                <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
-                <input class="form-control" type="text" id="lugar" name="lugar"  value="{{old('lugar')}}" required>
-                <div class="invalid-feedback">El lugar es obligatorio</div>
-                @if($errors->has('lugar'))
-                    <div class='text-danger mens'>
-                    {{$errors->first('lugar')}}
-                    </div>
-                @endif
-            </div>
+
         </div>
         <div class= "col-12">
             <label class= "form-label fw-bolder" for="descripcion">Descripción:</label>
@@ -180,6 +171,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valCitas.js') }}"></script>
 
 @endsection

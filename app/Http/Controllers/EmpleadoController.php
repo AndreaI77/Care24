@@ -81,7 +81,7 @@ class EmpleadoController extends Controller
                     $uploadSuccess = $request->file('foto')->move($path , $filename);
                     $user->foto = $path . $filename;
                 }
-                $user->activo= 1;
+
                 $pass = Str::random(8);
                 $user->password=bcrypt($pass);
                 $user->save();

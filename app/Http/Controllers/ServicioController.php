@@ -85,9 +85,9 @@ class ServicioController extends Controller
                 $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
             }
             $ser->estado=$request->get('estado');
-            if($request->has('comentario')){
-                $ser->comentario=Crypt::encryptString($request->get('comentario'));
-            }
+            // if($request->has('comentario')){
+            //     $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            // }
 
             $cliente=Cliente::findOrFail($request->get('cliente'));
             $ser->cliente()->associate($cliente);

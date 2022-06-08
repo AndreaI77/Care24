@@ -10,7 +10,7 @@
         <input type= "hidden" name ="user_id" id="user_id" value = {{$cliente->user->id}}>
         <div class= "col-sm-4">
             <label class= "form-label fw-bolder" for="nombre">Nombre:</label>
-            <input class="form-control " type="text" minLength='2' name="nombre" id="nombre" autofocus value="{{$cliente->user->nombre}}" required>
+            <input class="form-control " type="text" minlength='2' name="nombre" id="nombre" autofocus value="{{$cliente->user->nombre}}" required>
 
             <div class="invalid-feedback">El nombre es obligatorio (min. 2 carácteres)</div>
             @if($errors->has('nombre'))
@@ -31,7 +31,7 @@
         </div>
         <div class= "col-12">
             <label class= "form-label fw-bolder" for="domicilio"><span class="text-danger">*</span>Domicilio:</label>
-            <input class="form-control" type="text" name="domicilio" minLength="10" id="domicilio" required value="{{$cliente->user->domicilio}}">
+            <input class="form-control" type="text" name="domicilio" minlength="10" id="domicilio" required value="{{$cliente->user->domicilio}}">
             <div class="invalid-feedback">El domicilio es obligatorio (min. 10 carácteres)</div>
             @if($errors->has('domicilio'))
                 <div class='text-danger mens'>
@@ -41,7 +41,7 @@
         </div>
         <div class= "col-sm-6 col-md-3">
             <label class= "form-label fw-bolder" for="DNI"><span class="text-danger">*</span>DNI/NIE:</label>
-            <input class="form-control" type="text" name="DNI" id="DNI" minLength='8' required value="{{$cliente->user->dni}}">
+            <input class="form-control" type="text" name="DNI" id="DNI" minlength='8' required value="{{$cliente->user->dni}}">
             <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres).</div>
             @if($errors->has('DNI'))
                 <div class='text-danger mens'>
@@ -119,9 +119,7 @@
 
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="datos">Otros datos:</label>
-            <textarea class= "form-control" name="datos" rows="3" cols="50">
-                {{$cliente->user->datos}}
-            </textarea>
+            <textarea class= "form-control" name="datos" rows="3" cols="50">{{$cliente->user->datos}}</textarea>
         </div>
         <div class= "col-12 d-md-flex border border-1 border-success bg-secondary bg-opacity-25  rounded p-2 text-center">
             <div class= "col-md-6" id='divcoor'>

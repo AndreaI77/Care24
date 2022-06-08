@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     cuidados.push(elemento);
                 }else if(e[1] == "Administrativo"){
                     elemento ={"value": item.value, "text": item.text};
-                    console.log(item.text);
+
                     otros.push(elemento);
                 }
             }

@@ -7,7 +7,7 @@
 @section('content')
 <h1 class="bg-success bg-opacity-25 text-success text-center">Citas</h1>
 
-<div class="table-responsive">
+<div class="table-responsive mb-4">
 
     @isset($citas)
     <table class = "table table-sm table-striped" id="tabla">

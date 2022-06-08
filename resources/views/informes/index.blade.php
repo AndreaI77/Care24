@@ -7,7 +7,7 @@
 @section('content')
 <h1 class="bg-success bg-opacity-25 text-success text-center">Informes</h1>
 
-<div class=" table-responsive d-flex justify-content-center ">
+<div class=" table-responsive d-flex justify-content-center mb-4">
     <div class="col-xl-10 col-xxl-8">
     @isset($informes)
     <table class = " mt-3 table table-sm table-striped" id="tabla">

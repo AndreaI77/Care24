@@ -27,7 +27,7 @@
         </div>
         <div class= "mt-1 mb-2 col-6 col-md-4 col-lg-2">
             <label class= "form-label fw-bolder me-2" for="nombre">Cantidad (en mg): </label>
-            <input class="form-control" type="text" id="cantidad" name="cantidad" value="{{old('cantidad')}}" required>
+            <input class="form-control" type="number" id="cantidad" name="cantidad" value="{{old('cantidad')}}" required>
             <div class="invalid-feedback">El principio activo es obligatorio</div>
             @if($errors->has('cantidad'))
                 <div class='text-danger mens'>

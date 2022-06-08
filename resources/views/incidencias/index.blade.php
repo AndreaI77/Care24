@@ -7,7 +7,7 @@
 @section('content')
 <h1 class="bg-success bg-opacity-25 text-success text-center">Incidencias</h1>
 
-<div class=" table-responsive  ">
+<div class=" table-responsive mb-4 ">
     <div class="">
     @isset($incidencias)
     <table class = " mt-3 table table-sm table-striped" id="tabla">

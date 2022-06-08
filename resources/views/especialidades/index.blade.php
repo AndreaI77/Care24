@@ -10,7 +10,7 @@
         <div class="col-md-8 col-lg-6   ">
 
             @isset($especialidades)
-            <table class = "table table-sm table-striped" id="tabla">
+            <table class = "table table-sm table-striped mb-4" id="tabla">
                 <thead>
                 <tr>
                     <th class="text-center">Nombre</th>

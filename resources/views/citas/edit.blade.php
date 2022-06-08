@@ -117,7 +117,7 @@
                 <div class= "mt-2 col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_inicio">Hora de recogida:<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_inicio" name="hora_inicio"  value={{Carbon\Carbon::parse($cita->servicio->hora_inicio)->format('H:i')}} required>
-                    <div class="invalid-feedback">La hora de inicio es obligatoria</div>
+                    <div class="invalid-feedback">La hora de inicio debe ser anterior a la hora final e igual o anterior a la hora de la cita</div>
                     @if($errors->has('hora_inicio'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_inicio')}}
@@ -127,7 +127,7 @@
                 <div class= "mt-2 col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_final">Hora final (aprox.):<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_final" name="hora_final"  value={{Carbon\Carbon::parse($cita->servicio->hora_final)->format('H:i')}} required>
-                    <div class="invalid-feedback">La hora final es obligatoria</div>
+                    <div class="invalid-feedback">La hora final debe ser posterior a la hora de inicio y a la hora de la cita</div>
                     @if($errors->has('hora_final'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_final')}}
@@ -139,7 +139,7 @@
                 <div class= "col-lg-5">
                     <label class= "form-label fw-bolder me-2" for="hora_cita">Hora cita:<span class="text-danger">*</span></label>
                     <input class="form-control" type="time" id="hora_cita" name="hora_cita"  value="{{Carbon\Carbon::parse($cita->hora_cita)->format('H:i')}}" required>
-                    <div class="invalid-feedback">La hora de la cita es obligatoria</div>
+                    <div class="invalid-feedback">La hora de la cita debe ser igual o posterior a la hora de inicio y anterior a la hora final</div>
                     @if($errors->has('hora_cita'))
                         <div class='text-danger mens'>
                         {{$errors->first('hora_cita')}}
@@ -147,18 +147,18 @@
                     @endif
                 </div>
                 <div class= "d-none d-lg-inline col-lg-6">
-                    <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
+                    {{-- <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="lugar" name="lugar"  value="{{$cita->lugar}}" required>
                     <div class="invalid-feedback">El lugar es obligatorio</div>
                     @if($errors->has('lugar'))
                         <div class='text-danger mens'>
                         {{$errors->first('lugar')}}
                         </div>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>
-        <div class= "d-lg-none col-lg-6 mt-2">
+        <div class= " col-lg-6 mt-2">
             <label class= "form-label fw-bolder mt-2" for="Lugar">Lugar:<span class="text-danger">*</span></label>
             <input class="form-control" type="text" id="lugar" name="lugar"  value="{{$cita->lugar}}" required>
             <div class="invalid-feedback">El lugar es obligatorio</div>
@@ -174,7 +174,7 @@
         </div>
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
-            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo !== 'cliente') disabled @endif>{{Crypt::decryptString($cita->servicio->comentario)}}</textarea>
+            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo !== 'cliente') disabled @endif>@if($cita->servicio->comentario != "" && $cita->servicio->comentario != null ){{Crypt::decryptString($cita->servicio->comentario)}}@endif</textarea>
 
         </div>
 
@@ -186,6 +186,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valCitas.js') }}" defer></script>
 @endsection
 

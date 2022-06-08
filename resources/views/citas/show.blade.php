@@ -28,7 +28,7 @@
                     <br/></span>{{Crypt::decryptString($cita->servicio->descripcion)}}
                 </p>
                 <p><span class="fw-bolder">Comentario:
-                    <br/></span>{{Crypt::decryptString($cita->servicio->comentario)}}
+                    <br/></span>@if($cita->servicio->comentario != "" && $cita->servicio->comentario != null ){{Crypt::decryptString($cita->servicio->comentario)}}@endif
                 </p>
 
             </div>

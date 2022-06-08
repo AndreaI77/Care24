@@ -8,7 +8,7 @@
     <h1 class="bg-success bg-opacity-25 text-success text-center">Medicamentos</h1>
     <div class= 'd-flex justify-content-center m-5'>
         <div class="col-md-10 col-lg-8  ">
-            <div class="table-responsive">
+            <div class="table-responsive mb-4">
                 @isset($medicamentos)
                 <table class = "table table-sm table-striped" id="tabla">
                     <thead>
