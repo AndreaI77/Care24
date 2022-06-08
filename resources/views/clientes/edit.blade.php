@@ -2,7 +2,7 @@
 @section('title','Editar')
 @section('content')
 
-<form class="bg-light border rounded needs-validation" action="{{route('clientes.update', $cliente->id)}}" method="post" enctype="multipart/form-data" novalidate >
+<form class="bg-light border rounded needs-validation" action="{{route('clientes.update', $cliente->id)}}" method="POST" enctype="multipart/form-data" novalidate >
     @csrf
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Editar cliente </h1>
@@ -14,17 +14,17 @@
 
             <div class="invalid-feedback">El nombre es obligatorio (min. 2 carácteres)</div>
             @if($errors->has('nombre'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('nombre')}}
                 </div>
             @endif
         </div>
         <div class= "col-sm-8">
             <label class= "form-label fw-bolder" for="apellido"><span class="text-danger">*</span>Apellidos:</label>
-            <input class="form-control" type="text" name="apellido" id="apellido" required value="{{$cliente->user->apellido}}">
+            <input class="form-control" type="text" minlength='3' name="apellido" id="apellido" required value="{{$cliente->user->apellido}}">
             <div class="invalid-feedback">El apellido es obligatorio</div>
             @if($errors->has('apellido'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('apellido')}}
                 </div>
             @endif
@@ -34,7 +34,7 @@
             <input class="form-control" type="text" name="domicilio" minlength="10" id="domicilio" required value="{{$cliente->user->domicilio}}">
             <div class="invalid-feedback">El domicilio es obligatorio (min. 10 carácteres)</div>
             @if($errors->has('domicilio'))
-                <div class='text-danger mens'>
+                <div class='text-danger'>
                 {{$errors->first('domicilio')}}
                 </div>
             @endif
@@ -44,7 +44,7 @@
             <input class="form-control" type="text" name="DNI" id="DNI" minlength='8' required value="{{$cliente->user->dni}}">
             <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres).</div>
             @if($errors->has('DNI'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('DNI')}}
                 </div>
             @endif
@@ -55,7 +55,7 @@
             <input class="form-control" type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{$cliente->user->fecha_nac}}">
             <div class="invalid-feedback">La fecha de nacimiento debe ser anterior a hoy.</div>
             @if($errors->has('fecha_nacimiento'))
-            <div class='text-danger mens'>
+            <div class='text-danger '>
             {{$errors->first('fecha_nacimiento')}}
             </div>
         @endif
@@ -70,7 +70,7 @@
             <input class="form-control" type="text" name="SIP" id="SIP" pattern='[0-9]{6,}'  value="{{Crypt::decryptString($cliente->sip)}}">
             <div class="invalid-feedback">El sip debe tener un valor numérico con un mínimo de 6 cifras </div>
             @if($errors->has('SIP'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('SIP')}}
                 </div>
             @endif
@@ -85,7 +85,7 @@
             <input class="form-control" type="tel" name="tel" pattern='[0-9]{9,}' placeholder='000000000' id="tel" value="{{$cliente->user->tel}}" required>
             <div class="invalid-feedback">El teléfono es obligatorio. ( min 9 cifras)</div>
             @if($errors->has('tel'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('tel')}}
                 </div>
             @endif
@@ -95,7 +95,7 @@
             <input class="form-control" type="email" name="email" id="email" placeholder="usuario@ejemplo.com" required value="{{$cliente->user->email}}">
             <div class="invalid-feedback">El e-mail es obligatorio.</div>
             @if($errors->has('email'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('email')}}
                 </div>
             @endif
@@ -150,7 +150,7 @@
                 @endif>
                 <div class="invalid-feedback">Fecha de baja no puede sera anterior a la fecha de alta.</div>
                 @if($errors->has('fecha_baja'))
-                <div class='text-danger mens'>
+                <div class='text-danger '>
                 {{$errors->first('fecha_baja')}}
                 </div>
             @endif
@@ -166,6 +166,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/valid.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valClienteEdit.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/coordenadas.js') }}" defer></script>
 @endsection

@@ -2,14 +2,14 @@
 @section('title','Nuevo empleado')
 @section('content')
 
-<form class="bg-light border rounded needs-validation" action="{{route('empleados.store')}}" method="post" enctype="multipart/form-data" novalidate >
+<form class="bg-light border rounded needs-validation" action="{{route('empleados.store')}}" method="POST" enctype="multipart/form-data" novalidate >
     @csrf
     <h1 class="bg-success bg-opacity-25 text-success text-center">Nuevo empleado</h1>
     <div class= "row g-3 p-3">
 
     <div class= "col-sm-4">
         <label class= "form-label fw-bolder" for="nombre"><span class="text-danger">*</span>Nombre:</label>
-        <input class="form-control " type="text" minLength='2' name="nombre" id="nombre" autofocus value="{{old('nombre')}}" required>
+        <input class="form-control " type="text" minlength='2' name="nombre" id="nombre" autofocus value="{{old('nombre')}}" required>
 
         <div class="invalid-feedback">El nombre es obligatorio (min. 2 carácteres)</div>
         @if($errors->has('nombre'))
@@ -20,7 +20,7 @@
     </div>
     <div class= "col-sm-8">
         <label class= "form-label fw-bolder" for="apellido"><span class="text-danger">*</span>Apellidos:</label>
-        <input class="form-control" type="text" name="apellido" id="apellido" required value="{{old('apellido')}}">
+        <input class="form-control" type="text" minlength='3' name="apellido" id="apellido" required value="{{old('apellido')}}">
         <div class="invalid-feedback">El apellido es obligatorio</div>
         @if($errors->has('apellido'))
             <div class='text-danger mens'>
@@ -30,7 +30,7 @@
     </div>
     <div class= "col-12">
         <label class= "form-label fw-bolder" for="domicilio"><span class="text-danger">*</span>Domicilio:</label>
-        <input class="form-control" type="text" name="domicilio" minLength="10" id="domicilio" required value="{{old('domicilio')}}">
+        <input class="form-control" type="text" name="domicilio" minlength="10" id="domicilio" required value="{{old('domicilio')}}">
         <div class="invalid-feedback">El domicilio es obligatorio (min. 10 carácteres)</div>
         @if($errors->has('domicilio'))
             <div class='text-danger mens'>
@@ -40,7 +40,7 @@
     </div>
     <div class= "col-sm-3">
         <label class= "form-label fw-bolder" for="DNI"><span class="text-danger">*</span>DNI/NIE:</label>
-        <input class="form-control" type="text" name="DNI" id="DNI" minLength='8' required value="{{old('DNI')}}">
+        <input class="form-control" type="text" name="DNI" id="DNI" minlength='8' required value="{{old('DNI')}}">
         <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres)</div>
         @if($errors->has('DNI'))
             <div class='text-danger mens'>
@@ -119,6 +119,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valEmpleados.js') }}" defer></script>
 
 @endsection

@@ -3,7 +3,9 @@
 @section('content')
 
     @if( $empleado->user_id != 1)
-        <form class="bg-light border rounded needs-validation" action="{{route('empleados.update', $empleado->id)}}" method="post"  novalidate >
+
+
+        <form class="bg-light border rounded needs-validation" action="{{route('empleados.update', $empleado->id)}}" method="POST" enctype="multipart/form-data" novalidate >
             @csrf
             @method('PUT')
             <h1 class="bg-success bg-opacity-25 text-success text-center">Editar empleado</h1>
@@ -11,7 +13,7 @@
                 <input type= "hidden" name ="user_id" id="user_id" value = {{$empleado->user->id}}>
                 <div class= "col-sm-4">
                     <label class= "form-label fw-bolder" for="nombre">Nombre:</label>
-                    <input class="form-control " type="text" minLength='2' name="nombre" id="nombre" autofocus value="{{$empleado->user->nombre}}" required>
+                    <input class="form-control " type="text" minlength='2' name="nombre" id="nombre" autofocus value="{{$empleado->user->nombre}}" required>
 
                     <div class="invalid-feedback">El nombre es obligatorio (min. 2 carácteres)</div>
                     @if($errors->has('nombre'))
@@ -22,7 +24,7 @@
                 </div>
                 <div class= "col-sm-8">
                     <label class= "form-label fw-bolder" for="apellido"><span class="text-danger">*</span>Apellidos:</label>
-                    <input class="form-control" type="text" name="apellido" id="apellido" required value="{{$empleado->user->apellido}}">
+                    <input class="form-control" type="text" minlength='3' name="apellido" id="apellido" required value="{{$empleado->user->apellido}}">
                     <div class="invalid-feedback">El apellido es obligatorio</div>
                     @if($errors->has('apellido'))
                         <div class='text-danger mens'>
@@ -32,7 +34,7 @@
                 </div>
                 <div class= "col-12">
                     <label class= "form-label fw-bolder" for="domicilio"><span class="text-danger">*</span>Domicilio:</label>
-                    <input class="form-control" type="text" name="domicilio" minLength="10" id="domicilio" required value="{{$empleado->user->domicilio}}">
+                    <input class="form-control" type="text" name="domicilio" minlength="10" id="domicilio" required value="{{$empleado->user->domicilio}}">
                     <div class="invalid-feedback">El domicilio es obligatorio (min. 10 carácteres)</div>
                     @if($errors->has('domicilio'))
                         <div class='text-danger mens'>
@@ -42,7 +44,7 @@
                 </div>
                 <div class= "col-sm-3">
                     <label class= "form-label fw-bolder" for="DNI"><span class="text-danger">*</span>DNI/NIE:</label>
-                    <input class="form-control" type="text" name="DNI" id="DNI" minLength='8' required value="{{$empleado->user->dni}}">
+                    <input class="form-control" type="text" name="DNI" id="DNI" minlength='8' required value="{{$empleado->user->dni}}">
                     <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres).</div>
                     @if($errors->has('DNI'))
                         <div class='text-danger mens'>
@@ -91,7 +93,7 @@
                 <div class= "col-sm-4 ">
                     <label class= "form-label fw-bolder me-2" for="puesto"><span class="text-danger">*</span>Puesto:</label>
 
-                    <select class="form-control" name="puesto" required id="puesto">
+                    <select class="form-control" name="puesto"  required id="puesto">
 
                         <option value="Administrativo" {{ $empleado->puesto == "Administrativo" ? 'selected' : ''}}>Administrativo</option>
                         <option value="Cuidador" {{ $empleado->puesto == "Cuidador" ? 'selected' : ''}}>Cuidador</option>
@@ -153,5 +155,5 @@
     @endif
 @endsection
 @section('js')
-<script type="text/javascript" src="{{ asset('js/valid.js') }}" defer></script>
+<script type="text/javascript" src="{{ asset('js/valEmpEdit.js') }}" defer></script>
 @endsection

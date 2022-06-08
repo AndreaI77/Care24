@@ -2,7 +2,7 @@
 @section('title','Editar cita')
 @section('content')
 
-<form class="bg-light border rounded needs-validation" action="{{route('citas.update', $cita->id)}}" method="post"  novalidate >
+<form class="bg-light border rounded needs-validation" action="{{route('citas.update', $cita->id)}}" method="POST"  novalidate >
     @csrf
     @method('PUT')
     <h1 class="bg-success bg-opacity-25 text-success text-center">Editar cita médica</h1>

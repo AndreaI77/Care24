@@ -2,7 +2,7 @@
 @section('title','Nueva Cita')
 @section('content')
 
-<form class="bg-light border rounded needs-validation" action="{{route('citas.store')}}" method="post"  novalidate >
+<form class="bg-light border rounded needs-validation" action="{{route('citas.store')}}" method="POST"  novalidate >
     @csrf
     <h1 class="bg-success bg-opacity-25 text-success text-center">Nueva cita médica</h1>
     <div class= "row g-3 p-3 ps-lg-5 pe-lg-5">

@@ -2,16 +2,16 @@
 @section('title','Nuevo Cliente')
 @section('content')
 
-<form class="bg-light border rounded needs-validation" action="{{route('clientes.store')}}" method="post" enctype="multipart/form-data" novalidate >
+<form class="bg-light border rounded needs-validation" action="{{route('clientes.store')}}" method="POST" enctype="multipart/form-data" novalidate >
     @csrf
     <h1 class="bg-success bg-opacity-25 text-success text-center">Nuevo cliente</h1>
     <div class= "row g-3 p-3">
 
     <div class= "col-sm-4">
         <label class= "form-label fw-bolder" for="nombre"><span class="text-danger">*</span>Nombre:</label>
-        <input class="form-control " type="text" minLength='2' name="nombre" id="nombre" autofocus value="{{old('nombre')}}" required>
+        <input class="form-control " type="text" minlength='2' name="nombre" id="nombre" autofocus value="{{old('nombre')}}" required>
 
-        <div class="invalid-feedback">El nombre es obligatorio (min. 2 carácteres)</div>
+        <div class="invalid-feedback">El nombre es obligatorio (min. 2 caracteres)</div>
         @if($errors->has('nombre'))
             <div class='text-danger mens'>
                {{$errors->first('nombre')}}
@@ -20,8 +20,8 @@
     </div>
     <div class= "col-sm-8">
         <label class= "form-label fw-bolder" for="apellido"><span class="text-danger">*</span>Apellidos:</label>
-        <input class="form-control" type="text" name="apellido" id="apellido" required value="{{old('apellido')}}">
-        <div class="invalid-feedback">El apellido es obligatorio</div>
+        <input class="form-control" type="text" minlength='3' name="apellido" id="apellido" required value="{{old('apellido')}}">
+        <div class="invalid-feedback">El apellido es obligatorio(min 3 caracteres)</div>
         @if($errors->has('apellido'))
             <div class='text-danger mens'>
             {{$errors->first('apellido')}}
@@ -30,8 +30,8 @@
     </div>
     <div class= "col-12">
         <label class= "form-label fw-bolder" for="domicilio"><span class="text-danger">*</span>Domicilio:</label>
-        <input class="form-control" type="text" name="domicilio" minLength="10" id="domicilio" required value="{{old('domicilio')}}">
-        <div class="invalid-feedback">El domicilio es obligatorio (min. 10 carácteres)</div>
+        <input class="form-control" type="text" name="domicilio" minlength="10" id="domicilio" required value="{{old('domicilio')}}">
+        <div class="invalid-feedback">El domicilio es obligatorio (min. 10 caracteres)</div>
         @if($errors->has('domicilio'))
             <div class='text-danger mens'>
             {{$errors->first('domicilio')}}
@@ -40,8 +40,8 @@
     </div>
     <div class= "col-sm-6 col-md-3">
         <label class= "form-label fw-bolder" for="DNI"><span class="text-danger">*</span>DNI/NIE:</label>
-        <input class="form-control" type="text" name="DNI" id="DNI" minLength='8' required value="{{old('DNI')}}">
-        <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 carácteres)</div>
+        <input class="form-control" type="text" name="DNI" id="DNI" minlength='8' required value="{{old('DNI')}}">
+        <div class="invalid-feedback">El DNI/NIE es obligatorio (min. 8 caracteres)</div>
         @if($errors->has('DNI'))
             <div class='text-danger mens'>
             {{$errors->first('DNI')}}
@@ -52,6 +52,8 @@
     <div class= "col-sm-6 col-md-3">
         <label class= "form-label fw-bolder" for="fecha_nacimiento">Fecha nacimiento:</label>
         <input class="form-control" type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{old('fecha_nac')}}">
+        <div class="invalid-feedback ">La fecha debe ser anterior a hoy</div>
+
         @if($errors->has('fecha_nacimiento'))
             <div class='text-danger mens'>
             {{$errors->first('fecha_nacimiento')}}
@@ -66,10 +68,10 @@
     <div class= "col-sm-6 col-md-3">
         <label class= "form-label fw-bolder" for="sip">SIP:</label>
         <input class="form-control" type="text" name="SIP" id="SIP" pattern='[0-9]{6,}'  value="{{old('SIP')}}">
-        <div class="invalid-feedback">El sip debe tener un valor numérico con un mínimo de 6 cifras </div>
-        @if($errors->has('tel'))
+        <div class="invalid-feedback">El SIP debe tener un valor numérico con un mínimo de 6 cifras </div>
+        @if($errors->has('SIP'))
             <div class='text-danger mens'>
-            {{$errors->first('tel')}}
+            {{$errors->first('SIP')}}
             </div>
         @endif
     </div>
@@ -80,8 +82,8 @@
     </div>
     <div class= "col-sm-3">
         <label class= "form-label fw-bolder" for="tel"><span class="text-danger">*</span>Teléfono :</label>
-        <input class="form-control" type="tel" name="tel" pattern='[0-9]{9,}' placeholder='000000000' id="tel" value="{{old('tel')}}" required>
-        <div class="invalid-feedback">El teléfono es obligatorio </div>
+        <input class="form-control" type="tel" name="tel" pattern='[0-9]{9}' placeholder='000000000' id="tel" value="{{old('tel')}}" required>
+        <div class="invalid-feedback">El teléfono es obligatorio (9 cifras) </div>
         @if($errors->has('tel'))
             <div class='text-danger mens'>
             {{$errors->first('tel')}}
@@ -134,6 +136,7 @@
                 por lo tanto debe ser usado desde el domicilio del cliente.
                 Si no está en el domicilio del cliente al crear el registro,
                 se puede añadir o cambiar más tarde desde la opción "editar" en la ficha del cliente.
+                Espere hasta que las coordenadas aparezcan debajo del botón.
             </p>
         </div>
 
@@ -146,7 +149,7 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/servicioCrear.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/valCliente.js') }}" ></script>
     {{-- <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script> --}}
     <script type="text/javascript" src="{{ asset('js/coordenadas.js') }}" ></script>
 

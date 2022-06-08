@@ -30,6 +30,11 @@ $(document).ready(function () {
         event.preventDefault();
         event.stopPropagation();
         $data=false;
+
+      }else if(isNaN(Date.parse($('#fecha').val()))){
+        event.preventDefault();
+        event.stopPropagation();
+        $data=false;
       }
 
       //console.log('fecha: '+$data);
@@ -95,7 +100,7 @@ $(document).ready(function () {
             }
         }
     }
-      console.log('hc: '+$data);
+      //console.log('hc: '+$data);
       if($('#lugar').val() == "" || $('#lugar').val() == null){
         event.preventDefault();
         event.stopPropagation();

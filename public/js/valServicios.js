@@ -28,6 +28,10 @@ $(document).ready(function () {
         event.preventDefault();
         event.stopPropagation();
         $data=false;
+      }else if(isNaN(Date.parse($('#fecha').val()))){
+        event.preventDefault();
+        event.stopPropagation();
+        $data=false;
       }
 
       if ($("#hora_inicio").val() == "" || $("#hora_inicio").val() == null) {
