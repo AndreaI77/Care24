@@ -83,7 +83,7 @@
             </div>
         </div>
 
-    <button type = "reset" class="btn btn-danger btn-sm justify-self-end align-self-end   m-2" id="borrar">Reiniciar filtros</button>
+    <button type = "reset" class="btn btn-danger btn-sm justify-self-end align-self-end   m-2" id="borrar">Limpiar filtros</button>
 
 
 </div>
