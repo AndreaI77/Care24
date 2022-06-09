@@ -27,8 +27,8 @@
         </div>
         <div class= "mt-1 mb-2 col-6 col-md-4 col-lg-2">
             <label class= "form-label fw-bolder me-2" for="nombre">Cantidad (en mg): </label>
-            <input class="form-control" type="number" id="cantidad" name="cantidad" value="{{old('cantidad')}}" required>
-            <div class="invalid-feedback">El principio activo es obligatorio</div>
+            <input class="form-control" type="text" pattern="([0-9]*[.])?[0-9]+" id="cantidad" name="cantidad" value="{{old('cantidad')}}" required>
+            <div class="invalid-feedback">La cantidad es obligatoria (debe ser un valor numérico)</div>
             @if($errors->has('cantidad'))
                 <div class='text-danger mens'>
                 {{$errors->first('cantidad')}}
@@ -43,7 +43,7 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valMed.js') }}" defer></script>
 
 @endsection
 

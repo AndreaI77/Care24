@@ -11,7 +11,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('espec: '+$data);
+      //console.log('espec: '+$data);
       if($('#apellido').val() == "" || $("#apellido").val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -21,7 +21,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('tipo: '+$data);
+      //console.log('tipo: '+$data);
       if($('#domicilio').val() == "" || $("#domicilio").val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -31,7 +31,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('cliente: '+$data);
+      //console.log('cliente: '+$data);
       if($('#DNI').val() == "" || $('#DNI').val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -41,7 +41,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('emp: '+$data);
+      //console.log('emp: '+$data);
       if($('#fecha_nacimiento').val() != "" && $('#fecha_nacimiento').val() != null ){
         if(isNaN(Date.parse($('#fecha_nacimiento').val()))){
             event.preventDefault();
@@ -70,19 +70,19 @@ $(document).ready(function () {
                     event.preventDefault();
                     event.stopPropagation();
                     $data=false;
-                    alert("No se pueden contratar menores de 16 años-");
+                    alert("No se pueden contratar menores de 16 años.");
                 }
             }
        }
     }
 
-      console.log('hi: '+$data);
+     // console.log('hi: '+$data);
       if ($("#tel").val() == "" || $("#tel").val() == null) {
           event.preventDefault();
           event.stopPropagation();
           $data = false;
       } else {
-        if (isNaN($("#tel").val()) || $("#tel").val().length != 9) {
+        if (isNaN($("#tel").val()) || $("#tel").val().trim().length != 9) {
             event.preventDefault();
             event.stopPropagation();
             $data = false;
@@ -91,7 +91,7 @@ $(document).ready(function () {
             $("#tel").removeClass("is-invalid");
         }
       }
-      console.log('hf: '+$data);
+      //console.log('hf: '+$data);
       if ($("#email").val() == "" || $("#email").val() == null) {
         event.preventDefault();
         event.stopPropagation();
@@ -108,7 +108,7 @@ $(document).ready(function () {
         }
 
     }
-    console.log('cliente: '+$data);
+    //console.log('cliente: '+$data);
     if($('#puesto').val() == "" || $('#puesto').val() == null){
       event.preventDefault();
       event.stopPropagation();
@@ -135,7 +135,7 @@ $(document).ready(function () {
         }
     }
 
-      console.log('lugar: '+$data);
+      //console.log('lugar: '+$data);
       if($data == true){
           //console.log('hola');
         $('#enter').attr('disabled','true');

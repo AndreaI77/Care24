@@ -26,9 +26,9 @@
         </div>
 
 
-        <div>
+        <div class='mt-3'>
             <label class= "form-label fw-bolder" for="titulo">Título: <span class="text-danger">*</span></label>
-            <input class="form-control " type="text" minLength='5' name="titulo" id="titulo"  value="{{Crypt::decryptString($informe->titulo)}}" disabled required>
+            <input class="form-control " type="text" minlength='5' name="titulo" id="titulo"  value="{{Crypt::decryptString($informe->titulo)}}" disabled required>
             <div class="invalid-feedback">El título es obligatorio (min. 5 carácteres).</div>
             @if($errors->has('titulo'))
                 <div class='text-danger mens'>

@@ -27,7 +27,7 @@
                     @endif
                 </div>
                 <div class= "mt-2 col-lg-8">
-                    <label class= "form-label fw-bolder " for="estado">Medicamento:<span class="text-danger">*</span></label>
+                    <label class= "form-label fw-bolder " for="medicamento">Medicamento:<span class="text-danger">*</span></label>
                     <select class="form-control" name="medicamento" required id="medicamento">
                         <option value="" selected hidden disabled>Elige medicamento</option>
                         @foreach($medicamentos as $med)
@@ -52,7 +52,7 @@
 
                 <div class= "mt-2 col-md-6">
                     <label class= "form-label fw-bolder " for="cantidad">Cantidad:<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="cantidad" name="cantidad" pattern="([0-9]*[.])?[0-9]+" value="{{old('cantidad')}}" required>
+                    <input class="form-control" type="text"  id="cantidad" name="cantidad" pattern="([0-9]*[.])?[0-9]+" value="{{old('cantidad')}}" required>
                     <div class="invalid-feedback">La cantidad es obligatoria (valor numérico)</div>
                     @if($errors->has('cantidad'))
                         <div class='text-danger '>
@@ -108,6 +108,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valTratamiento.js') }}" defer></script>
 
 @endsection

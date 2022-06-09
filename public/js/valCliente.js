@@ -1,3 +1,5 @@
+const { trim } = require("lodash");
+
 $(document).ready(function () {
 
     $("#enter").on('click',function (event) {
@@ -66,7 +68,7 @@ $(document).ready(function () {
     }
 
       if ($("#SIP").val() !== "" ) {
-          if(isNaN($("#SIP").val()) || $("#SIP").val().length < 6){
+          if(isNaN($("#SIP").val()) || $("#SIP").val().trim().length < 6){
             event.preventDefault();
             event.stopPropagation();
             $data = false;
@@ -81,7 +83,7 @@ $(document).ready(function () {
           event.stopPropagation();
           $data = false;
       } else {
-        if (isNaN($("#tel").val()) || $("#tel").val().length != 9) {
+        if (isNaN($("#tel").val()) || $("#tel").val().trim().length != 9) {
             event.preventDefault();
             event.stopPropagation();
             $data = false;
