@@ -2,6 +2,7 @@
 @section('title','Tratamientos')
 @section("css")
 <link rel='stylesheet' href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" >
+<link rel='stylesheet' href="{{ asset('css/link.css') }}" >
 @endsection
 
 @section('content')
@@ -36,15 +37,15 @@
         </div>
         @if (auth()->user()->tipo != 'cliente' )
             <div class=' d-md-none justify-self-end align-self-end  p-2  me-2'>
-                <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Reiniciar filtros</button>
+                <button type = "reset" class="btn btn-danger btn-sm    mt-2" id="borrar">Limpiar filtros</button>
             </div>
         @endif
     </div>
 </form>
 <div class= "d-flex justify-content-center pt-4 bg-light">
-    <div class=" col col-lg-6  border m-2  mb-4" id="agenda">
+    <div class=" col col-lg-8  border m-2  mb-4" id="agenda">
         <div class="bg-primary bg-opacity-25 ps-2 pe-2  " >
-            <div  id="antes"> <span class="fw-bolder">Antes de 8:00</span> </div><hr class="mb-0"/>
+            <div  id="antes"> <span class="fw-bolder">Antes de las 8:00</span> </div><hr class="mb-0"/>
         </div>
         <div class="bg-warning bg-opacity-25 ps-2 pe-2 " >
             <div id="8"><span class="fw-bolder">8:00</span></div><hr class="mb-0"/>
@@ -67,7 +68,7 @@
             <div id="21"><span class="fw-bolder">21:00</span> </div><hr class="mb-0"/>
         </div>
         <div class="bg-primary bg-opacity-25 ps-2 pe-2 " >
-            <div id="despues"><span class="fw-bolder">Después de 22:00</span> </div><hr class="mb-0"/>
+            <div id="despues"><span class="fw-bolder">Después de las 22:00</span> </div><hr class="mb-0"/>
         </div>
     </div>
 </div>
@@ -93,7 +94,7 @@
             @forelse($tratamientos as $trat)
                 <tr class="text-center" id="{{$trat->id}}">
 
-                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('tratamientos.show', $trat->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                    <td><a class= " p-0 m-0 text-center" href="{{route('tratamientos.show', $trat->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
                     <td class="cliente">{{$trat->cliente->user->nombre}}, {{$trat->cliente->user->apellido}}</td>
                     <td class="empleado">{{Crypt::decryptString($trat->medicamento->nombre)}} ({{$trat->medicamento->cantidad}}mg)</td>
                     <td class="fecha_principio">{{Carbon\Carbon::parse($trat->fecha_principio)->format('d/m/Y')}}</td>
@@ -119,8 +120,6 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tratamientos.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/tabla.js') }}"></script>
-
-
 
 @endsection
 

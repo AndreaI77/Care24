@@ -2,6 +2,7 @@
 @section('title','Horarios')
 @section("css")
     <link rel='stylesheet' href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" >
+    <link rel='stylesheet' href="{{ asset('css/link.css') }}" >
 @endsection
 
 @section('content')
@@ -134,13 +135,13 @@
                             <tr class="text-center" id="{{$cl->id}}">
                                 @forelse($citas as $cita)
                                     @if($cita->servicio_id == $cl->id)
-                                        <td><a class= "nav-link p-0 m-0 text-center" href="{{route('citas.show', $cita->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                                        <td><a class= " p-0 m-0 text-center" href="{{route('citas.show', $cita->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
                                         @php $ct = true; @endphp
                                     @endif
                                 @empty
                                 @endforelse
                                 @if($ct == false)
-                                    <td><a class= "nav-link p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
+                                    <td><a class= " p-0 m-0 text-center" href="{{route('servicios.show', $cl->id)}}"><i class="bi bi-eye"></i> Ver</a></td>
                                 @endif
                                 <td class="fecha">{{Carbon\Carbon::parse($cl->fecha)->format('d/m/Y')}}</td>
 
@@ -183,8 +184,8 @@
 
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" ></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/agenda.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/tabla.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/agenda.js') }}" ></script>
 
 
 @endsection

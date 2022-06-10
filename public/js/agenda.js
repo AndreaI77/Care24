@@ -101,13 +101,13 @@ $(document).ready(function () {
 
                 if(item[6] == "Cita médica"){
 
-                    texto=`<p class= 'ms-5 '><span class="text-success">Hora inicio: </span>`+item[2]+`, <span class="text-success">Hora final: </span>`+item[3]+`, <span class="text-success">Cliente: </span>`+item[4]+`,
+                    texto=` <p class= 'ms-5 '><span class='me-2' >`+item[0]+`</span><span class="text-success">Hora inicio: </span>`+item[2]+`, <span class="text-success">Hora final: </span>`+item[3]+`, <span class="text-success">Cliente: </span>`+item[4]+`,
                     <span class="text-success">Empleado: </span>`+item[5]+`, <span class="text-success">Tipo: </span>`+item[6]+`, <span class="text-success">Estado: </span>`+item[7]+`,
                     <span class="text-success">Hora cita: </span>`+item[8]+`, <span class="text-success">Lugar: </span>`+item[9]+`, <span class="text-success">Especialidad: </span>`+item[10]+`</p>`;
-                    // <span>`+item[0]+`</span>
+                    // <span >`+item[0]+`</span>
                 }else{
 
-                    texto=`<p class= 'ms-5'><span class="text-success">Hora inicio: </span>`+item[2]+`, <span class="text-success">Hora final: </span>`+item[3]+`, <span class="text-success">Cliente: </span>`+item[4]+`,
+                    texto=`<p class= 'ms-5'> <span class='me-2'>`+item[0]+`</span><span class="text-success">Hora inicio: </span>`+item[2]+`, <span class="text-success">Hora final: </span>`+item[3]+`, <span class="text-success">Cliente: </span>`+item[4]+`,
                     <span class="text-success">Empleado: </span>`+item[5]+`, <span class="text-success">Tipo: </span>`+item[6]+`, <span class="text-success">Estado: </span>`+item[7]+` </p>`;
                 }
 
