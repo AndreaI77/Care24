@@ -65,7 +65,7 @@
                 </div>
                 <div class= "mt-2 col-md-6">
                     <label class= "form-label fw-bolder " for="Lugar">Cantidad:<span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" id="lugar" name="cantidad" pattern="([0-9]*[.])?[0-9]+" value="{{$tratamiento->cantidad}}" required>
+                    <input class="form-control" type="text" id="cantidad" name="cantidad" pattern="([0-9]*[.])?[0-9]+" value="{{$tratamiento->cantidad}}" required>
                     <div class="invalid-feedback">La cantidad es obligatoria (valor numérico)</div>
                     @if($errors->has('cantidad'))
                         <div class='text-danger '>

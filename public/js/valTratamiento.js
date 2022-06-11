@@ -2,28 +2,35 @@ $(document).ready(function () {
 
     $("#enter").on('click',function (event) {
         $data = true;
+
         if($('#cliente').val() == "" || $("#cliente").val() == null){
             event.preventDefault();
             event.stopPropagation();
             $data=false;
           }
+
       if ($("#medicamento").val() == "" || $("#medicamento").val() == null) {
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      if ($("#cantidad").val() == "" || $("#estado").val() == null) {
+
+      if($("#cantidad").val() == "" || $("#cantidad").val() == null) {
+        console.log($('#cantidad').val());
         event.preventDefault();
         event.stopPropagation();
-        $data=false
+        $data=false;
+
       }else if(isNaN($("#cantidad").val())){
         event.preventDefault();
         event.stopPropagation();
         $data=false
+
         $("#cantidad").addClass('is-invalid');
     }else{
         $("#cantidad").removeClass('is-invalid');
     }
+
     if ($("#hora").val() == "" || $("#hora").val() == null) {
         event.preventDefault();
         event.stopPropagation();
@@ -39,6 +46,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
+      //console.log('5'+$data);
       if($('#fecha_fin').val() != "" && $('#fecha_fin').val() !== null){
 
         if(isNaN(Date.parse($('#fecha_fin').val()))){
@@ -61,7 +69,7 @@ $(document).ready(function () {
             }
         }
       }
-
+      //console.log('6'+$data);
       if($data == true){
 
         $('#enter').attr('disabled','true');
@@ -108,5 +116,5 @@ $(document).ready(function () {
             }
         }
     });
-  });
+});
 

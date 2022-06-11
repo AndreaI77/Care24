@@ -70,7 +70,7 @@
     </div>
 
     <button type="submit" class="btn btn-success text-warning mt-3 mb-3 float-end" name="enter" id="enter"><i class="bi bi-save"></i> Valorar</button>
-    @if($servicio->tipo == 'Cita médica')
+    @if($servicio->tipo == 'Cita')
     <a href= "{{route('citas.index')}}" class="btn btn-outline-success  m-3 float-end"><i class="bi bi-arrow-left"></i> Volver</a>
     @else
     <a href= "{{route('servicios.index')}}" class="btn btn-outline-success  m-3 float-end"><i class="bi bi-arrow-left"></i> Volver</a>

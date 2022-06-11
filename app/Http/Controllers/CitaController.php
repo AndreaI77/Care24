@@ -118,7 +118,7 @@ class CitaController extends Controller
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
             $ser->hora_final=$request->get('hora_final');
-            $ser->tipo="Cita médica";
+            $ser->tipo="Cita";
             if($request->has('descripcion')){
                 $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
             }

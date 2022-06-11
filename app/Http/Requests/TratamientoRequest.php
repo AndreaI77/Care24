@@ -39,7 +39,7 @@ class TratamientoRequest extends FormRequest
             'cliente.required'=> 'Cliente es obligatorio',
             'fecha_principio.required'=> 'La fecha de principio es obligatoria',
             'fecha_fin.after'=> 'La fecha final debe ser posterior a la fecha de principio',
-            'hora,required' => 'La hora de la toma es obligatoria',
+            'hora.required' => 'La hora de la toma es obligatoria',
             'cantidad.required' => 'La cantidad es obligatoria',
             'cantidad.numeric' => 'La cantidad debe ser un valor numérico'
         ];

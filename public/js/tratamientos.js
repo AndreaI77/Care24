@@ -10,7 +10,7 @@ $(document).ready(function () {
             let childEl = $(this).html();
 
             el.push($(this)[i]=childEl + "");
-            console.log(childEl);
+            //console.log(childEl);
         });
         servicios.push(el);
     });

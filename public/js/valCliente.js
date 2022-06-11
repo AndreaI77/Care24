@@ -1,5 +1,3 @@
-const { trim } = require("lodash");
-
 $(document).ready(function () {
 
     $("#enter").on('click',function (event) {

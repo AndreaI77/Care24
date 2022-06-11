@@ -76,7 +76,7 @@ class ComentarioController extends Controller
             $servicio->save();
 
            Session::flash('info', "Se ha guardado su comentario.");
-            if($servicio->tipo == 'Cita médica'){
+            if($servicio->tipo == 'Cita'){
                 return redirect()->route('citas.index');
             }else{
                 return redirect()->route('servicios.index');

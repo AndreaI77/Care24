@@ -108,6 +108,6 @@
 
 @endsection
 @section('js')
-    <script type="text/javascript" src="{{ asset('js/valTratamiento.js') }}" defer></script>
+    <script type="text/javascript" src="{{ asset('js/valTratamiento.js') }}" ></script>
 
 @endsection

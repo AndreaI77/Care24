@@ -53,8 +53,8 @@
 
                     <select class="form-control" name="tipo" required id="tipo">
                         <option value="" selected hidden disabled>Elige una opción</option>
-                        <option value="Médica" @if($incidencia->tipo === "Médica") selected @endif>Médica</option>
-                        <option value="No médica" @if($incidencia->tipo === "No médica") selected @endif>No médica</option>
+                        <option value="Medica" @if($incidencia->tipo === "Medica") selected @endif>Médica</option>
+                        <option value="No medica" @if($incidencia->tipo === "No medica") selected @endif>No médica</option>
                     </select>
                     <div class="invalid-feedback">Selecciona el tipo de incidencia</div>
                     @if($errors->has('tipo'))
