@@ -11,7 +11,7 @@
             <h4 class="text-success text-center"> Autor: {{ auth()->user()->nombre }}, {{ auth()->user()->apellido }}</h4>
         </div>
 
-        <input type="hidden" name="estado" id='estado' value='activo'/>
+        <input type="hidden" name="estado" id='estado' value='Activo'/>
         <div>
             <label class= "form-label fw-bolder" for="titulo">Título: <span class="text-danger">*</span></label>
             <input class="form-control " type="text" minlength='5' name="titulo" id="titulo" autofocus value="{{old('titulo')}}" required>
