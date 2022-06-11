@@ -19,7 +19,7 @@
             </div>
             <div class="col">
                 @forelse($servicios as $cl)
-                    @if($cl->comentario != "" && $cl->comentario != null)
+                    @if($cl->comentario != "" && $cl->comentario != null && $cl->valoracion >0)
                         <div >
                             <div class="card mb-3 border border-warning  ">
                                 <input type= "hidden" class='tarjeta' name= "valor" value= "{{$cl->valoracion}}"/>
