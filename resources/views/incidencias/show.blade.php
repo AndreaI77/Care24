@@ -7,15 +7,17 @@
             <h1>Detalles de la incidencia:</h1>
         </div>
         <div class="card-body">
-            <div class= '  p-2 border-bottom'>
-
-                    <p><span class="fw-bolder">Reportado por:  </span>{{$incidencia->empleado->user->nombre}}, {{$incidencia->empleado->user->apellido}} </p>
-                    <p><span class="fw-bolder">Cliente:  </span>{{$incidencia->cliente->user->nombre}}, {{$incidencia->cliente->user->apellido}} </p>
-                    <p><span class="fw-bolder">Fecha de la incidencia:  </span>{{Carbon\Carbon::parse($incidencia->fecha)->format('d/m/Y')}} </p>
-                    <p><span class="fw-bolder">Tipo de incidencia:  </span>{{$incidencia->tipo}} </p>
-                    <p><span class="fw-bolder">Estado:  </span>{{$incidencia->estado}} </p>
-                    <p><span class="fw-bolder">Título:  </span>{{Crypt::decryptString($incidencia->titulo)}} </p>
-
+            <div class= 'p-2 border-bottom row row-cols-md-2'>
+                <div class="col-md-6">
+                    <p><span class="fw-bolder">Reportado por:  </span>{{$incidencia->empleado->user->nombre}}, {{$incidencia->empleado->user->apellido}}</p>
+                    <p><span class="fw-bolder">Cliente:  </span>{{$incidencia->cliente->user->nombre}}, {{$incidencia->cliente->user->apellido}}</p>
+                    <p><span class="fw-bolder">Fecha de la incidencia:  </span>{{Carbon\Carbon::parse($incidencia->fecha)->format('d/m/Y')}}</p>
+                </div>
+                <div calss="col-md-6">
+                    <p><span class="fw-bolder">Tipo de incidencia:  </span>{{$incidencia->tipo}}</p>
+                    <p><span class="fw-bolder">Estado:  </span>{{$incidencia->estado}}</p>
+                    <p><span class="fw-bolder">Título:  </span>{{Crypt::decryptString($incidencia->titulo)}}</p>
+                </div>
             </div>
             <div class= "  ps-3 mt-3 ">
                 <p><span class="fw-bolder"> Mensaje:  <br/></span>{{Crypt::decryptString($incidencia->descripcion)}} </p>

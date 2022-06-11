@@ -146,19 +146,19 @@
                         </div>
                     @endif
                 </div>
-                <div class= "d-none d-lg-inline col-lg-6">
-                    {{-- <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
+                <div class= " col-lg-6">
+                    <label class= "form-label fw-bolder " for="Lugar">Lugar:<span class="text-danger">*</span></label>
                     <input class="form-control" type="text" id="lugar" name="lugar"  value="{{$cita->lugar}}" required>
                     <div class="invalid-feedback">El lugar es obligatorio</div>
                     @if($errors->has('lugar'))
                         <div class='text-danger mens'>
                         {{$errors->first('lugar')}}
                         </div>
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>
-        <div class= " col-lg-6 mt-2">
+        {{-- <div class= " col-lg-6 mt-2">
             <label class= "form-label fw-bolder mt-2" for="Lugar">Lugar:<span class="text-danger">*</span></label>
             <input class="form-control" type="text" id="lugar" name="lugar"  value="{{$cita->lugar}}" required>
             <div class="invalid-feedback">El lugar es obligatorio</div>
@@ -167,7 +167,7 @@
                 {{$errors->first('lugar')}}
                 </div>
             @endif
-        </div>
+        </div> --}}
         <div class= "col-lg-6">
             <label class= "form-label fw-bolder" for="descripcion">Descripción:</label>
             <textarea class= "form-control" name="descripcion" rows="3" cols="50" >{{Crypt::decryptString($cita->servicio->descripcion)}}</textarea>

@@ -237,14 +237,12 @@ class ServicioController extends Controller
             $ser= Servicio::findOrFail($id);
             try
             {
-                if(Incidencia::where('servicio_id', '=', $id)->first() != null){
-                    return back()->with('error','Se ha reportado incidencia durante este servicio, no puede ser eliminado.');
-                }else{
+
 
                     $ser->delete();
                     Session::flash('info', "Se ha eliminado el registro.");
                     return redirect()->route('servicios.index');
-                }
+
             }catch(Exception $e){
                 return $e->getMessage();
 
