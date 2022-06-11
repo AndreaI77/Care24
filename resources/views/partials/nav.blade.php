@@ -59,7 +59,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
                             @if (auth()->user()->foto != null && auth()->user()->foto != "" )
-                                <img class= "rounded-circle" src="{{auth()->user()->foto}}" alt="" width="60"/>
+                                <img class= "rounded-circle" src="{{asset(auth()->user()->foto)}}" alt="" width="60"/>
                             @else <i class="bi bi-person-circle"></i>
                             @endif
                         </a>

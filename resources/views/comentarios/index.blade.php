@@ -19,7 +19,7 @@
             </div>
             <div class="col">
                 @forelse($servicios as $cl)
-                    @if(Crypt::decryptString($cl->comentario) != "")
+                    @if($cl->comentario != "" && $cl->comentario != null)
                         <div >
                             <div class="card mb-3 border border-warning  ">
                                 <input type= "hidden" class='tarjeta' name= "valor" value= "{{$cl->valoracion}}"/>

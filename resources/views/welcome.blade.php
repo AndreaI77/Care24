@@ -4,7 +4,7 @@
 
 <div class="text-center">
     <p class="float-end">{{Carbon\Carbon::now()->format('d/m/Y')}} </p>
-    <h1 class="text-success">Bienvenido {{ auth()->user()->nombre }}.</h1>
+    <h1 class="text-success">Bienvenid@ {{ auth()->user()->nombre }}.</h1>
 
     <p class="fs-4">No olvides cerrar la sesión antes de salir de la aplicación.</p>
     <img src="{{asset('img/logo2.png')}}" alt="logo" width="300">
