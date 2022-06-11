@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     @endif
-                @empty <li>No elements to be shown</li>
+                @empty <li>No hay comentarios</li>
                 @endforelse
             </div>
         </div>

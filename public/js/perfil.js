@@ -5,12 +5,17 @@ $(document).ready(function () {
       $("#password_confirmation").val("");
       event.preventDefault();
       event.stopPropagation();
+
+    //   $("#password_confirmation").addClass("is-invalid");
+
     } else {
-      $("#pass").addClass("is-valid");
-      $("#password_confirmation").addClass("is-valid");
+
+    //   $("#pass").removeClass("is-invalid");
+    //   $("#password_confirmation").removeClass("is-invalid");
 
       $('#enter').attr('disabled','true');
       $('#enter').text('Enviando...');
+      $('form').submit();
 
     }
     $(".needs-validation").addClass("was-validated");

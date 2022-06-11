@@ -220,6 +220,9 @@
 
         </section>
         <section>
+            <a class="invisible enlace" data-bs-toggle="offcanvas" href="#offcanvasBottom" role="button" aria-controls="offcanvasExample">
+                Link
+            </a>
             <div class="offcanvas offcanvas-bottom text-center max-vh-20 " tabindex="-1" id="offcanvasBottom"  aria-labelledby="offcanvasBottomLabel">
                 <div class="offcanvas-header ms-auto">
                     <button type="button " class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -229,7 +232,7 @@
                     <p>Esta página usa cookies para mejorar su experiencia y proporcionar funcionalidades adicionales. </p>
                     <div>
                     <a href="{{route('cookies')}}">Detalles</a>
-                    <a class="ms-3 me-3" href="Privacidad.html">Política de privacidad</a>
+                    <a class="ms-3 me-3" href="{{route('privacidad')}}">Política de privacidad</a>
                     <a class="btn btn-success text-warning "  data-bs-toggle="offcanvas" href="#offcanvasBottom" role="button" aria-controls="offcanvasExample">
                         Aceptar
                     </a>
@@ -244,6 +247,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/estilo.css') }}">
+
     <script src="{{ asset('js/cookies.js') }}"></script>
 @endsection

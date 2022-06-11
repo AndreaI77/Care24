@@ -47,7 +47,7 @@ Route::get('/condiciones', function () {
 })->name('condiciones');
 
 Route::get('/cookies', function () {
-    return view('Cookies');
+    return view('cookies');
 })->name('cookies');
 
 Route::get('/privacidad', function () {

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
-
+    <link rel="stylesheet" href="{{ asset('css/estilo.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="icon" href="{{ asset('img/logo2Trans.png') }}" type="image/x-icon">
     @yield('css')

@@ -79,8 +79,8 @@
                                                 ¡Rellene la contraseña! min. 8 carácteres
                                             </div>
                                             @if($errors->has('pass'))
-                                            <div class='text-danger mens'>
-                                            {{$errors->first('tel')}}
+                                            <div class='text-danger '>
+                                            {{$errors->first('pass')}}
                                             </div>
                                         @endif
                                         </div>
@@ -93,8 +93,8 @@
                                                 ¡Las contraseñas no coinciden!
                                             </div>
                                             @if($errors->has('password_confirmation'))
-                                            <div class='text-danger mens'>
-                                            {{$errors->first('tel')}}
+                                            <div class='text-danger '>
+                                            {{$errors->first('password_confirmation')}}
                                             </div>
                                         @endif
                                         </div>
