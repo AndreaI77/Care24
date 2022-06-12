@@ -16,7 +16,7 @@ $(document).ready(function () {
       }
 
       if($("#cantidad").val() == "" || $("#cantidad").val() == null) {
-        console.log($('#cantidad').val());
+        //console.log($('#cantidad').val());
         event.preventDefault();
         event.stopPropagation();
         $data=false;

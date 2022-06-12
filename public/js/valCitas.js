@@ -7,25 +7,25 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      //console.log('espec: '+$data);
+
       if($('#estado').val() == "" || $("#estado").val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      //console.log('tipo: '+$data);
+
       if($('#cliente').val() == "" || $("#cliente").val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      //console.log('cliente: '+$data);
+
       if($('#empleado').val() == "" || $('#empleado').val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      //console.log('emp: '+$data);
+
       if($('#fecha').val() == "" || $('#fecha').val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -37,14 +37,14 @@ $(document).ready(function () {
         $data=false;
       }
 
-      //console.log('fecha: '+$data);
+
       if ($("#hora_inicio").val() == "" || $("#hora_inicio").val() == null) {
           event.preventDefault();
           event.stopPropagation();
           $data = false;
 
       }
-      //console.log('hi: '+$data);
+
       if ($("#hora_final").val() == "" || $("#hora_final").val() == null) {
           event.preventDefault();
           event.stopPropagation();
@@ -64,7 +64,7 @@ $(document).ready(function () {
             }
         }
       }
-     // console.log('hf: '+$data);
+
       if ($("#hora_cita").val() == "" || $("#hora_cita").val() == null) {
         event.preventDefault();
         event.stopPropagation();
@@ -73,19 +73,19 @@ $(document).ready(function () {
         if ($("#hora_inicio").val() != ""){
             let hi = $("#hora_inicio").val().split(":");
             let hc = $("#hora_cita").val().split(":");
-            //console.log(hi[0]+', hc='+hc[0]);
+
             if (hi[0] > hc[0] || (hi[0] == hc[0] && hi[1] > hc[1])) {
                 event.preventDefault();
                 event.stopPropagation();
                 $data = false;
-                //console.log('hi-hcfalse: '+$data);
+
                 $("#hora_inicio").addClass('is-invalid');
             }else{
                 $("#hora_inicio").removeClass('is-invalid');
             }
 
         }
-        //console.log('hi-hc: '+$data);
+
         if ($("#hora_final").val() != ""){
             let hf = $("#hora_final").val().split(":");
             let hc = $("#hora_cita").val().split(":");
@@ -100,15 +100,15 @@ $(document).ready(function () {
             }
         }
     }
-      //console.log('hc: '+$data);
+
       if($('#lugar').val() == "" || $('#lugar').val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      //console.log('lugar: '+$data);
+
       if($data == true){
-          //console.log('hola');
+
         $('#enter').attr('disabled','true');
         $('#enter').text('Enviando...');
         $('form').submit();

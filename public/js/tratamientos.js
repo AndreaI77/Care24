@@ -70,7 +70,7 @@ $(document).ready(function () {
             fecha3.setHours(0,0,0,0);
             if(fecha3.valueOf()>= fechaI.valueOf()){
                 if(fechaF !=""){
-                     //console.log(fecha3.valueOf()+', ff='+fechaF.valueOf());
+
                     if(fecha3.valueOf() <= fechaF.valueOf()){
                         texto=`<p class= 'ms-5'><span class='me-2' >`+item[0]+`</span><span class="text-success">Hora: </span>`+item[6]+`, <span class="text-success">Medicamento: </span>`+item[2]+`,
                     <span class="text-success">Cantidad: </span>`+item[5]+`, <span class="text-success">Cliente: </span>`+item[1]+` </p>`;

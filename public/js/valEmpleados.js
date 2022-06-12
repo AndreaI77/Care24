@@ -116,7 +116,7 @@ $(document).ready(function () {
 
 
       if($data == true){
-          //console.log('hola');
+
         $('#enter').attr('disabled','true');
         $('#enter').text('Enviando...');
         $('form').submit();

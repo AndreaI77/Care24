@@ -25,7 +25,7 @@
 @section('content')
 
         <div class="d-lg-flex w-100 pt-3">
-            <div class="d-flex col col-lg-5 justify-content-center align-items-center mx-auto text-center p-4">
+            <div class="d-flex col col-lg-5 justify-content-center align-items-center mx-auto text-center p-4 pt-0">
                 <div>
                 <h2 class="text-success">Sobre nuestro equipo</h2>
                 <p>

@@ -10,9 +10,9 @@ $(document).ready(function () {
             el.push($(this)[i]=childEl);
 
         });
-        servicios.push(el);
+        //servicios.push(el);
     });
-    //console.log(servicios);
+    console.log(servicios);
    $('#agenda > div > p').remove();
    filtrarAgenda(servicios, $('#fecha').val(), $('#clt').val(),$('#emp').val());
 

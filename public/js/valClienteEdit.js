@@ -11,7 +11,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('espec: '+$data);
+
       if($('#apellido').val() == "" || $("#apellido").val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -21,7 +21,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('tipo: '+$data);
+
       if($('#domicilio').val() == "" || $("#domicilio").val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -31,7 +31,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('cliente: '+$data);
+
       if($('#DNI').val() == "" || $('#DNI').val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -41,7 +41,7 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('emp: '+$data);
+
       if($('#fecha_nacimiento').val() != "" && $('#fecha_nacimiento').val() != null ){
         if(isNaN(Date.parse($('#fecha_nacimiento').val()))){
             event.preventDefault();
@@ -65,7 +65,7 @@ $(document).ready(function () {
 
        }
     }
-      console.log('fecha: '+$data);
+
       if ($("#SIP").val() !== "" ) {
           if(isNaN($("#SIP").val()) || $("#SIP").val().trim().length < 6){
             event.preventDefault();
@@ -76,7 +76,7 @@ $(document).ready(function () {
             $("#SIP").removeClass('is-invalid')
           }
       }
-      console.log('hi: '+$data);
+
       if ($("#tel").val() == "" || $("#tel").val() == null) {
           event.preventDefault();
           event.stopPropagation();
@@ -91,7 +91,7 @@ $(document).ready(function () {
             $("#tel").removeClass("is-invalid");
         }
       }
-      console.log('hf: '+$data);
+
       if ($("#email").val() == "" || $("#email").val() == null) {
         event.preventDefault();
         event.stopPropagation();
@@ -129,9 +129,9 @@ $(document).ready(function () {
             }
         }
     }
-      console.log('lugar: '+$data);
+
       if($data == true){
-          //console.log('hola');
+
         $('#enter').attr('disabled','true');
         $('#enter').text('Enviando...');
         $('form').submit();
