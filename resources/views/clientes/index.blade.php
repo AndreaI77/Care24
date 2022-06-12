@@ -7,7 +7,7 @@
 
 @section('content')
 <h1 class="bg-success bg-opacity-25 text-success text-center">Clientes</h1>
-<div class="d-flex m-2">
+{{-- <div class="d-flex m-2">
     <div class="form-check me-3 ">
         <label class="form-check-label" for="todos">Todos los clientes</label>
         <input class="form-check-input" type="radio" name='radio' id="todos" >
@@ -20,7 +20,7 @@
         <label class="form-check-label" for="alta">Clientes de alta</label>
         <input class="form-check-input" type="radio" name='radio' id="alta" >
     </div>
-</div>
+</div> --}}
 <div class= "mb-4 d-flex flex-column bg-light">
     <h4 class="text-success ps-2 pt-1">Ocultar campos:</h4>
         <div class="row row-cols-2 row-cols-md-4 ps-4" id="filtros">
@@ -142,11 +142,11 @@
 </div>
 @endsection
 @section('js')
-
+    <script type="text/javascript" src="{{ asset('js/clientes.js') }}"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" ></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/clientes.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/tabla.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/tabla.js') }}" defer></script>
 
 @endsection
 
