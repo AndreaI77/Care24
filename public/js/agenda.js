@@ -12,53 +12,30 @@ $(document).ready(function () {
         });
         servicios.push(el);
     });
-
+    //console.log(servicios);
    $('#agenda > div > p').remove();
-   filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(),$('#emp').val());
+   filtrarAgenda(servicios, $('#fecha').val(), $('#clt').val(),$('#emp').val());
 
    $('#borrar').on('click', function(){
        $('form')[0].reset();
         $('#agenda > div > p').remove();
-        filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(),$('#emp').val());
+        filtrarAgenda(servicios,$('#fecha').val(), $('#clt').val(),$('#emp').val());
     });
 
    $('#fecha').on('change', function(){
         $('#agenda > div > p').remove();
-       filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(), $('#emp').val());
+       filtrarAgenda(servicios, $('#fecha').val(), $('#clt').val(), $('#emp').val());
    });
 
    $('#emp').on('change',function(){
         $('#agenda > div > p').remove();
-        filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(),$('#emp').val());
+        filtrarAgenda(servicios, $('#fecha').val(), $('#clt').val(),$('#emp').val());
    })
    $('#clt').on('change',function(){
         $('#agenda > div > p').remove();
-        filtrarAgenda(servicios, crearFecha($('#fecha').val()), $('#clt').val(),$('#emp').val());
+        filtrarAgenda(servicios, $('#fecha').val(), $('#clt').val(),$('#emp').val());
    });
 
-   function crearFecha(fecha2){
-    let myDate = new Date(fecha2);
-    let mes = myDate.getMonth()+1;
-    let mes1=0;
-    if(mes < 10){
-        mes1 ='0'+mes;
-    }else{
-        mes1 = mes;
-    }
-
-    let dia= myDate.getDate();
-
-    let dia1=0;
-    if(dia < 10){
-        dia1 ='0'+dia;
-    }else{
-        dia1 = dia;
-    }
-
-    let mifecha = dia1 + '/' + mes1 + '/' +
-        myDate.getFullYear();
-    return mifecha;
-}
    function filtrarAgenda(filas, fecha, cl, em){
        let row=[];
 
@@ -93,10 +70,13 @@ $(document).ready(function () {
         for( let item of row){
             let texto = null;
 
-            let datos=fecha.split('/');
+            let mifecha= new Date(fecha);
+            mifecha.setHours(0,0,0,0);
             let dat=item[1].split('/');
-            //if(new Date(fecha).valueOf() == new Date(item[1]).valueOf()){
-            if(datos[0].trim() == dat[0].trim() && datos[1].trim() == dat[1].trim() && datos[2].trim() == dat[2].trim()){
+            let fechaI = new Date(dat[2], dat[1]-1, dat[0]);
+            fechaI.setHours(0,0,0,0);
+            if(mifecha.valueOf() == fechaI.valueOf()){
+
 
                 if(item[6] == "Cita"){
 
