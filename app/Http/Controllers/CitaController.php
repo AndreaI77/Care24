@@ -122,6 +122,9 @@ class CitaController extends Controller
             if($request->has('descripcion')){
                 $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
             }
+            if($request->has('comentario')){
+                $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            }
             $ser->estado=$request->get('estado');
 
             $cliente=Cliente::findOrFail($request->get('cliente'));
@@ -202,6 +205,7 @@ class CitaController extends Controller
      * @param  \App\Models\Cita  $cita
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         if(auth()->user()->tipo == 'Administrativo'){
@@ -228,6 +232,21 @@ class CitaController extends Controller
                 }
                 $especialidades=Especialidad::get();
                 return view('citas.edit', compact('cita','clientes', 'especialidades'));
+        }else if(auth()->user()->tipo == 'cliente'){
+                $cita=null;
+
+                $cita1= Cita::findOrFail($id);
+                $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+
+                    foreach($clientes as $cliente){
+                        if($cita1->servicio->cliente_id === $cliente->id){
+                            $cita=$cita1;
+
+                        }
+                    }
+                    $especialidades=Especialidad::get();
+                    return view('citas.edit', compact('cita','clientes', 'especialidades'));
+
         }else{
             Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');
@@ -243,7 +262,7 @@ class CitaController extends Controller
      */
     public function update(CitaRequest $request, $id)
     {
-        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador'){
+        if(auth()->user()->tipo == 'Administrativo' || auth()->user()->tipo == 'Cuidador' || auth()->user()->tipo == 'cliente'){
             $cita= Cita::findOrFail($id);
             $cita->servicio->fecha=$request->get('fecha');
             $cita->servicio->hora_inicio=$request->get('hora_inicio');
@@ -254,6 +273,9 @@ class CitaController extends Controller
             }
             if($request->has('comentario')){
                 $cita->servicio->comentario=Crypt::encryptString($request->get('comentario'));
+            }
+            if($request->has('valoracion')){
+                $cita->servicio->valoracion=$request->get('valoracion');
             }
 
             $cita->servicio->cliente_id=$request->get('cliente');

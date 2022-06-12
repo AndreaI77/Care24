@@ -9,7 +9,7 @@
         <div class= "col-sm-6 ">
             <div class="row row-cols-md-2 ">
                 <div class= "col-md-6">
-                    <label class= "form-label fw-bolder me-2" for="estado">Tipo del servicio:<span class="text-danger">*</span></label>
+                    <label class= "form-label fw-bolder me-2" for="tipo">Tipo del servicio:<span class="text-danger">*</span></label>
                     <select class="form-control" name="tipo" required id="tipo">
                         <option value="" selected hidden disabled>Elige una opción</option>
                         <option value="Limpieza" @if(old('tipo') === "Limpieza") selected @endif>Limpieza</option>

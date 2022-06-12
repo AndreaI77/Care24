@@ -26,14 +26,7 @@
                         @endif
                     </div>
                     <div class= "d-none d-lg-inline col-lg-5">
-                        {{-- <label class= "form-label fw-bolder me-2" for="estado">Estado:<span class="text-danger">*</span></label>
 
-                        <select class="form-control" name="estado" required id="estado">
-
-                            <option value="Pendiente" selected>Pendiente</option>
-                            <option value="Atendido" @if(old('estado') === "Atendido") selected @endif>Atendido</option>
-
-                        </select> --}}
 
                     </div>
                 </div>

@@ -81,7 +81,6 @@ Route::post('curriculum', [CVController::class, 'contactar'])->name('envioCV.sto
 Route::get('recuperacion', [RecupController::class, 'recupForm'])->name('recuperacion');
 Route::post('recuperacion', [RecupController::class, 'recup'])->name('recup');
 Route::resource('perfil', PerfilController::class)->only('index', 'update')->middleware('auth');
-// Route::get('valoraciones', [ComentController::class, 'getData'])->name('coments');
 Route::resource('comentarios', ComentarioController::class)->only('index','edit', 'update')->middleware('auth');
 Route::resource('horarios', HorarioController::class)->only('index')->middleware('auth');
 

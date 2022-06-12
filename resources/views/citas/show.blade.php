@@ -59,7 +59,7 @@
                     <a class="btn btn-success text-warning fw-bolder float-end " href="{{route('citas.edit', $cita->id)}}"><i class="bi bi-pencil-square"></i> Editar</a>
                 @endif
                 @if(auth()->user()->tipo === 'cliente' && $cita->servicio->estado == 'Atendido')
-                    <a class="btn btn-success text-warning fw-bolder float-end " href="{{route('comentarios.edit',$cita->servicio_id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
+                    <a class="btn btn-success text-warning fw-bolder float-end " href="{{route('citas.edit',$cita->id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
 
                 @endif
                 <a class="btn btn-outline-success  fw-bolder float-end me-5  " href="{{route('citas.index')}}"><i class="bi bi-arrow-left"></i> Volver</a>
