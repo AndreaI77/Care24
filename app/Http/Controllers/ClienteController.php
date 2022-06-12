@@ -109,17 +109,17 @@ class ClienteController extends Controller
                 $user->save();
                 $cl=new Cliente();
                 $cl->user_id=$user->id;
-                $cl->idioma=$request->idioma;
+                $cl->idioma=$request->get('idioma');
                 if($request->has('SIP')){
                     $cl->sip=Crypt::encryptString($request->SIP);
                 }
-                $cl->nacionalidad=$request->nacionalidad;
+                $cl->nacionalidad=$request->get('nacionalidad');
                 if($request->has('enfermedades')){
                     $cl->enfermedades=Crypt::encryptString($request->enfermedades);
                 }
-                $cl->familiares=$request->family;
-                $cl->coordenadax=$request->coordenadax;
-                $cl->coordenaday=$request->coordenaday;
+                $cl->familiares=$request->get('family');
+                $cl->coordenadax=$request->get('coordenadax');
+                $cl->coordenaday=$request->get('coordenaday');
                 $cl->user()->associate($user);
                 $cl->save();
 
@@ -223,17 +223,17 @@ class ClienteController extends Controller
             }
 
             $cl->user->save();
-            $cl->idioma=$request->idioma;
+            $cl->idioma=$request->get('idioma');
             if($request->has('SIP')){
                 $cl->sip=Crypt::encryptString($request->SIP);
             }
-            $cl->nacionalidad=$request->nacionalidad;
+            $cl->nacionalidad=$request->get('nacionalidad');
             if($request->has('enfermedades')){
                 $cl->enfermedades=Crypt::encryptString($request->enfermedades);
             }
-            $cl->familiares=$request->family;
-            $cl->coordenadax=$request->coordenadax;
-            $cl->coordenaday=$request->coordenaday;
+            $cl->familiares=$request->get('family');
+            $cl->coordenadax=$request->get('coordenadax');
+            $cl->coordenaday=$request->get('coordenaday');
             $cl->save();
             Session::flash('info', "Se han actualizado los datos.");
 
@@ -258,7 +258,7 @@ class ClienteController extends Controller
             {
                 if(Servicio::where('cliente_id', '=', $id)->first() != null || Tratamiento::where('cliente_id', '=', $id)->first() != null
                     || Incidencia::where('cliente_id', '=', $id)->first() != null){
-                    return back()->with('error','Se han creado registros con este cliente, no puede ser eliminado.Lo puedes desactivar, asignándole una fecha de baja en la opción de editar.');
+                    return back()->with('error','Se han creado registros con este cliente, no puede ser eliminado. Lo puedes desactivar, asignándole una fecha de baja en la opción de editar.');
                 }else{
                     $cl->user->delete();
                     $cl->delete();

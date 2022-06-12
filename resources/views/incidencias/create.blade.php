@@ -14,7 +14,7 @@
                 <div class= "col-8 col-lg-6">
                     <label class= "form-label fw-bolder" for="fecha">Fecha de la incidencia: <span class="text-danger">*</span></label>
                     <input class="form-control" type="date"  name="fecha" id="fecha"  value="{{old('fecha')}}" required>
-                    <div class="invalid-feedback">Inserte una fecha válida.</div>
+                    <div class="invalid-feedback">Inserte una fecha válida. Debe ser anterior o igual a hoy.</div>
                         @if($errors->has('fecha'))
                             <div class='text-danger mens'>
                             {{$errors->first('fecha')}}

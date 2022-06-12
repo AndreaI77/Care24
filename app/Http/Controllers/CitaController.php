@@ -245,8 +245,12 @@ class CitaController extends Controller
                         }
                     }
                     $especialidades=Especialidad::get();
-                    return view('citas.edit', compact('cita','clientes', 'especialidades'));
-
+                    if($cita == null){
+                        Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                        return redirect()->route('inicio');
+                    }else{
+                        return view('citas.edit', compact('cita','clientes', 'especialidades'));
+                    }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta página.');
             return redirect()->route('citas.index');

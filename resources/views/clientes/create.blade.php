@@ -76,7 +76,7 @@
         @endif
     </div>
     <div class= "col-sm-4">
-        <label class= "form-label fw-bolder" for="idiomas">Idioma:</label>
+        <label class= "form-label fw-bolder" for="idioma">Idioma:</label>
         <input class="form-control" type="text" name="idioma" id="idioma" value="{{old('idioma')}}">
 
     </div>

@@ -85,9 +85,9 @@ class ServicioController extends Controller
                 $ser->descripcion=Crypt::encryptString($request->get('descripcion'));
             }
             $ser->estado=$request->get('estado');
-            // if($request->has('comentario')){
-            //     $ser->comentario=Crypt::encryptString($request->get('comentario'));
-            // }
+            if($request->has('comentario')){
+                $ser->comentario=Crypt::encryptString($request->get('comentario'));
+            }
 
             $cliente=Cliente::findOrFail($request->get('cliente'));
             $ser->cliente()->associate($cliente);
@@ -167,7 +167,7 @@ class ServicioController extends Controller
             $clientes1=Cliente::get();
             $clientes=[];
             $servicios =Servicio::where('empleado_id', auth()->user()->id)->get();
-
+            $empleados =Empleado::where('user_id', auth()->user()->id)->get();
             foreach($servicios as $ser){
                 if($ser->estado != 'Archivado'){
                     foreach($clientes1 as $ct){
@@ -179,7 +179,25 @@ class ServicioController extends Controller
                     }
                 }
             }
-                return view('servicios.edit', compact('servicio', 'clientes'));
+                return view('servicios.edit', compact('servicio', 'clientes','empleados'));
+            }else if(auth()->user()->tipo == 'cliente'){
+
+                $servicio1= Servicio::findOrFail($id);
+                $clientes=Cliente::where('user_id', auth()->user()->id)->get();
+                $empleados=Empleado::get();
+                    foreach($clientes as $cliente){
+                        if($servicio1->cliente_id === $cliente->id){
+                            $servicio=$servicio1;
+
+                        }
+                    }
+
+                    if($servicio == null){
+                        Session::flash('danger','No está autorizado a acceder a esta ruta.');
+                        return redirect()->route('inicio');
+                    }else{
+                        return view('servicios.edit', compact('servicio', 'clientes', 'empleados'));
+                    }
         }else{
             Session::flash('danger','No está autorizado a acceder a esta ruta.');
             return redirect()->route('inicio');
@@ -195,7 +213,7 @@ class ServicioController extends Controller
      */
     public function update(ServicioRequest $request, $id)
     {
-        if(auth()->user()->tipo !== 'cliente'){
+
             $ser= Servicio::findOrFail($id);
             $ser->fecha=$request->get('fecha');
             $ser->hora_inicio=$request->get('hora_inicio');
@@ -208,6 +226,9 @@ class ServicioController extends Controller
             if($request->has('comentario')){
                 $ser->comentario=Crypt::encryptString($request->get('comentario'));
             }
+            if($request->has('valoracion')){
+                $ser->valoracion=$request->get('valoracion');
+            }
 
 
             $ser->cliente_id=$request->get('cliente');
@@ -219,10 +240,7 @@ class ServicioController extends Controller
             Session::flash('info', "Se han actualizado los datos.");
 
             return redirect()->route('servicios.show', $id);
-        }else{
-            Session::flash('danger','No está autorizado a acceder a esta ruta.');
-            return redirect()->route('inicio');
-        }
+
     }
 
     /**

@@ -47,7 +47,7 @@
             @endif
 
             @if(auth()->user()->tipo === 'cliente' && $servicio->estado == 'Atendido')
-                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('comentarios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
+                <a class="btn btn-success text-warning fw-bolder float-end w-25" href="{{route('servicios.edit', $servicio->id)}}"><i class="bi bi-pencil-square"></i> Valorar</a>
 
             @endif
 

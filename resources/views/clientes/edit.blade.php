@@ -76,8 +76,8 @@
             @endif
         </div>
         <div class= "col-sm-4 ">
-            <label class= "form-label fw-bolder" for="idiomas">Idiomas:</label>
-            <input class="form-control" type="text" name="idiomas" id="idiomas" value="{{$cliente->idiomas}}">
+            <label class= "form-label fw-bolder" for="idioma">Idiomas:</label>
+            <input class="form-control" type="text" name="idioma" id="idioma" value="{{$cliente->idioma}}">
 
         </div>
         <div class= "col-sm-3">

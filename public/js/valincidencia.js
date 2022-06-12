@@ -56,7 +56,7 @@ $(document).ready(function () {
         $data=false;
         $("#descrip").addClass('is-invalid');
       }else{
-        $("#fecha").removeClass('is-invalid');
+        $("#descrip").removeClass('is-invalid');
       }
 
      //8 console.log('lugar: '+$data);

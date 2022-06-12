@@ -117,9 +117,7 @@
                 </div>
                 <div class= "col-lg-6">
                     <label class= "form-label fw-bolder" for="datos">Otros datos:</label>
-                    <textarea class= "form-control" name="datos" rows="3" cols="50">
-                        {{$empleado->user->datos}}
-                    </textarea>
+                    <textarea class= "form-control" name="datos" rows="3" cols="50">{{$empleado->user->datos}}</textarea>
                     <div class= "row row-cols-sm-2">
                         <div class= "col-8 col-sm-6">
                             <label class= "form-label fw-bolder" for= "fecha_alta">Fecha de alta:</label>

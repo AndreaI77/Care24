@@ -21,7 +21,7 @@
             <input type='date' name='fecha' id='fecha' value="{{Carbon\Carbon::now()->format('Y-m-d')}}">
         </div>
         @if (auth()->user()->tipo == 'cliente')
-            <div class= 'row ms-5 me-5' id ="emp1">
+            <div class= 'row ms-5 ' id ="emp1">
                 <label for="emp">Empleado:</label>
                 <select name="emp"  id="emp" >
                     <option value="" selected hidden >Selecciona empleado</option>

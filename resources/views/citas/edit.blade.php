@@ -26,7 +26,7 @@
                             </div>
                         @endif
                         @if(auth()->user()->tipo == 'cliente')
-                            <input type="hidden" name="especialidad" id='especialidad' value="{{$cita->especialidad->id}}">
+                            <input type="hidden" name="especialidad"  value="{{$cita->especialidad->id}}">
                         @endif
                     </div>
                     <div class= "d-none d-lg-inline col-lg-5">
@@ -60,7 +60,7 @@
                     </div>
                 @endif
                 @if(auth()->user()->tipo == 'cliente')
-                            <input type="hidden" name="cliente" id='cliente' value="{{$cita->servicio->cliente->id}}">
+                            <input type="hidden" name="cliente"  value="{{$cita->servicio->cliente->id}}">
                         @endif
             </div>
             <div class= "mt-2 col-lg-8 col-xl-6">
@@ -105,7 +105,7 @@
                     </div>
                 @endif
                 @if(auth()->user()->tipo == 'cliente')
-                    <input type="hidden" name="fecha" id='fecha' value="{{$cita->servicio->fecha}}">
+                    <input type="hidden" name="fecha"  value="{{$cita->servicio->fecha}}">
                 @endif
             </div>
             <div class= "  col-lg-6">
@@ -120,7 +120,7 @@
                     @endif
                 </select>
                 @if(auth()->user()->tipo == 'cliente')
-                    <input type="hidden" name="estado" id='estado' value="{{$cita->servicio->estado}}">
+                    <input type="hidden" name="estado"  value="{{$cita->servicio->estado}}">
                 @endif
             </div>
         </div>
@@ -135,7 +135,7 @@
                         </div>
                     @endif
                     @if(auth()->user()->tipo == 'cliente')
-                        <input type="hidden" name="hora_inicio" id='hora_inicio' value="{{Carbon\Carbon::parse($cita->servicio->hora_inicio)->format('H:i')}}">
+                        <input type="hidden" name="hora_inicio"  value="{{Carbon\Carbon::parse($cita->servicio->hora_inicio)->format('H:i')}}">
                     @endif
                 </div>
                 <div class= "mt-2 col-lg-5">
@@ -148,7 +148,7 @@
                         </div>
                     @endif
                     @if(auth()->user()->tipo == 'cliente')
-                        <input type="hidden" name="hora_final" id='hora_final' value="{{Carbon\Carbon::parse($cita->servicio->hora_final)->format('H:i')}}">
+                        <input type="hidden" name="hora_final" value="{{Carbon\Carbon::parse($cita->servicio->hora_final)->format('H:i')}}">
                     @endif
                 </div>
             </div>
@@ -163,7 +163,7 @@
                         </div>
                     @endif
                     @if(auth()->user()->tipo == 'cliente')
-                        <input type="hidden" name="hora_cita" id='hora_cita' value="{{Carbon\Carbon::parse($cita->hora_cita)->format('H:i')}}">
+                        <input type="hidden" name="hora_cita"  value="{{Carbon\Carbon::parse($cita->hora_cita)->format('H:i')}}">
                     @endif
                 </div>
                 <div class= " col-lg-6">
@@ -176,7 +176,7 @@
                         </div>
                     @endif
                     @if(auth()->user()->tipo == 'cliente')
-                        <input type="hidden" name="lugar" id='lugar' value="{{$cita->lugar}}">
+                        <input type="hidden" name="lugar"  value="{{$cita->lugar}}">
                     @endif
                 </div>
             </div>
@@ -195,23 +195,23 @@
 
                     <div class="star_content fs-bolder form-check ms-3">
 
-                            <input class="form-check-input" name="valoracion" value="5" type="radio"@if($cita->servicio->valoracion == 5)checked @endif class="form-check-input"/>
+                            <input class="form-check-input" name="valoracion" value="5" type="radio"@if($cita->servicio->valoracion == 5)checked @endif class="form-check-input"  @if(auth()->user()->tipo == 'cliente')required @endif/>
                             <label class="ms-2 form-check-label" for=valoracion>Muy satisfecho:</label><br/>
 
 
-                        <input  class="form-check-input" name="valoracion" value="4" type="radio" @if($cita->servicio->valoracion == 4)checked @endif class="form-check-input" />
+                        <input  class="form-check-input" name="valoracion" value="4" type="radio" @if($cita->servicio->valoracion == 4)checked @endif class="form-check-input"  @if(auth()->user()->tipo == 'cliente')required @endif />
                         <label class="ms-2 form-check-label" for=valoracion>Satisfecho:</label><br/>
 
 
-                        <input class="form-check-input" name="valoracion" value="3" type="radio" @if($cita->servicio->valoracion == 3)checked @endif class="form-check-input"/>
+                        <input class="form-check-input" name="valoracion" value="3" type="radio" @if($cita->servicio->valoracion == 3)checked @endif class="form-check-input"  @if(auth()->user()->tipo == 'cliente')required @endif/>
                         <label class="ms-2 form-check-label" for=valoracion>Bien:</label><br/>
 
 
-                        <input class="form-check-input" name="valoracion" value="2" type="radio" @if($cita->servicio->valoracion == 2)checked @endif class="form-check-input" />
+                        <input class="form-check-input" name="valoracion" value="2" type="radio" @if($cita->servicio->valoracion == 2)checked @endif class="form-check-input"  @if(auth()->user()->tipo == 'cliente')required @endif />
                         <label  class="ms-2 form-check-label" for=valoracion>Insatisfecho:</label><br/>
 
 
-                        <input class="form-check-input" name="valoracion" value="1" type="radio" @if($cita->servicio->valoracion == 1)checked @endif class="form-check-input" />
+                        <input class="form-check-input" name="valoracion" value="1" type="radio" @if($cita->servicio->valoracion == 1)checked @endif class="form-check-input"  @if(auth()->user()->tipo == 'cliente')required @endif />
                         <label class="ms-2 form-check-label" for=valoracion>Muy insatisfecho:</label><br/>
 
                         <div class="invalid-feedback">Elige una opción</div>
@@ -227,7 +227,7 @@
             </div>
             @endif
             <label class= "form-label fw-bolder" for="comentario">Comentario:</label>
-            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo !== 'cliente') disabled @endif>@if($cita->servicio->comentario != "" && $cita->servicio->comentario != null ){{Crypt::decryptString($cita->servicio->comentario)}}@endif</textarea>
+            <textarea class= "form-control" name="comentario" rows="3" cols="50" @if(auth()->user()->tipo !== 'cliente') disabled @endif  @if(auth()->user()->tipo == 'cliente')required @endif>@if($cita->servicio->comentario != "" && $cita->servicio->comentario != null ){{Crypt::decryptString($cita->servicio->comentario)}}@endif</textarea>
 
         </div>
 
@@ -239,6 +239,10 @@
 
 @endsection
 @section('js')
+@if(auth()->user()->tipo == 'cliente')
+<script type="text/javascript" src="{{ asset('js/val_bootstrap.js') }}" ></script>
+@else
     <script type="text/javascript" src="{{ asset('js/valCitasEdit.js') }}" defer></script>
+@endif
 @endsection
 

@@ -7,25 +7,25 @@ $(document).ready(function () {
         event.stopPropagation();
         $data=false;
       }
-      console.log('espec: '+$data);
+      //console.log('espec: '+$data);
       if($('#estado').val() == "" || $("#estado").val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      console.log('tipo: '+$data);
+      //console.log('tipo: '+$data);
       if($('#cliente').val() == "" || $("#cliente").val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      console.log('cliente: '+$data);
+      //console.log('cliente: '+$data);
       if($('#empleado').val() == "" || $('#empleado').val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      console.log('emp: '+$data);
+      //console.log('emp: '+$data);
       if($('#fecha').val() == "" || $('#fecha').val() == null){
         event.preventDefault();
         event.stopPropagation();
@@ -37,14 +37,14 @@ $(document).ready(function () {
         $data=false;
       }
 
-      console.log('fecha: '+$data);
+      //console.log('fecha: '+$data);
       if ($("#hora_inicio").val() == "" || $("#hora_inicio").val() == null) {
           event.preventDefault();
           event.stopPropagation();
           $data = false;
 
       }
-      console.log('hi: '+$data);
+      //console.log('hi: '+$data);
       if ($("#hora_final").val() == "" || $("#hora_final").val() == null) {
           event.preventDefault();
           event.stopPropagation();
@@ -64,7 +64,7 @@ $(document).ready(function () {
             }
         }
       }
-      console.log('hf: '+$data);
+      //console.log('hf: '+$data);
       if ($("#hora_cita").val() == "" || $("#hora_cita").val() == null) {
         event.preventDefault();
         event.stopPropagation();
@@ -85,7 +85,7 @@ $(document).ready(function () {
             }
 
         }
-        console.log('hi-hc: '+$data);
+        //console.log('hi-hc: '+$data);
         if ($("#hora_final").val() != ""){
             let hf = $("#hora_final").val().split(":");
             let hc = $("#hora_cita").val().split(":");
@@ -100,38 +100,38 @@ $(document).ready(function () {
             }
         }
     }
-      console.log('hc: '+$data);
+      //console.log('hc: '+$data);
       if($('#lugar').val() == "" || $('#lugar').val() == null){
         event.preventDefault();
         event.stopPropagation();
         $data=false;
       }
-      console.log('lugar: '+$data);
-      if($('#valoracion').val() != "" || $('#comentario').val() != ""){
-        console.log('entra: '+$data);
-        if($('#valoracion').val() != ""){
-            if($('#comentario').val() == ""){
-                event.preventDefault();
-                event.stopPropagation();
-                $data=false;
-                console.log('val: '+$data);
-                $("#comentario").addClass('is-invalid');
-            }else{
-                $("#comentario").removeClass('is-invalid');
-            }
-        }else if($('#comentario').val() != ""){
-            if($('#valoracion').val() == ""){
-                event.preventDefault();
-                event.stopPropagation();
-                $data=false;
-                console.log('com: '+$data);
-                $("#valoracion").addClass('is-invalid');
-            }else{
-                $("#valoracion").removeClass('is-invalid');
-            }
-        }
+      //console.log('lugar: '+$data);
+    //   if($('#valoracion').val() != "" || $('#comentario').val() != ""){
+    //     //console.log('entra: '+$data);
+    //     if($('#valoracion').val() != ""){
+    //         if($('#comentario').val() == ""){
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //             $data=false;
+    //             //console.log('val: '+$data);
+    //             $("#comentario").addClass('is-invalid');
+    //         }else{
+    //             $("#comentario").removeClass('is-invalid');
+    //         }
+    //     }else if($('#comentario').val() != ""){
+    //         if($('#valoracion').val() == ""){
+    //             event.preventDefault();
+    //             event.stopPropagation();
+    //             $data=false;
+    //             //console.log('com: '+$data);
+    //             $("#valoracion").addClass('is-invalid');
+    //         }else{
+    //             $("#valoracion").removeClass('is-invalid');
+    //         }
+    //     }
 
-      }
+    //   }
 
       if($data == true){
           //console.log('hola');
