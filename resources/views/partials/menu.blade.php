@@ -36,9 +36,7 @@
                             <li class="nav-item">
                                 <a class="nav-link fw-bolder fs-5 text-success  {{setActive('empleados.create')}} " href={{route('empleados.create')}}>Nuevo empleado</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link fw-bolder fs-5 text-success  {{setActive('empleados.create')}} " href={{route('empleados.index')}}>Horarios</a>
-                            </li>
+
                         </ul>
 
                     </div>
