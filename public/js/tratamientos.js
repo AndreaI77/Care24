@@ -37,7 +37,7 @@ $(document).ready(function () {
    function filtrarAgenda(filas, fecha, cl){
        let row=[];
 
-       let servicios=[];
+        let servicios=[];
         for( let item of filas){
             if(cl != "" ){
                 if(cl == item[1]){

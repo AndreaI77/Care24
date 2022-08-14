@@ -23,7 +23,7 @@
 
                         </div>
                         <div class= " col-md-6 ps-3 ">
-                            <p><span class="fw-bolder"> Fecha nacimiento:  </span>{{$empleado->user->fecha_nac}} </p>
+                            <p><span class="fw-bolder"> Fecha nacimiento:  </span>{{Carbon\Carbon::parse($empleado->user->fecha_nac)->format('d/m/Y')}} </p>
                             <p><span class="fw-bolder">Puesto:  </span>{{$empleado->puesto}} </p>
                             <p><span class="fw-bolder">Idiomas:  </span>{{$empleado->idiomas}} </p>
 

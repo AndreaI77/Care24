@@ -25,7 +25,7 @@
                 </div>
                 <div class= " col-md-6 ps-3 ">
                     @if(auth()->user()->tipo !== 'Limpiador')
-                        <p><span class="fw-bolder"> Fecha nacimiento:  </span>{{$cliente->user->fecha_nac}} </p>
+                        <p><span class="fw-bolder"> Fecha nacimiento:  </span>{{Carbon\Carbon::parse($cliente->user->fecha_nac)->format('d/m/Y')}} </p>
                         <p><span class="fw-bolder">SIP:  </span>{{Crypt::decryptString($cliente->sip)}} </p>
                     @endif
                     <p><span class="fw-bolder">Idiomas:  </span>{{$cliente->idiomas}} </p>

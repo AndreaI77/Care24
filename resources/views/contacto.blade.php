@@ -39,7 +39,7 @@
 
             <form class="row g-3 border border-3 border-success rounded p-2 bg-light needs-validation" action= "{{route('contact.store')}}" method="POST" novalidate>
                 @csrf
-                <h1 class="m-0 text-center"> Contacto:<img class="float-end d-lg-none" src="../../public/img/logo2.png" alt="logo" width="50"></h1>
+                <h1 class="m-0 text-center"> Contacto:<img class="float-end d-lg-none" src="{{asset('img/logo2.png')}}" alt="logo" width="50"></h1>
 
                 <div>
                     <label class="form-label" for="nombre">Tu nombre:</label>

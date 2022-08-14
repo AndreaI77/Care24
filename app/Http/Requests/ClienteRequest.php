@@ -30,7 +30,7 @@ class ClienteRequest extends FormRequest
             'DNI'=> 'required | unique:App\Models\User,dni,'.$this->user_id.',id|min:8',
             'email'=> 'required | email',
             'tel'=> 'required | numeric',
-            'SIP' => 'nullable | numeric ',
+            'SIP' => 'nullable | numeric',
             'fecha_nacimiento'=> 'nullable |date_format:Y-m-d| before:today | after:1900-01-01',
             'fecha_baja' => 'nullable |date_format:Y-m-d| after_or_equal:'.$this->fecha_alta
         ];
